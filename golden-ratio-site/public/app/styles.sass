@@ -1,0 +1,37 @@
+$bg: black
+
+body
+  width: 100vw
+  height: 100vh
+
+canvas
+
+  position: fixed
+  background: black
+
+.spiral
+  position: fixed
+  transition: 0.5s
+  -webkit-backface-visibility: hidden
+  -webkit-transform: translateZ(0) scale(1.0, 1.0)
+  backface-visibility: hidden
+  transform: translateZ(0)
+
+.section
+  color: white
+  display: flex
+  justify-content: center
+  align-items: center
+  font-size: 64px
+  left: -100%
+  position: absolute
+  border-left: 2px solid $bg
+  border-top: 2px solid $bg
+  border-right: 2px solid $bg
+  backface-visibility: hidden
+  -webkit-font-smoothing: anitaliased
+  transition: 0.25s
+
+.section:hover
+  border-radius: 10%
+  border: 3px solid $bg
