@@ -1,9 +1,10 @@
 body
+  border: none
   margin: 0
   color: white
   width: 100vw
-  height: 100vh
   box-sizing: border-box
+  background: #12af45
 
 
 // FUNCTIONAL MAGNIFYING STYILNG
@@ -11,7 +12,7 @@ body
 
 
 .container1
-  position: fixed
+  position: absolute
 
 .mag-container
   position: fixed
@@ -24,23 +25,35 @@ body
 // ADDITIONAL STYLING
 /////////////////////
 
-.container1
-  width: 100vw
-  height: 100vh
-  display: grid
-  grid-template-columns: repeat(3, 33.3%)
-  grid-template-rows: repeat(3, 33.3%)
 
-.container1 > *
-  border: 2px solid black
-  color: black
-  grid-column: auto
-  grid-row: auto
+.f-col
   display: flex
-  justify-content: center
-  align-items: center
-  font-size: 50px
-  background: radial-gradient(white 0%, black 100%)
+  flex-direction: column
+
+.f-cent
+
+
+nav
+  width: 100vw
+  height: 100px
+  background: #bada55
+  ul
+    height: inherit
+    display: flex
+    justify-content: space-around
+    align-items: center
+    margin: 0
+    li
+      list-style: none
+      cursor: pointer
+
+.mag-container
+  border: inset 5px solid black
+
+.content
+  width: 100%
+  height: 400px
+  // padding: 20px
 
 .zoomed
-  opacity: 0.5
+  background: black

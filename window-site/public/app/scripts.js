@@ -1,4 +1,4 @@
-const boxes = document.querySelectorAll('.box')
+const body = document.querySelector('body')
 const glass = document.querySelector('.mag-container')
 const original = document.querySelector('body').children[1]
 // creates a copy of the content to be applied to the magnifying glass div
@@ -7,7 +7,7 @@ const clone = content.cloneNode(true)
 
 
 // set scale between background content and zoom
-let scale = 8
+let scale = 2
 let glassSize = 700
 
 glass.style.width = glassSize + 'px'
@@ -27,11 +27,13 @@ zoomed.className += ' zoomed'
 zoomed.style.transform = `scale(${scale})`
 
 
-
+// determines center of entire document body
+// note this may not be crowss-browser comptatible
 let center = {
-  w: window.innerWidth/2,
-  h: window.innerHeight/2
+  w: document.body.scrollWidth/2,
+  h: document.body.scrollHeight/2
 }
+
 
 // event function to move mag-glass around zoomed conten t
 let moveGlass = (e) => {
@@ -41,14 +43,16 @@ let moveGlass = (e) => {
         y: e.pageY
       }
     let corr = glassSize/2
-    let difX = ((scale-1)*(mouse.x-center.w)/center.w)*center.w
-    let difY = ((scale-1)*(mouse.y-center.h)/center.h)*center.h
+    let centOffsetX = ((scale-1)*(mouse.x-center.w)/center.w)*center.w
+    let centOffsetY = ((scale-1)*(mouse.y-center.h)/center.h)*center.h
+    let distFromTop = document.querySelector('body').scrollTop
+    console.log(distFromTop);
     // translate container div mith mouse move
-    glass.style.transform = `translate(${mouse.x - corr}px, ${mouse.y - corr}px)`
+    glass.style.transform = `translate(${mouse.x - corr}px, ${mouse.y - corr - distFromTop}px)`
     // correct container div translations
-    // difX and difY account for the scaling difference between the original content and the zoom
+    // centOffsetX and centOffsetY account for the scaling difference between the original content and the zoom
     // scale maintains scaling of content in magnifying glass
-    zoomed.style.transform = `translate(${((-mouse.x) - difX + corr)}px, ${((-mouse.y) - difY + corr)}px) scale(${scale})`
+    zoomed.style.transform = `translate(${((-mouse.x) - centOffsetX + corr)}px, ${((-mouse.y) - centOffsetY + corr - 50)}px) scale(${scale})`
     }
   }
 
@@ -60,17 +64,25 @@ let spacedown = false
 // event listeners for spacebar press and mousemove
 window.addEventListener('resize', () => {
   center = {
-    w: window.innerWidth/2,
-    h: window.innerHeight/2
+    w: document.body.scrollWidth/2,
+    h: document.body.scrollHeight/2
   }
+  console.log(center);
 })
 
 window.addEventListener('keydown', (e) => {
-  e.keyCode === 32 ? spacedown = true : null
+  if (e.keyCode === 32) {
+    e.preventDefault()
+    spacedown = true
+    // body.style.cursor = 'none'
+  }
 })
 
 window.addEventListener('keyup', (e) => {
-  e.keyCode === 32 ? spacedown = false : null
+  if (e.keyCode === 32) {
+    spacedown = false
+    // body.style.cursor = 'default'
+  }
 })
 
 window.addEventListener('mousemove', (e) => {
