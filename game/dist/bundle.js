@@ -3,10 +3,7 @@
 //    Map moves automatically
 //    Player can move up, down, left, right anywhere on screen
 //    3 different types of enemies
-//        - Jet
-//        - Helicopter
-//        - Bomber
-//    Play has health bar
+//    Player has health bar
 //    3 Different powerups that change the way you shoot
 //    Keeps track of score
 //         - Enemies killed
@@ -48,11 +45,15 @@ let images = new function() {
     this.bullet = new Image()
     this.enemy = new Image()
     this.enemyBullet = new Image()
+    this.explosion = new Image()
 
     this.spaceship.src = 'img/ship.png'
     this.bullet.src = 'img/bullet.png'
     this.enemy.src = 'img/enemy.png'
     this.enemyBullet.src = 'img/bullet_enemy.png'
+    this.explosion.src ='img/explosion.png'
+    this.explosion.spriteWidth = this.explosion.width/50
+    this.explosion.frameIndex = 0
 }
 
 //========================== Player Movement Logic ================================
@@ -93,13 +94,17 @@ document.onkeyup = (e) => {
 
 //========================== Game State ================================
 
+let level = 1
+
+
 let player = {
     x: 10,
     y: cH/2,
     width: images.spaceship.width,
     height: images.spaceship.height,
     img: images.spaceship,
-    speed: 10
+    speed: 10,
+    health: 4
 }
 
 let bullets = []
@@ -114,16 +119,20 @@ let maxEnemies = 20
 let enemyBullets = []
 let enemyBulletSpeed = 15
 
+let explosions = []
+let maxExplosion = maxEnemies
+
 let score = 0
 // let scoreElement = document.querySelector('#score')
 
 
-//========================== Re-usable Functions ================================
+//========================== Custom Functions ================================
 
 
 function random(min, max) {
     return (Math.random() * (max - min)) + min
 }
+
 
 //========================== Player ================================
 
@@ -160,8 +169,8 @@ let generateBulletPool = (maxBullets) => {
     for (let i = 0; i < maxBullets; i++) {
         let bullet = {
             alive: false,
-            x: 0,
-            y: 0,
+            x: -10,
+            y: -10,
             speed: bulletSpeed,
             img: images.bullet
         }
@@ -215,7 +224,10 @@ let shootBullets = () => {
 
 let moveBullet = (b) => {
     b.x += b.speed
-    b.x >= cW ? b.alive = false : null
+    if (b.x >= cW) {
+      b.alive = false
+      alterScore.bulletMissed()
+    }
 }
 
 
@@ -274,8 +286,8 @@ let generateEnemeyBulletPool = (maxBullets) => {
     for (let i = 0; i < maxBullets; i++) {
         let bullet = {
             alive: false,
-            x: 0,
-            y: 0,
+            x: -10,
+            y: -10,
             speed: enemyBulletSpeed,
             img: images.enemyBullet
         }
@@ -319,6 +331,18 @@ let drawEnemyBullets = () => {
     }
 }
 
+//========================== Sprite Explosions ================================
+
+let generateExplosion = () => {
+
+}
+
+
+// let animateSprite = (sprite) => {
+//   count = 0
+//   for (let i = 0; i < sprite.)
+// }
+
 //========================== Collision Detection ================================
 
 let detectCollision = (rect1, rect2) => {
@@ -332,12 +356,57 @@ let detectCollision = (rect1, rect2) => {
   }
 }
 
+let enemyBulletCollision = () => {
+  for(let i = 0; i < bullets.length; i++) {
+    for(let j = 0; j < enemies.length; j++) {
+      if (bullets[i].alive) {
+        if (detectCollision(bullets[i], enemies[j])) {
+          alterScore.enemyKilled()
+          resetEnemy(enemies[j])
+          resetBullet(bullets[i])
+        }
+      }
+    }
+  }
+}
+
+let palyerBulletCollision = () => {
+  for (let i = 0; i < enemyBullets.length; i++) {
+    if (detectCollision(enemyBullets[i], player)) {
+      player.health--
+      alterScore.hitTaken()
+      if (player.health === 0) {
+        gameOver()
+      }
+    }
+  }
+}
+
+let playerEnemyDetection = () => {
+  for (let i = 0; i < enemies.length; i++) {
+    if (detectCollision(enemies[i], player)) {
+      player.health--
+      alterScore.hitTaken()
+      if (player.health === 0) {
+        gameOver()
+      }
+    }
+  }
+}
+
+let detectAllCollisions = () => {
+  enemyBulletCollision()
+  palyerBulletCollision()
+  playerEnemyDetection()
+}
+
 let gameOver = () => {
   console.log('game over');
   cancelAnimationFrame(gameloop)
 }
 
 let resetEnemy = (e) => {
+  // ctx.drawImage(img.explosion, )
   ctx.clearRect(e.x,e.y,e.img.width,e.img.height)
   e.x = random(cW, cW*1.5)
   e.y = random(0, cH - images.enemy.height)
@@ -350,45 +419,23 @@ let resetBullet = (b) => {
   b.y = 0
 }
 
-let enemyBulletCollision = () => {
-  for(let i = 0; i < bullets.length; i++) {
-    for(let j = 0; j < enemies.length; j++) {
-      if (bullets[i].alive) {
-        if (detectCollision(bullets[i], enemies[j])) {
-          score += 10
-          console.log(score);
-          resetEnemy(enemies[j])
-          resetBullet(bullets[i])
-        }
-      }
+//========================== Manipulate Score ================================
+
+  let alterScore = {
+    enemyKilled() {
+      score += 100
+      console.log(score);
+    },
+    hitTaken() {
+      score -= 100
+      console.log(score);
+
+    },
+    bulletMissed() {
+      score -= 1
+      console.log(score);
     }
   }
-}
-
-let palyerBulletCollision = () => {
-  for (let i = 0; i < enemyBullets.length; i++) {
-    if (detectCollision(enemyBullets[i], player)) {
-      // console.log('playerBulletCollision');
-      gameOver()
-    }
-  }
-}
-
-let playerEnemyDetection = () => {
-  for (let i = 0; i < enemies.length; i++) {
-    if (detectCollision(enemies[i], player)) {
-      gameOver()
-    }
-  }
-}
-
-let detectAllCollisions = () => {
-  enemyBulletCollision()
-  palyerBulletCollision()
-  playerEnemyDetection()
-}
-
-
 
 //========================== Game Loop ================================
 
