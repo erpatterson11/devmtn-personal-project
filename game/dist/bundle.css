@@ -56,4 +56,5 @@ body {
   align-items: center; }
 
 canvas {
+  position: fixed;
   background: black; }
