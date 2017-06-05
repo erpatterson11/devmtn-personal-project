@@ -62,6 +62,7 @@ let images = new function() {
     this.enemyBullet = new Image()
     this.explosion = new Image()
     this.bg = new Image()
+    this.bg2 = new Image()
     this.powerup1 = new Image()
     this.powerup2 = new Image()
     this.powerup3 = new Image()
@@ -71,7 +72,8 @@ let images = new function() {
     this.enemy.src = 'img/enemy.png'
     this.enemyBullet.src = 'img/bullet_enemy.png'
     this.explosion.src ='img/explosion.png'
-    this.bg.src = 'img/bg.png'
+    this.bg.src = 'img/spr_stars01.png'
+    this.bg2.src = 'img/spr_stars02.png'
     this.powerup1.src = 'img/powerup1.png'
     this.powerup2.src = 'img/powerup2.png'
     this.powerup3.src = 'img/powerup3.png'
@@ -88,8 +90,10 @@ const BackgroundAnimateFactory = () => {
 
   let drawBackground = () => {
     bgCtx.clearRect(0,0,cW,cH)
-    bgCtx.drawImage(images.bg,current,0,cW, cH)
-    bgCtx.drawImage(images.bg,cW+current,0,cW,cH)
+    bgCtx.drawImage(images.bg,current*2,0,cW, cH)
+    bgCtx.drawImage(images.bg,cW+current*2,0,cW,cH)
+    bgCtx.drawImage(images.bg2,current,0,cW, cH)
+    bgCtx.drawImage(images.bg2,cW+current,0,cW,cH)
     moveBackground()
   }
 
@@ -258,8 +262,8 @@ const PlayerBulletFactory = () => {
     }
   }
 
-  let fireOne = (player) => {
-    bulletParams.fireRate = 200
+  let fireOne = (player, fireRate) => {
+    bulletParams.fireRate = fireRate
     let b = bulletPool[ 0]
     if (!b.alive) {
         b.alive = true
@@ -269,8 +273,8 @@ const PlayerBulletFactory = () => {
     }
   }
 
-  let fireTwo = (player) => {
-    bulletParams.fireRate = 100
+  let fireTwo = (player, fireRate) => {
+    bulletParams.fireRate = fireRate
     let b = bulletPool[0]
     if (!b.alive) {
         b.alive = true
@@ -287,8 +291,8 @@ const PlayerBulletFactory = () => {
     }
   }
 
-  let fireFour = (player) => {
-    bulletParams.fireRate = 50
+  let fireFour = (player, fireRate) => {
+    bulletParams.fireRate = fireRate
     let b = bulletPool[0]
     if (!b.alive) {
         b.alive = true
@@ -320,6 +324,8 @@ const PlayerBulletFactory = () => {
   }
 
 
+
+
   const drawBullets = () => {
     for (var i = 0; i < bulletPool.length; i++) {
       let b = bulletPool[i]
@@ -339,12 +345,14 @@ const PlayerBulletFactory = () => {
         bulletParams.lastFire = now
         if (KeyStatus.space) {
           console.log(index);
-          if (index > 1) {
-            fireFour(player)
+          if (index>2) {
+            fireFour(player, 100)
+          } else if (index > 1) {
+            fireFour(player, 200)
           } else if (index > 0) {
-            fireTwo(player)
+            fireTwo(player, 200)
           } else {
-            fireOne(player)
+            fireOne(player, 200)
           }
         }
       }
@@ -387,7 +395,7 @@ const EnemyFactory = () => {
   // automatically generate enemies when factory is run
     for (let i = 0; i < maxEnemies; i++) {
       let enemy = {
-          alive: false,
+          alive: true,
           x: random(cW, cW*1.5),
           y: random(0, cH - images.enemy.height),
           speed: random(speed.low,speed.high),
@@ -502,11 +510,12 @@ const EnemyBulletFactory = () => {
 
 const PowerupFactory = () => {
 
-  let powerup1 = NewPowerup(images.powerup2, 10)
+  let powerup1 = NewPowerup(images.powerup1, 10)
   let powerup2 = NewPowerup(images.powerup2, 15)
   let powerup3 = NewPowerup(images.powerup3, 20)
+  let powerup4 = powerup3
 
-  let powerupPool = [powerup1,powerup2,powerup3]
+  let powerupPool = [powerup1,powerup2,powerup3, powerup4]
   let index = 0
   let lastPowerup = Date.now()
 
@@ -648,11 +657,6 @@ const CollisionDetectionFactory = (player, bullets, enemies, enemyBullets, power
     }
   }
 
-  let gameOver = () => {
-    console.log('game over');
-    cancelAnimationFrame(gameloop)
-  }
-
   let resetEnemy = (e) => {
     // ctx.drawImage(img.explosion, )
     ctx.clearRect(e.x,e.y,e.img.width,e.img.height)
@@ -750,9 +754,13 @@ const Background = BackgroundAnimateFactory()
 
 //========================== Game Loop ================================
 
-let init = () => {
-    Enemies.spawnEnemies()
-}
+const requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
+                            window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+
+const cancelAnimationFrame = window.cancelAnimationFrame || window.mozCancelAnimationFrame;
+
+
+let req
 
 let gameloop = () => {
     Background.draw()
@@ -764,10 +772,32 @@ let gameloop = () => {
     Player.draw()
     Powerup.generate()
     DetectAllCollisions.run()
-    requestAnimationFrame(gameloop)
+    req = requestAnimationFrame(gameloop)
 }
 
-window.onload = () => {
-    init()
-    gameloop()
+
+
+const startScreen = document.querySelector('#start-screen')
+const startButton = document.querySelector('#start-button')
+const gameOverScreen = document.querySelector('#game-over-screen')
+const pauseButton = document.querySelector('#pause-button')
+
+startButton.addEventListener('click', () => {
+  startScreen.classList += 'hidden'
+  gameloop()
+})
+
+
+
+let stopGameLoop = () => {
+  console.log('cancel?');
+  cancelAnimationFrame(req)
+  gameOverScreen.classList.remove('hidden')
 }
+
+let gameOver = () => {
+  console.log('game over');
+  stopGameLoop()
+}
+
+pauseButton.addEventListener('click', stopGameLoop)

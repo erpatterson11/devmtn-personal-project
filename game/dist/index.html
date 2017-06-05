@@ -8,13 +8,22 @@
     <link rel="stylesheet" href="./bundle.css">
   </head>
   <body>
-<div class="canvas-container">
+
+<button id='pause-button' type="button" name="button">Stop Game</button>
+
+<div class="game-container">
   <canvas id="bgCanvas"></canvas>
   <canvas id="gameCanvas"></canvas>
+  <div id='start-screen'>
+    Game Title!
+    <button type="button" name="button" id='start-button'>Start Game</button>
+  </div>
+  <div id='game-over-screen' class='hidden'>
+    You suck! HAHAHAHAHAHAHAHAH
+  </div>
 </div>
 
 
-    <ui-view></ui-view>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.js'></script>
     <script src="./bundle.js"></script>
