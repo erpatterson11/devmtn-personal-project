@@ -62,6 +62,9 @@ let images = new function() {
     this.enemyBullet = new Image()
     this.explosion = new Image()
     this.bg = new Image()
+    this.powerup1 = new Image()
+    this.powerup2 = new Image()
+    this.powerup3 = new Image()
 
     this.spaceship.src = 'img/ship.png'
     this.bullet.src = 'img/bullet.png'
@@ -69,6 +72,9 @@ let images = new function() {
     this.enemyBullet.src = 'img/bullet_enemy.png'
     this.explosion.src ='img/explosion.png'
     this.bg.src = 'img/bg.png'
+    this.powerup1.src = 'img/powerup1.png'
+    this.powerup2.src = 'img/powerup2.png'
+    this.powerup3.src = 'img/powerup3.png'
 
     this.explosion.spriteWidth = this.explosion.width/50
     this.explosion.frameIndex = 0
@@ -77,7 +83,30 @@ let images = new function() {
 
 //========================== Draw Background ================================
 
-bgCtx.drawImage(images.bg, images.bg.width, images.bg.height)
+const BackgroundAnimateFactory = () => {
+  let current = 0
+
+  let drawBackground = () => {
+    bgCtx.clearRect(0,0,cW,cH)
+    bgCtx.drawImage(images.bg,current,0,cW, cH)
+    bgCtx.drawImage(images.bg,cW+current,0,cW,cH)
+    moveBackground()
+  }
+
+  let moveBackground = () => {
+    current--
+    if (current < -cW) {
+      current = 0
+    }
+  }
+
+return {
+  draw: drawBackground
+}
+
+}
+
+
 
 //========================== Player Movement Logic ================================
 
@@ -117,7 +146,7 @@ document.onkeyup = (e) => {
 
 //========================== Factory Functions ================================
 
-  const BulletPoolInitialize = (max, speed, image) => {
+  const InitializeBulletPool = (max, speed, image) => {
     let arr = []
     for (let i = 0; i < max; i++) {
       let bullet = {
@@ -132,6 +161,23 @@ document.onkeyup = (e) => {
     return arr
   }
 
+  const DrawObject = (obj, callback) => {
+    ctx.clearRect(obj.x, obj.y - 2, obj.width, obj.height * 1.1)
+    callback()
+    ctx.drawImage(obj.img, obj.x, obj.y)
+  }
+
+  const NewPowerup = (image, interval) => {
+    return {
+        alive: false,
+        x: -10,
+        y: -10,
+        dx: -1,
+        dy: 2,
+        img: image,
+        interval: interval
+    }
+  }
 
 //========================== Player ================================
 
@@ -143,8 +189,8 @@ const PlayerFactory = () => {
       width: images.spaceship.width,
       height: images.spaceship.height,
       img: images.spaceship,
-      speed: 10,
-      health: 4
+      speed: 7,
+      health: 10
   }
 
   const updatePlayerHealth = (num) => {
@@ -155,7 +201,7 @@ const PlayerFactory = () => {
     return player
   }
 
-  const movePlayer = () => {
+  let movePlayer = () => {
       if (KeyStatus.left) {
           player.x -= player.speed
           player.x <= 0 ? player.x = 0 : null
@@ -184,9 +230,8 @@ const PlayerFactory = () => {
 
   return {
     changeHealth: updatePlayerHealth,
-    getInfo: getPlayerInfo,
-    movePlayer: movePlayer,
-    drawPlayer: drawPlayer
+    get: getPlayerInfo,
+    draw: drawPlayer
   }
 };
 
@@ -198,48 +243,82 @@ const PlayerBulletFactory = () => {
   let bulletParams = {
     maxBullets: 100,
     bulletSpeed: 15,
-    fireRate: 50,
+    fireRate: 200,
     lastFire: Date.now(),
     powerup: false
   }
 
-  let bulletPool = BulletPoolInitialize(bulletParams.maxBullets,bulletParams.bulletSpeed,images.bullet)
+  let bulletPool = InitializeBulletPool(bulletParams.maxBullets,bulletParams.bulletSpeed,images.bullet)
 
   let moveBullet = (b) => {
     b.x += b.speed
     if (b.x >= cW) {
       b.alive = false
-// TODO: add in function to update score after the bullet leaves the canvas
-      // alterScore.bulletMissed()
+      Score.change(-1)
     }
   }
 
   let fireOne = (player) => {
-    let b = bullets[ 0]
+    bulletParams.fireRate = 200
+    let b = bulletPool[ 0]
     if (!b.alive) {
         b.alive = true
         b.x = player.x + player.width
         b.y = player.y + player.height / 2
-        bullets.push(bullets.shift())
+        bulletPool.push(bulletPool.shift())
     }
   }
 
   let fireTwo = (player) => {
-    let b = bullets[0]
+    bulletParams.fireRate = 100
+    let b = bulletPool[0]
     if (!b.alive) {
         b.alive = true
         b.x = player.x + player.width
         b.y = player.y + player.height * 0.25
-        bullets.push(bullets.shift())
+        bulletPool.push(bulletPool.shift())
     }
-    let bn = bullets[0]
+    let bn = bulletPool[0]
     if (!bn.alive) {
         bn.alive = true
         bn.x = player.x + player.width
         bn.y = player.y + player.height * 0.75
-        bullets.push(bullets.shift())
+        bulletPool.push(bulletPool.shift())
     }
   }
+
+  let fireFour = (player) => {
+    bulletParams.fireRate = 50
+    let b = bulletPool[0]
+    if (!b.alive) {
+        b.alive = true
+        b.x = player.x + player.width
+        b.y = player.y + player.height * 0.25
+        bulletPool.push(bulletPool.shift())
+    }
+    let bn = bulletPool[0]
+    if (!bn.alive) {
+        bn.alive = true
+        bn.x = player.x + player.width
+        bn.y = player.y + player.height * 0.75
+        bulletPool.push(bulletPool.shift())
+    }
+    let by = bulletPool[0]
+    if (!by.alive) {
+        by.alive = true
+        by.x = player.x + player.width
+        by.y = player.y
+        bulletPool.push(bulletPool.shift())
+    }
+    let bz = bulletPool[0]
+    if (!bz.alive) {
+        bz.alive = true
+        bz.x = player.x + player.width
+        bz.y = player.y + player.height
+        bulletPool.push(bulletPool.shift())
+    }
+  }
+
 
   const drawBullets = () => {
     for (var i = 0; i < bulletPool.length; i++) {
@@ -252,16 +331,22 @@ const PlayerBulletFactory = () => {
     }
   }
 
-// TODO: add if (KeyStatus.space) condition where this is invoked!
-  const shootBullets = (player) => {
-    let now = Date.now()
-    let dif = now - player.lastFire
-    if (dif >= player.fireRate) {
-      player.lastFire = now
-      if (powerup) {
-          fireTwo(player)
-      } else {
-          fireOne(player)
+  const shootBullets = (player, index) => {
+    if(KeyStatus.space) {
+      let now = Date.now()
+      let dif = now - bulletParams.lastFire
+      if (dif >= bulletParams.fireRate) {
+        bulletParams.lastFire = now
+        if (KeyStatus.space) {
+          console.log(index);
+          if (index > 1) {
+            fireFour(player)
+          } else if (index > 0) {
+            fireTwo(player)
+          } else {
+            fireOne(player)
+          }
+        }
       }
     }
   }
@@ -277,10 +362,10 @@ const PlayerBulletFactory = () => {
   }
 
   return {
-    drawBullets: drawBullets,
-    shootBullets: shootBullets,
+    draw: drawBullets,
+    shoot: shootBullets,
     changeBulletSpeed: updateBulletSpeed,
-    accessPool: accessPool
+    get: accessPool
   }
 };
 
@@ -289,6 +374,15 @@ const PlayerBulletFactory = () => {
 const EnemyFactory = () => {
   let enemyPool = []
   let maxEnemies = 20
+  let speed = {
+    low: 0.5,
+    high: 2
+  }
+  let chance = {
+    low: 0.005,
+    high: 0.05
+  }
+  let enemyLives = 3
 
   // automatically generate enemies when factory is run
     for (let i = 0; i < maxEnemies; i++) {
@@ -296,9 +390,9 @@ const EnemyFactory = () => {
           alive: false,
           x: random(cW, cW*1.5),
           y: random(0, cH - images.enemy.height),
-          speed: random(0.5,2),
-          chance: random(0.05, 0.1),
-          life: 3,
+          speed: random(speed.low,speed.high),
+          chance: random(chance.low, chance.high),
+          life: enemyLives,
           img: images.enemy
       }
       enemyPool.push(enemy)
@@ -342,15 +436,14 @@ const EnemyFactory = () => {
 
   return {
     spawnEnemies: spawnEnemies,
-    shootBullets: shootBullets,
-    drawEnemies: drawEnemies,
-    accessPool: accessPool
+    shoot: shootBullets,
+    draw: drawEnemies,
+    get: accessPool
   }
 };
 
 
 //========================== Enemy Bullets ================================
-
 
 const EnemyBulletFactory = () => {
   let bulletParams = {
@@ -358,9 +451,7 @@ const EnemyBulletFactory = () => {
     bulletSpeed: 15,
   }
 
-  let enemyBulletPool = BulletPoolInitialize(bulletParams.maxBullets,bulletParams.bulletSpeed,images.enemyBullet)
-
-  // automatically fills enemy bullet pool on factory invokation
+  let enemyBulletPool = InitializeBulletPool(bulletParams.maxBullets,bulletParams.bulletSpeed,images.enemyBullet)
 
   let moveEnemyBullet = (b) => {
     b.x -= b.speed
@@ -378,7 +469,7 @@ const EnemyBulletFactory = () => {
     }
   }
 
-  const fireBullets = (e) => {
+  const shootBullets = (e) => {
     let b = enemyBulletPool[0]
     if (!b.alive && e) {
         b.alive = true
@@ -399,22 +490,119 @@ const EnemyBulletFactory = () => {
   }
 
   return {
-    drawEnemyBullets: drawEnemyBullets,
-    fireEnemyBullets: fireBullets,
+    draw: drawEnemyBullets,
+    shoot: shootBullets,
     updateBulletSpeed: updateBulletSpeed,
-    accessPool: accessPool
+    get: accessPool
+  }
+};
+
+
+//========================== Powerup Factory ================================
+
+const PowerupFactory = () => {
+
+  let powerup1 = NewPowerup(images.powerup2, 10)
+  let powerup2 = NewPowerup(images.powerup2, 15)
+  let powerup3 = NewPowerup(images.powerup3, 20)
+
+  let powerupPool = [powerup1,powerup2,powerup3]
+  let index = 0
+  let lastPowerup = Date.now()
+
+  const getPowerups = () => {
+    return powerupPool
+  }
+
+  const getIndex = () => {
+    return index
+  }
+
+  const activatePowerup = (powerup) => {
+    ctx.clearRect(powerup.x-2,powerup.y-2,powerup.img.width+2,powerup.img.height+2)
+    powerup.x = cW + 100
+    powerup.y = random(0, cH - powerup.img.height)
+    index++
+    index >= powerupPool.length-1 ? index = powerupPool.length-1 : null
+    resetPowerupTimer()
+    console.log(index);
+  }
+
+  const resetPowerup = () =>{
+    index = 0
+  }
+
+  const generatePowerup = () => {
+    let now = Date.now()
+    let dif = now - lastPowerup
+    if (dif >= powerupPool[index].interval*1000 && !powerupPool[index].alive) {
+      spawnPowerup()
+    }
+    if (powerupPool[index].alive) {
+      drawPowerup(powerupPool[index])
+    }
+  }
+
+  let resetPowerupTimer = () => {
+    lastPowerup = Date.now()
+    powerupPool.map(x=> x.alive = false)
+  }
+
+  let spawnPowerup = () => {
+    console.log('powerup spawned!');
+    powerupPool[index].alive = true
+    powerupPool[index].x = cW + 10
+    powerupPool[index].y = random(100,cH-100)
+  }
+
+  let movePowerup = (p) => {
+    p.x += p.dx
+    p.y += p.dy
+    if (p.y < 0 || p.y > cH - p.img.height) {
+      p.dy = -p.dy
+    }
+    if (p.x < 0-p.width) {
+      resetPowerupTimer()
+    }
+  }
+
+  let drawPowerup = (powerup) => {
+    ctx.clearRect(powerup.x-2,powerup.y-2,powerup.img.width+2,powerup.img.height+2)
+    movePowerup(powerup)
+    ctx.drawImage(powerup.img,powerup.x,powerup.y)
+  }
+
+  return {
+    get: getPowerups,
+    getIndex: getIndex,
+    generate: generatePowerup,
+    activate: activatePowerup,
+    reset: resetPowerup
   }
 };
 
 
 //========================== Game Stat Factory ================================
 
-const GameStatFactory = () => {
+const ScoreFactory = () => {
   let score = 0
-  let level = 0
 
+  const changeScore = (num) => {
+    score += num
+    score <= 0 ? score = 0 : null
+    console.log(score);
+  }
 
-}
+  const getScore = () => {
+    return parseInt(`${score}`)
+  }
+
+  return {
+    change: changeScore,
+    get: getScore
+  }
+};
+
 
 
 
@@ -427,31 +615,18 @@ const GameStatFactory = () => {
 
 
 
-
-
-
-
-
-const Player = PlayerFactory()
-// drawPlayer(), changeHealth(num), getInfo(), movePlayer()
-const PlayerBullets = PlayerBulletFactory()
-// drawBullets(), shootBullets(Player.getInfo()), updateBulletSpeed(num), accessPool()
-const Enemies = EnemyFactory()
-// drawEnemies(), spawnEnemies(), shootBullets(), accessPool()
-const EnemyBullets = EnemyBulletFactory()
-//drawEnemyBullets(), fireEnemyBullets(Enemy.shootBullets()), updateBulletSpeed(num), accessPool()
-
-console.log(Player);
-console.log(PlayerBullets);
-console.log(Enemies);
-console.log(EnemyBullets);
-
 //========================== Sprite Explosions ================================
 
 let generateExplosion = () => {
 
 }
 
+let flashRed = () => {
+  console.log('flash!');
+  ctx.fillStyle = '#FF0000'
+  ctx.fillRect(0,0,cW,cH)
+  ctx.clearRect(0,0,cW,cH)
+}
 
 // let animateSprite = (sprite) => {
 //   count = 0
@@ -460,97 +635,118 @@ let generateExplosion = () => {
 
 //========================== Collision Detection ================================
 
-let detectCollision = (rect1, rect2) => {
-  if (rect1.x < rect2.x + rect2.img.width &&
-     rect1.x + rect1.img.width > rect2.x &&
-     rect1.y < rect2.y + rect2.img.height &&
-     rect1.img.height + rect1.y > rect2.y) {
-       return true
-  } else {
-    return false
-  }
-}
 
-let enemyBulletCollision = (bullets, enemies) => {
-  for(let i = 0; i < bullets.length; i++) {
-    for(let j = 0; j < enemies.length; j++) {
-      if (bullets[i].alive) {
-        if (detectCollision(bullets[i], enemies[j])) {
-          // alterScore.enemyKilled()
-          resetEnemy(enemies[j])
-          resetBullet(bullets[i])
+const CollisionDetectionFactory = (player, bullets, enemies, enemyBullets, powerup) => {
+  let detectCollision = (rect1, rect2) => {
+    if (rect1.x < rect2.x + rect2.img.width &&
+       rect1.x + rect1.img.width > rect2.x &&
+       rect1.y < rect2.y + rect2.img.height &&
+       rect1.img.height + rect1.y > rect2.y) {
+         return true
+    } else {
+      return false
+    }
+  }
+
+  let gameOver = () => {
+    console.log('game over');
+    cancelAnimationFrame(gameloop)
+  }
+
+  let resetEnemy = (e) => {
+    // ctx.drawImage(img.explosion, )
+    ctx.clearRect(e.x,e.y,e.img.width,e.img.height)
+    e.x = random(cW, cW*1.5)
+    e.y = random(0, cH - images.enemy.height)
+  }
+
+  let resetBullet = (b) => {
+    b.alive = false
+    ctx.clearRect(b.x - 1, b.y - 1, b.img.width + 2, b.img.height + 2)
+    b.x = 0
+    b.y = 0
+  }
+
+  const runDetections = () => {
+    // enemy - bullet detection
+      for(let i = 0; i < bullets.length; i++) {
+        for(let j = 0; j < enemies.length; j++) {
+          if (bullets[i].alive) {
+            if (detectCollision(bullets[i], enemies[j])) {
+              Score.change(100)
+              resetEnemy(enemies[j])
+              resetBullet(bullets[i])
+            }
+          }
         }
       }
-    }
-  }
-}
 
-let palyerBulletCollision = (enemyBullets,player) => {
-  for (let i = 0; i < enemyBullets.length; i++) {
-    if (detectCollision(enemyBullets[i], player)) {
-      player.health--
-      // alterScore.hitTaken()
-      if (player.health === 0) {
-        gameOver()
+    // player - enemy bullet detection
+      for (let i = 0; i < enemyBullets.length; i++) {
+        if (detectCollision(enemyBullets[i], player)) {
+          player.health--
+          flashRed()
+          Powerup.reset()
+          Score.change(-100)
+          if (player.health === 0) {
+            gameOver()
+          }
+        }
       }
-    }
-  }
-}
 
-let playerEnemyDetection = (enemies,player) => {
-  for (let i = 0; i < enemies.length; i++) {
-    if (detectCollision(enemies[i], player)) {
-      player.health--
-      // alterScore.hitTaken()
-      if (player.health === 0) {
-        gameOver()
+    // player - enemy detection
+      for (let i = 0; i < enemies.length; i++) {
+        if (detectCollision(enemies[i], player)) {
+          player.health--
+          flashRed()
+          resetEnemy(enemies[i])
+          Powerup.reset()
+          Score.change(-100)
+          if (player.health === 0) {
+            gameOver()
+          }
+        }
       }
-    }
+
+    // player - powerup detection
+      for (let i = 0; i < enemies.length; i++) {
+        let activePowerup
+        powerup.map(x => x.alive ? activePowerup = x : null)
+        if (activePowerup) {
+          if (detectCollision(player,activePowerup)) {
+            Powerup.activate(activePowerup)
+          }
+        }
+      }
   }
-}
 
-let detectAllCollisions = () => {
-  enemyBulletCollision(PlayerBullets.accessPool(), Enemies.accessPool())
-  palyerBulletCollision(EnemyBullets.accessPool(), Player.getInfo())
-  playerEnemyDetection(Enemies.accessPool(), Player.getInfo())
-}
+  return {
+    run: runDetections
+  }
+};
 
-let gameOver = () => {
-  console.log('game over');
-  cancelAnimationFrame(gameloop)
-}
 
-let resetEnemy = (e) => {
-  // ctx.drawImage(img.explosion, )
-  ctx.clearRect(e.x,e.y,e.img.width,e.img.height)
-  e.x = random(cW, cW*1.5)
-  e.y = random(0, cH - images.enemy.height)
-}
 
-let resetBullet = (b) => {
-  b.alive = false
-  ctx.clearRect(b.x - 1, b.y - 1, b.img.width + 2, b.img.height + 2)
-  b.x = 0
-  b.y = 0
-}
 
 //========================== Manipulate Score ================================
-  //
-  // let alterScore = {
-  //   enemyKilled() {
-  //     score += 100
-  //     console.log(score);
-  //   },
-  //   hitTaken() {
-  //     score -= 100
-  //     console.log(score);
-  //
-  //   },
-  //   bulletMissed() {
-  //     score -= 1
-  //     console.log(score);
-  //   }
-  // }
+
+const Player = PlayerFactory()
+// draw(), changeHealth(num), get(), move()
+const PlayerBullets = PlayerBulletFactory()
+// draw(), shoot(Player.get()), updateBulletSpeed(num), get()
+const Enemies = EnemyFactory()
+// draw(), spawnEnemies(), shoot(), get()
+const EnemyBullets = EnemyBulletFactory()
+//draw(), shoot(Enemy.shoot()), updateBulletSpeed(num), get()
+const Score = ScoreFactory()
+// change(num), get()
+const Powerup = PowerupFactory()
+// generate(), get(), activate()
+const DetectAllCollisions = CollisionDetectionFactory(Player.get(), PlayerBullets.get(), Enemies.get(),EnemyBullets.get(),Powerup.get())
+// run()
+const Background = BackgroundAnimateFactory()
+// draw()
+
 
 //========================== Game Loop ================================
 
@@ -559,13 +755,15 @@ let init = () => {
 }
 
 let gameloop = () => {
-    Enemies.drawEnemies()
-    PlayerBullets.shootBullets(Player.getInfo())
-    EnemyBullets.fireEnemyBullets(Enemies.shootBullets())
-    PlayerBullets.drawBullets()
-    EnemyBullets.drawEnemyBullets()
-    Player.drawPlayer()
-    detectAllCollisions()
+    Background.draw()
+    Enemies.draw()
+    PlayerBullets.shoot(Player.get(),Powerup.getIndex())
+    EnemyBullets.shoot(Enemies.shoot())
+    PlayerBullets.draw()
+    EnemyBullets.draw()
+    Player.draw()
+    Powerup.generate()
+    DetectAllCollisions.run()
     requestAnimationFrame(gameloop)
 }
 
