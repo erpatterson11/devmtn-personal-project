@@ -20,7 +20,8 @@ let touchStartY = 0
 let touchStartX = 0
 let scale = 0
 let bounds
-
+let rotationRate = 2
+let chgInt = 120
 
 let animateCanvasSpirals = function() {
 
@@ -35,33 +36,56 @@ let animateCanvasSpirals = function() {
 
   let spiralOriginX = ~~(_winW * axis)
   let spiralOriginY = ~~_winW * goldenRatio * axis
-  let colors = ['red','blue','white', 'green', 'yellow', 'orange']
+  let colors = ['orange','black','purple', 'green', 'yellow', 'orange']
 
   let drawLine = (color) => {
-    ctx.strokeStyle = color
-    ctx.beginPath()
-    // ctx.moveTo(w/2 +100, h/2 + 100)
-    ctx.bezierCurveTo(200,100,2000,500,300,300)
-    ctx.bezierCurveTo(200,100,20,-500,450,500)
-    ctx.stroke()
+    ctx.beginPath();
+  	ctx.lineJoin = 'round';
+  	ctx.strokeStyle = color
+  	ctx.lineCap = 'round';
+  	ctx.miterLimit = 4;
+  	ctx.lineWidth = 1;
+    ctx.translate(w/2, w/2);
+    ctx.moveTo(248.169100, 326.385170);
+  	ctx.bezierCurveTo(267.912090, 326.385180, 283.905100, 310.347180, 283.885100, 290.611180);
+  	ctx.moveTo(283.885100, 290.611180);
+  	ctx.bezierCurveTo(283.885100, 258.737180, 258.000090, 232.909180, 226.124100, 232.935180);
+  	ctx.moveTo(226.124100, 232.935180);
+  	ctx.bezierCurveTo(174.539090, 232.935180, 132.713100, 274.753180, 132.713100, 326.339180);
+  	ctx.moveTo(132.713100, 326.339180);
+  	ctx.bezierCurveTo(132.713100, 409.837170, 200.399100, 477.530220, 283.897100, 477.530220);
+  	ctx.moveTo(283.897100, 477.530220);
+  	ctx.bezierCurveTo(419.006080, 477.530190, 528.546060, 368.005180, 528.546060, 232.889180);
+  	ctx.moveTo(528.546060, 232.889180);
+  	ctx.bezierCurveTo(528.546060, 14.262183, 351.309100, -162.982820, 132.674090, -162.974820);
+  	ctx.moveTo(132.674090, -162.974820);
+  	ctx.bezierCurveTo(-221.082910, -162.974820, -507.863940, 123.805190, -507.857890, 477.562200);
+    ctx.translate(-w/2, -w/2);
+  	ctx.stroke();
   }
 
 let animate = () => {
   let i;
   rotate += 1
-  if (rotate < 360*2) {
+  if (rotate < chgInt*1) {
     i = 0
-  } else if (rotate > 360*2 && rotate < 360 * 4) {
+
+  } else if (rotate > chgInt*1 && rotate < chgInt * 2) {
     i = 1
-  } else if (rotate > 360 * 4) {
+  } else if (rotate > chgInt * 2) {
     i = 2
   }
-  rotate > 360*6 ? rotate = 0 : null;
+
+  if (rotate > chgInt*3) {
+    rotate = 0
+
+  }
   ctx.translate(spiralOriginX,spiralOriginY)
-  ctx.rotate(1)
+  ctx.rotate(rotationRate)
   ctx.translate(-spiralOriginX,-spiralOriginY)
   drawLine(colors[i])
 }
+
 
 $(window).on('wheel keydown', () => {
   if(shouldAnimate) {
@@ -71,8 +95,6 @@ $(window).on('wheel keydown', () => {
     ctx.clearRect(0,0,w,h)
   }
 })
-
-
 
 
 window.addEventListener('click', () => {
@@ -148,9 +170,9 @@ animateCanvasSpirals();
 
 // callback function to move to the next or previous section (depending on currentSection)
 let updateSpiral = () => {
-  bounds = (currentSection > -10 && currentSection < sections.length + 1)
+  bounds = (currentSection > -15 && currentSection < sections.length + 3)
   if (bounds) {
-    (currentSection < sections.length + 2 && currentSection > -1) ? shouldAnimate = false : shouldAnimate = true
+    (currentSection < sections.length + 2 && currentSection > 0) ? shouldAnimate = false : shouldAnimate = true
     spiral.css({
       'transform-origin': `${spiralOrigin}`,
       'transform': `rotate(${~~(-90*currentSection)}deg) scale(${1/Math.pow(goldenRatio,currentSection)})`
@@ -191,7 +213,7 @@ let updateSpiral = () => {
         'width': `${w}`,
         'height': `${h}`,
         'transform-origin': `${spiralOrigin}`,
-        'background': `hsl(200,100%,${70-i*(40/sections.length)}%)`,
+        'background': `hsl(301,50%,${40-i*(35/sections.length)}%)`,
         'transform': `rotate(${myRot}deg) scale(${scale})`
       })
     })

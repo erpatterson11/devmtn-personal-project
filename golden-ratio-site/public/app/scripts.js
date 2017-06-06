@@ -60,9 +60,9 @@
 
 // callback function to move to the next or previous section (depending on currentSection)
 let updateSpiral = () => {
-  bounds = (currentSection > -10 && currentSection < sections.length + 1)
+  bounds = (currentSection > -15 && currentSection < sections.length + 3)
   if (bounds) {
-    (currentSection < sections.length + 2 && currentSection > -1) ? shouldAnimate = false : shouldAnimate = true
+    (currentSection < sections.length + 2 && currentSection > 0) ? shouldAnimate = false : shouldAnimate = true
     spiral.css({
       'transform-origin': `${spiralOrigin}`,
       'transform': `rotate(${~~(-90*currentSection)}deg) scale(${1/Math.pow(goldenRatio,currentSection)})`
@@ -103,7 +103,7 @@ let updateSpiral = () => {
         'width': `${w}`,
         'height': `${h}`,
         'transform-origin': `${spiralOrigin}`,
-        'background': `hsl(200,100%,${70-i*(40/sections.length)}%)`,
+        'background': `hsl(301,50%,${40-i*(35/sections.length)}%)`,
         'transform': `rotate(${myRot}deg) scale(${scale})`
       })
     })
