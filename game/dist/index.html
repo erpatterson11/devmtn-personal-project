@@ -4,28 +4,42 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title></title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="shortcut icon" href="favicon.ico">
     <link rel="stylesheet" href="./bundle.css">
   </head>
   <body>
 
-<button id='pause-button' type="button" name="button">Stop Game</button>
 
-<div class="game-container">
-  <canvas id="bgCanvas"></canvas>
-  <canvas id="gameCanvas"></canvas>
-  <div id='start-screen'>
-    Game Title!
-    <button type="button" name="button" id='start-button'>Start Game</button>
+
+<section class="game-container">
+
+  <div class="canvas-container">
+    <canvas id="bgCanvas"></canvas>
+    <canvas id="gameCanvas"></canvas>
+
+    <div id='stats-bar'>
+      <button id='pause-button' type="button" name="button">Pause Game</button>
+      <button id='mute-button' type="button" name="button">Mute</button>
+      <div id='health-bar'>
+        <div id='health-bar-fill'></div>
+      </div>
+      <div id='health-text'></div>
+      <div id='score'></div>
+    </div>
+
+    <div id='start-screen'>
+      Game Title!
+      <button type="button" name="button" id='start-button'>Start Game</button>
+    </div>
+    <div id='game-over-screen' class='hidden'>
+      Game Over!
+      <button id='restart-game' type="button" name="button">Restart</button>
+    </div>
   </div>
-  <div id='game-over-screen' class='hidden'>
-    You suck! HAHAHAHAHAHAHAHAH
+
   </div>
-</div>
+</section>
 
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.js'></script>
     <script src="./bundle.js"></script>
   </body>
 </html>
