@@ -9,13 +9,13 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="611.51501"
-   height="378.05099"
-   viewBox="0 0 611.51501 378.051"
+   width="378.05099"
+   height="611.51501"
+   viewBox="0 0 378.05099 611.51502"
    id="svg4552"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="spiral-line-orange.svg">
+   sodipodi:docname="golden-curve-mobile-dark-blue.svg">
   <defs
      id="defs4554" />
   <sodipodi:namedview
@@ -26,8 +26,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.98994949"
-     inkscape:cx="370.95557"
-     inkscape:cy="83.19047"
+     inkscape:cx="196.70426"
+     inkscape:cy="285.22098"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -59,11 +59,11 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(771.21509,-502.87559)">
+     transform="translate(771.21509,-269.41157)">
     <path
        id="path3946"
-       style="fill:none;stroke:#b05400;stroke-width:0.61838382;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m -325.27436,791.50338 c 11.63734,5e-5 21.06419,-9.45342 21.0524,-21.08656 m 0,0 c 0,-18.78774 -15.25762,-34.01176 -34.04652,-33.99643 m 0,0 c -30.40618,0 -55.06013,24.64908 -55.06008,55.05594 m 0,0 c -5e-5,49.21689 39.89673,89.11776 89.11366,89.11779 m 0,0 c 79.63849,-10e-6 144.20562,-64.55823 144.2056,-144.20085 m 0,0 c -1e-5,-128.86727 -104.47036,-233.34232 -233.34223,-233.33762 m 0,0 c -208.51807,10e-6 -377.55785,169.0393 -377.55434,377.55734"
+       style="fill:none;stroke:#1f2a51;stroke-width:0.61799997;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m -681.79208,715.35249 c -5e-5,11.63734 9.45342,21.06419 21.08656,21.0524 m 0,0 c 18.78774,0 34.01176,-15.25762 33.99643,-34.04652 m 0,0 c 0,-30.40618 -24.64908,-55.06013 -55.05594,-55.06008 m 0,0 c -49.21689,-5e-5 -89.11776,39.89673 -89.11779,89.11366 m 0,0 c 1e-5,79.63849 64.55823,144.20562 144.20085,144.2056 m 0,0 c 128.86727,-1e-5 233.34232,-104.47036 233.33762,-233.34223 m 0,0 c -10e-6,-208.51807 -169.0393,-377.55785 -377.55734,-377.55434"
        inkscape:connector-curvature="0" />
   </g>
 </svg>

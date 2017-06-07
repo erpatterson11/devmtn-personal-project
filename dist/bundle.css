@@ -121,10 +121,32 @@ ui-view {
 #golden-ratio-section {
   width: 100vw;
   height: 100vh;
-  background: url("#spiral") cover no-repeat; }
+  background: url("../app/routes/golden-ratio-site/img/pattern.png"); }
+  #golden-ratio-section #introSVG {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background: transparent;
+    animation: hideSVG 0s ease forwards 3s; }
+    #golden-ratio-section #introSVG #spiralSVG {
+      top: 0;
+      left: 0;
+      transition: 1s; }
+      #golden-ratio-section #introSVG #spiralSVG #spiral-path {
+        stroke-dasharray: 1500;
+        stroke-dashoffset: 1500;
+        animation: dash 3s ease-out forwards; }
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: 4500; } }
+
+@keyframes hideSVG {
+  to {
+    display: none; } }
   #golden-ratio-section canvas {
     position: fixed;
-    background: black; }
+    transition: 1s; }
   #golden-ratio-section .spiral {
     position: fixed;
     transition: 0.5s;
@@ -149,4 +171,6 @@ ui-view {
   #golden-ratio-section .section:hover {
     border-radius: 10%;
     border: 3px solid transparent; }
+  #golden-ratio-section .hidden {
+    display: none; }
 

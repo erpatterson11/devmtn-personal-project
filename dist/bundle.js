@@ -999,123 +999,123 @@ angular.module("portfolioApp").service("gameService", ["$http", function($http) 
 
 }]);
 
-// INITILIZE SERVICE
-// ============================================================
-angular.module("portfolioApp").service("goldenRatioCanvasService", ["$http", function($http) {
-  // CRUD FUNCTIONS
-  // ============================================================
-
-  // OTHER FUNCTIONS
-  // ============================================================
-
-const win = $(window)
-const spiral = $('.spiral')
-const sections = $('.section')
-const canvas = $('#canvas')
-
-let shouldAnimate = false
-let currentSection = 0
-let rotate = 0
-let spiralOrigin
-let _winW = window.innerWidth;
-let _winH = window.innerHeight;
-let smallScreen
-let landscape
-let goldenRatio = 0.618033
-let axis = 0.7237
-let rotation = 0
-let sectionCount = sections.length
-let touchStartY = 0
-let touchStartX = 0
-let scale = 0
-let bounds
-let rotationRate = 2
-let chgInt = 120
-
-let animateCanvasSpirals = function() {
-
-  const canvas = document.getElementById('canvas')
-  const ctx = canvas.getContext('2d')
-
-  let w = window.innerWidth
-  let h = window.innerHeight
-
-  canvas.width = w
-  canvas.height = h
-
-  let spiralOriginX = ~~(_winW * axis)
-  let spiralOriginY = ~~_winW * goldenRatio * axis
-  let colors = ['orange','black','purple', 'green', 'yellow', 'orange']
-
-  let drawLine = (color) => {
-    ctx.beginPath();
-  	ctx.lineJoin = 'round';
-  	ctx.strokeStyle = color
-  	ctx.lineCap = 'round';
-  	ctx.miterLimit = 4;
-  	ctx.lineWidth = 1;
-    ctx.translate(w/2, w/2);
-    ctx.moveTo(248.169100, 326.385170);
-  	ctx.bezierCurveTo(267.912090, 326.385180, 283.905100, 310.347180, 283.885100, 290.611180);
-  	ctx.moveTo(283.885100, 290.611180);
-  	ctx.bezierCurveTo(283.885100, 258.737180, 258.000090, 232.909180, 226.124100, 232.935180);
-  	ctx.moveTo(226.124100, 232.935180);
-  	ctx.bezierCurveTo(174.539090, 232.935180, 132.713100, 274.753180, 132.713100, 326.339180);
-  	ctx.moveTo(132.713100, 326.339180);
-  	ctx.bezierCurveTo(132.713100, 409.837170, 200.399100, 477.530220, 283.897100, 477.530220);
-  	ctx.moveTo(283.897100, 477.530220);
-  	ctx.bezierCurveTo(419.006080, 477.530190, 528.546060, 368.005180, 528.546060, 232.889180);
-  	ctx.moveTo(528.546060, 232.889180);
-  	ctx.bezierCurveTo(528.546060, 14.262183, 351.309100, -162.982820, 132.674090, -162.974820);
-  	ctx.moveTo(132.674090, -162.974820);
-  	ctx.bezierCurveTo(-221.082910, -162.974820, -507.863940, 123.805190, -507.857890, 477.562200);
-    ctx.translate(-w/2, -w/2);
-  	ctx.stroke();
-  }
-
-let animate = () => {
-  let i;
-  rotate += 1
-  if (rotate < chgInt*1) {
-    i = 0
-
-  } else if (rotate > chgInt*1 && rotate < chgInt * 2) {
-    i = 1
-  } else if (rotate > chgInt * 2) {
-    i = 2
-  }
-
-  if (rotate > chgInt*3) {
-    rotate = 0
-
-  }
-  ctx.translate(spiralOriginX,spiralOriginY)
-  ctx.rotate(rotationRate)
-  ctx.translate(-spiralOriginX,-spiralOriginY)
-  drawLine(colors[i])
-}
-
-
-$(window).on('wheel keydown', () => {
-  if(shouldAnimate) {
-    animate()
-  } else {
-    ctx.resetTransform(1,0,0,1,0,0)
-    ctx.clearRect(0,0,w,h)
-  }
-})
-
-
-window.addEventListener('click', () => {
-  ctx.resetTransform(1,0,0,1,0,0)
-  ctx.clearRect(0,0,w,h)
-})
-
-};
-
-animateCanvasSpirals();
-
-}]);
+// // INITILIZE SERVICE
+// // ============================================================
+// angular.module("portfolioApp").service("goldenRatioCanvasService", function($http) {
+//   // CRUD FUNCTIONS
+//   // ============================================================
+//
+//   // OTHER FUNCTIONS
+//   // ============================================================
+// 
+// const win = $(window)
+// const spiral = $('.spiral')
+// const sections = $('.section')
+// const canvas = $('#canvas')
+//
+// let shouldAnimate = false
+// let currentSection = 0
+// let rotate = 0
+// let spiralOrigin
+// let _winW = window.innerWidth;
+// let _winH = window.innerHeight;
+// let smallScreen
+// let landscape
+// let goldenRatio = 0.618033
+// let axis = 0.7237
+// let rotation = 0
+// let sectionCount = sections.length
+// let touchStartY = 0
+// let touchStartX = 0
+// let scale = 0
+// let bounds
+// let rotationRate = 2
+// let chgInt = 120
+//
+// let animateCanvasSpirals = function() {
+//
+//   const canvas = document.getElementById('canvas')
+//   const ctx = canvas.getContext('2d')
+//
+//   let w = window.innerWidth
+//   let h = window.innerHeight
+//
+//   canvas.width = w
+//   canvas.height = h
+//
+//   let spiralOriginX = ~~(_winW * axis)
+//   let spiralOriginY = ~~_winW * goldenRatio * axis
+//   let colors = ['orange','black','purple', 'green', 'yellow', 'orange']
+//
+//   let drawLine = (color) => {
+//     ctx.beginPath();
+//   	ctx.lineJoin = 'round';
+//   	ctx.strokeStyle = color
+//   	ctx.lineCap = 'round';
+//   	ctx.miterLimit = 4;
+//   	ctx.lineWidth = 1;
+//     ctx.translate(w/2, w/2);
+//     ctx.moveTo(248.169100, 326.385170);
+//   	ctx.bezierCurveTo(267.912090, 326.385180, 283.905100, 310.347180, 283.885100, 290.611180);
+//   	ctx.moveTo(283.885100, 290.611180);
+//   	ctx.bezierCurveTo(283.885100, 258.737180, 258.000090, 232.909180, 226.124100, 232.935180);
+//   	ctx.moveTo(226.124100, 232.935180);
+//   	ctx.bezierCurveTo(174.539090, 232.935180, 132.713100, 274.753180, 132.713100, 326.339180);
+//   	ctx.moveTo(132.713100, 326.339180);
+//   	ctx.bezierCurveTo(132.713100, 409.837170, 200.399100, 477.530220, 283.897100, 477.530220);
+//   	ctx.moveTo(283.897100, 477.530220);
+//   	ctx.bezierCurveTo(419.006080, 477.530190, 528.546060, 368.005180, 528.546060, 232.889180);
+//   	ctx.moveTo(528.546060, 232.889180);
+//   	ctx.bezierCurveTo(528.546060, 14.262183, 351.309100, -162.982820, 132.674090, -162.974820);
+//   	ctx.moveTo(132.674090, -162.974820);
+//   	ctx.bezierCurveTo(-221.082910, -162.974820, -507.863940, 123.805190, -507.857890, 477.562200);
+//     ctx.translate(-w/2, -w/2);
+//   	ctx.stroke();
+//   }
+//
+// let animate = () => {
+//   let i;
+//   rotate += 1
+//   if (rotate < chgInt*1) {
+//     i = 0
+//
+//   } else if (rotate > chgInt*1 && rotate < chgInt * 2) {
+//     i = 1
+//   } else if (rotate > chgInt * 2) {
+//     i = 2
+//   }
+//
+//   if (rotate > chgInt*3) {
+//     rotate = 0
+//
+//   }
+//   ctx.translate(spiralOriginX,spiralOriginY)
+//   ctx.rotate(rotationRate)
+//   ctx.translate(-spiralOriginX,-spiralOriginY)
+//   drawLine(colors[i])
+// }
+//
+//
+// $(window).on('wheel keydown', () => {
+//   if(shouldAnimate) {
+//     animate()
+//   } else {
+//     ctx.resetTransform(1,0,0,1,0,0)
+//     ctx.clearRect(0,0,w,h)
+//   }
+// })
+//
+//
+// window.addEventListener('click', () => {
+//   ctx.resetTransform(1,0,0,1,0,0)
+//   ctx.clearRect(0,0,w,h)
+// })
+//
+// };
+//
+// animateCanvasSpirals();
+//
+// });
 
 // INITILIZE CONTROLLER
 // ============================================================
@@ -1140,17 +1140,14 @@ angular.module("portfolioApp").controller("goldenRatioCtrl", ["$scope", function
   let shouldAnimate = false
   let currentSection = 0
   let rotate = 0
-  let spiralOrigin
+  let goldenRatio = 0.618033
+  let axis = 0.7237
   let sprialOriginX
   let spiralOriginY
   let wW = window.innerWidth;
-  let wH = window.innerHeight;
-  let w = canvas.width = window.innerWidth
-  let h = canvas.height = window.innerHeight
+  let wH = wW * goldenRatio
   let smallScreen
   let landscape
-  let goldenRatio = 0.618033
-  let axis = 0.7237
   let rotation = 0
   let sectionCount = sections.length
   let touchStartY = 0
@@ -1159,50 +1156,32 @@ angular.module("portfolioApp").controller("goldenRatioCtrl", ["$scope", function
   let bounds
   let rotationRate = 2
   let chgInt = 120
+  let createSpiral
+  // let animateSpeed = ~~(Math.random()*(20-0)+1)
 
-  let sizeCanvas = () => {
-    if (wW < 960) {
-      smallScreen = true;
-      spiralOriginX = Math.floor((wW/goldenRatio) * goldenRatio * (1 - axis))
-      spiralOriginY = Math.floor((wW/goldenRatio) * axis)
-    } else {
-      smallScreen = false;
-      spiralOriginX = wW * axis
-      spiralOriginY = wW * goldenRatio * axis
-    }
-    canvas.width = wW;
-    canvas.height = wW*goldenRatio;
-
-    if (wW < wH) {
-      canvas.width = wH*goldenRatio;
-      canvas.height = wH;
-    }
-  }
-
-
-
-  window.addEventListener('resize', sizeCanvas)
 
   let animateCanvasSpirals = function() {
 
-    sizeCanvas()
-
-    let spiralSources = ['spiral-line','spiral-line-orange','spiral-line-purple', 'spiral-line-dark-blue']
+    let spiralSources = ['golden-curve','golden-curve-orange','golden-curve-purple', 'golden-curve-dark-blue']
+    let spiralSourcesMobile = ['golden-curve-mobile']
 
     const spiralSVG = new Image()
-    spiralSVG.src = `./app/routes/golden-ratio-site/img/spiral-line.svg `
+    let resetSpiralSVG = () => {
+      spiralSVG.src = `./app/routes/golden-ratio-site/img/golden-curve.svg `
+      rotate = 0
+    }
+    resetSpiralSVG()
 
     let chooseSpiralSource = (i) => {
       spiralSVG.src = `./app/routes/golden-ratio-site/img/${spiralSources[i]}.svg `
     }
-
 
     let drawLine = (num) => {
       ctx.globalAlpha = 1;
       ctx.translate(spiralOriginX, spiralOriginY);
       ctx.rotate(num)
       ctx.translate( -spiralOriginX, -spiralOriginY);
-      ctx.drawImage(spiralSVG, 0,0,wW,wH);
+      ctx.drawImage(spiralSVG, 0,0,wW,wW*goldenRatio);
     }
 
     drawLine(0)
@@ -1216,35 +1195,36 @@ angular.module("portfolioApp").controller("goldenRatioCtrl", ["$scope", function
     } else if (rotate > chgInt * 3) {
       chooseSpiralSource(3)
     }
-
     if (rotate > chgInt*4) {
       rotate = 0
+      // animateSpeed = ~~(Math.random()*(20-0)+1)
       chooseSpiralSource(0)
     }
-    drawLine(2)
+    drawLine(11)
   }
 
 
   win.on('wheel keydown', (e) => {
-    if(shouldAnimate || e.keyCode!==82) {
+    if(shouldAnimate && e.keyCode!==82) {
       animate()
     } else {
       ctx.resetTransform(1,0,0,1,0,0)
       ctx.clearRect(0,0,wW,wH)
-      spiralSVG.src = `./app/routes/golden-ratio-site/img/spiral-line.svg `
+      resetSpiralSVG()
       drawLine(0)
     }
   })
 
 
-  win.on('click', () => {
+  $('canvas').on('click', () => {
+    currentSection = 0
+    updateSpiral()
     ctx.resetTransform(1,0,0,1,0,0)
     ctx.clearRect(0,0,wW,wH)
+    resetSpiralSVG()
     drawLine(0)
   })
 }
-
-  animateCanvasSpirals();
 
   win.on('wheel', (e) => {
     e.preventDefault()
@@ -1291,35 +1271,52 @@ angular.module("portfolioApp").controller("goldenRatioCtrl", ["$scope", function
     $(sections[i]).on('click',(e)=> {
       currentSection = i
       updateSpiral()
-      console.log(currentSection);
     })
   })
 
 // callback function to move to the next or previous section (depending on currentSection)
 let updateSpiral = () => {
-  inBounds = (currentSection > -15 && currentSection < sections.length + 3)
+  let zoomOutLimit = 15
+  inBounds = (currentSection > -zoomOutLimit && currentSection < sections.length + 3)
   if (inBounds) {
-    (currentSection < sections.length + 2 && currentSection >= -1) ? shouldAnimate = false : shouldAnimate = true
+    if (currentSection < sections.length + 2 && currentSection >= -1)  {
+      shouldAnimate = false
+      canvas.style.background = 'transparent'
+    } else {
+      canvas.style.background ='black'
+      shouldAnimate = true
+    }
     spiral.css({
-      'transform-origin': `${spiralOrigin}`,
+      'transform-origin': `${spiralOriginX}px ${spiralOriginY}px`,
       'transform': `rotate(${~~(-90*currentSection)}deg) scale(${1/Math.pow(goldenRatio,currentSection)})`
     })
   } else {
     currentSection > 0 ? currentSection-- : currentSection++
   }
-console.log(currentSection);
 }
 
-
 // generates spiral from all divs with class 'section'
-  let buildSpiral = () => {
-    spiralOrigin = `${~~(wW * axis)}px ${~~wW * goldenRatio * axis}px`
-    h = wW * goldenRatio
-    w = h
-    spiral.css({
-      'transform-origin': `${spiralOrigin}`,
-      'backface-visiblity': 'hidden'
-    })
+  createSpiral = () => {
+    let h
+    let w
+    if (!landscape) {
+      spiralOrigin = `${(wW*(1-axis))}px ${(wW/goldenRatio) * axis}px`
+      h = wW
+      w = h
+      console.log(h,w);
+      spiral.css({
+        'transform-origin': `${spiralOrigin}`,
+        'backface-visiblity': 'hidden'
+      })
+    } else {
+      spiralOrigin = `${(wW * axis)}px ${wW * goldenRatio * axis}px`
+      h = wW * goldenRatio
+      w = h
+      spiral.css({
+        'transform-origin': `${spiralOrigin}`,
+        'backface-visiblity': 'hidden'
+      })
+    }
     sections.each((i) => {
       let myRot = ~~(90*i)
       let scale = Math.pow(goldenRatio, i)
@@ -1332,9 +1329,39 @@ console.log(currentSection);
       })
     })
   }
-  buildSpiral()
-})()
 
+
+// conditions: vertical or horizontal
+
+// initial rotation & spiral origin change
+
+
+  let sizeApp = () => {
+    wW = window.innerWidth
+    wH = window.innerHeight
+    if (wW < wH) {
+      landscape = false
+      spiralOriginX = (wW*(1-axis))
+      spiralOriginY = ((wW/goldenRatio) * axis)
+      canvas.width = wH
+      canvas.height = wH
+    } else {
+      landscape = true
+      spiralOriginX = (wW * axis)
+      spiralOriginY = (wW * goldenRatio * axis)
+      canvas.width = wW
+      canvas.height = wW
+    }
+    createSpiral()
+  }
+
+  sizeApp()
+  createSpiral()
+  animateCanvasSpirals()
+
+  window.addEventListener('resize', sizeApp)
+
+})()
 
 }]);
 
