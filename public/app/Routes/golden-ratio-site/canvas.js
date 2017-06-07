@@ -1,3 +1,12 @@
+// INITILIZE SERVICE
+// ============================================================
+angular.module("portfolioApp").service("goldenRatioCanvasService", function($http) {
+  // CRUD FUNCTIONS
+  // ============================================================
+
+  // OTHER FUNCTIONS
+  // ============================================================
+
 const win = $(window)
 const spiral = $('.spiral')
 const sections = $('.section')
@@ -104,3 +113,5 @@ window.addEventListener('click', () => {
 };
 
 animateCanvasSpirals();
+
+});

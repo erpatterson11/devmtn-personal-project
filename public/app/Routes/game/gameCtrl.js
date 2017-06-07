@@ -1,37 +1,19 @@
+angular.module("portfolioApp").controller("gameCtrl", function($scope, gameService) {
 
+  $scope.finalScore
 
+  // invoked in the gameOver function on the Game object
+  $scope.submitFinalScore = () => {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  }
 
 
 // Flying shooter game
 // Features:
-//    Map moves automatically
-//    Player can move up, down, left, right anywhere on screen
-//    3 different types of enemies
-//    Player has health bar
-//    3 Different powerups that change the way you shoot
-//    Keeps track of score
-//         - Enemies killed
-//         - Damage taken
-//         - Accuracy
 //    Login to save/load scores
+
+// GAME CODE
+//==============================================================
 
 
 //========================== Custom Functions ================================
@@ -67,17 +49,15 @@ let screenW = window.innerWidth
 let screenH = window.innerHeight
 let userAspect = screenW / screenH
 
-
 let cW = gameCanvas.width = 900
 let cH = gameCanvas.height = 600
 
 canvasContainer.style.width = statsBar.style.width = `${cW}px`
-canvasContainer.style.height = `${cH}px`
+canvasContainer.style.height = statsBar.style.height = `${cH}px`
 
-console.log(canvasContainer.width, canvasContainer.height);
+
 
 let ctx = gameCanvas.getContext('2d')
-
 
 //========================== Background Canvas Setup ================================
 
@@ -100,16 +80,16 @@ const images = new function() {
     this.powerup2 = new Image()
     this.powerup3 = new Image()
 
-    this.spaceship.src = 'img/ship.png'
-    this.bullet.src = 'img/bullet.png'
-    this.enemy.src = 'img/enemy.png'
-    this.enemyBullet.src = 'img/bullet_enemy.png'
-    this.explosion.src ='img/explosion.png'
-    this.bg.src = 'img/spr_stars01.png'
-    this.bg2.src = 'img/spr_stars02.png'
-    this.powerup1.src = 'img/powerup1.png'
-    this.powerup2.src = 'img/powerup2.png'
-    this.powerup3.src = 'img/powerup3.png'
+    this.spaceship.src = 'app/routes/game/media/img/ship.png'
+    this.bullet.src = 'app/routes/game/media/img/bullet.png'
+    this.enemy.src = 'app/routes/game/media/img/enemy.png'
+    this.enemyBullet.src = 'app/routes/game/media/img/bullet_enemy.png'
+    this.explosion.src ='app/routes/game/media/img/explosion.png'
+    this.bg.src = 'app/routes/game/media/img/spr_stars01.png'
+    this.bg2.src = 'app/routes/game/media/img/spr_stars02.png'
+    this.powerup1.src = 'app/routes/game/media/img/powerup1.png'
+    this.powerup2.src = 'app/routes/game/media/img/powerup2.png'
+    this.powerup3.src = 'app/routes/game/media/img/powerup3.png'
 }
 
 //========================== Audio Repo ================================
@@ -118,21 +98,17 @@ const audio = new function() {
   this.laser1 = new Audio()
   this.laser2 = new Audio()
   this.laser3 = new Audio()
-
   this.explosion = new Audio()
-  this.explosion2 = new Audio()
 
-  this.laser1.src = 'audio/laser.wav'
-  this.laser2.src = 'audio/turret-1.wav'
-  this.laser3.src = 'audio/wlkrsht2.wav'
-  this.explosion.src = 'audio/explosion.wav'
-  this.explosion2.src = 'audio/explosion2.wav'
+  this.laser1.src = 'app/routes/game/media/audio/laser.wav'
+  this.laser2.src = 'app/routes/game/media/audio/turret-1.wav'
+  this.laser3.src = 'app/routes/game/media/audio/wlkrsht2.wav'
+  this.explosion.src = 'app/routes/game/media/audio/explosion.wav'
 
   this.laser1.volume = 0.75
   this.laser2.volume = 0.5
   this.laser3.volume = 0.5
 }
-
 
 //========================== Player Movement Logic ================================
 
@@ -169,7 +145,6 @@ document.onkeyup = (e) => {
         KeyStatus[KeyCodes[currCode]] = false;
     }
 }
-
 
 //====================================================================
 
@@ -252,17 +227,15 @@ const PlayerFactory = () => {
       speed: 7,
       health: 10,
       maxHealth: 10
-  }
+      }
 
-  healthText.innerText = `Health: ${player.maxHealth}`
+  healthText.innerText = `Health: ${100*player.health/player.maxHealth}%`
   healthBarFill.style.width = '0%'
 
   const updateHealth = (num) => {
     player.health += num
-
-    let healthPercent = 100 - (100 * player.health/player.maxHealth)
-    healthText.innerText = `Health: ${player.health}`
-    healthBarFill.style.width = `${healthPercent}%`
+    healthText.innerText = `Health: ${100*player.health/player.maxHealth}%`
+    healthBarFill.style.width = `${100-(100*player.health/player.maxHealth)}%`
   }
 
   const getPlayerInfo = () => {
@@ -897,3 +870,6 @@ muteButton.addEventListener('click', Game.mute)
 
 
 //==========================  ================================
+
+
+});

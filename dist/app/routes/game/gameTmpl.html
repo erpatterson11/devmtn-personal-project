@@ -1,0 +1,40 @@
+<section id="game-container">
+
+  <div class="canvas-container">
+    <canvas id="bgCanvas"></canvas>
+    <canvas id="gameCanvas"></canvas>
+    <div id='stats-bar'>
+      <div id='status-top'>
+        <div class="">
+          <div id='health-bar'>
+            <div id='health-bar-fill'></div>
+          </div>
+          <div id='health-text'></div>
+          <div id='score'></div>
+        </div>
+
+        <div id='status-bottom'>
+          <button id='pause-button' type="button" name="button">Pause Game</button>
+          <button id='mute-button' type="button" name="button">Mute</button>
+        </div>
+      </div>
+    </div>
+
+    <div id='start-screen'>
+      <h1>Game Title!</h1>
+      <button type="button" name="button" id='start-button'>Start Game</button>
+      <h3>Controls</h3>
+      <ul>
+        <li>Move: Arrow Keys</li>
+        <li>Shoot: Space</li>
+        <li>Pause: P</li>
+        <li>Mute: M</li>
+      </ul>
+    </div>
+    <div id='game-over-screen' class='hidden'>
+      Game Over!
+      <button id='restart-game' type="button" name="button">Restart</button>
+    </div>
+  </div>
+
+</section>
