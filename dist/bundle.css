@@ -46,6 +46,104 @@ ui-view {
   width: 100%;
   height: 100%; }
 
+:root {
+  --gr-bg-color: #4ABDAC;
+  --gr-accent-1-color: #FC4A1A;
+  --gr-accent-2-color: #F78733;
+  --gr-text-color: #DFDCE3;
+}
+
+#golden-ratio-section {
+  width: 100vw;
+  height: 100vh;
+  background: var(--gr-bg-color);
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: default;
+  z-index: -1000;
+  color: var(--gr-text-color);
+  transition: background 1s, color 1s, border-color 1s;
+}
+
+#golden-ratio-section .accent1 {
+  color: var(--gr-accent-1-color);
+}
+
+#golden-ratio-section .accent2 {
+  color: var(--gr-accent-2-color);
+}
+
+#golden-ratio-section #svgContainer {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  opacity: 1;
+  background: black;
+  transition: opacity 3s;
+}
+
+#golden-ratio-section #spiralSVG {
+  transform-origin: 0 0;
+}
+
+#golden-ratio-section canvas {
+  position: fixed;
+  transition: 1s;
+  background: transparent;
+}
+
+#golden-ratio-section .spiral {
+  position: fixed;
+  transition: 0.5s;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translateZ(0) scale(1.0, 1.0);
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  white-space: nowrap;
+}
+
+#golden-ratio-section .section {
+  background: var(--gr-accent-1-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  left: -100%;
+  position: absolute;
+  border-style: inset;
+  border-left:  2px solid var(--gr-bg-color);
+  border-top:  2px solid var(--gr-bg-color);
+  border-right:  2px solid var(--gr-bg-color);
+  backface-visibility: hidden;
+  -webkit-font-smoothing: anitaliased;
+  transition: border-radius 0.25s;
+}
+
+#golden-ratio-section .section:hover {
+  border-radius: 5%;
+}
+
+#golden-ratio-section #texture-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  min-height: 100vh;
+  background: url('../app/routes/golden-ratio-site/img/pattern.png') repeat;
+  background-size: 200px;
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: 1;
+}
+
+#golden-ratio-section .hidden {
+  display: none;
+}
+
 #game-container {
   background: linear-gradient(black 0%, #050505 100%);
   height: 100vh;
@@ -117,60 +215,4 @@ ui-view {
       background: black; }
   #game-container .hidden {
     display: none !important; }
-
-#golden-ratio-section {
-  width: 100vw;
-  height: 100vh;
-  background: url("../app/routes/golden-ratio-site/img/pattern.png"); }
-  #golden-ratio-section #introSVG {
-    position: fixed;
-    width: 100vw;
-    height: 100vh;
-    background: transparent;
-    animation: hideSVG 0s ease forwards 3s; }
-    #golden-ratio-section #introSVG #spiralSVG {
-      top: 0;
-      left: 0;
-      transition: 1s; }
-      #golden-ratio-section #introSVG #spiralSVG #spiral-path {
-        stroke-dasharray: 1500;
-        stroke-dashoffset: 1500;
-        animation: dash 3s ease-out forwards; }
-
-@keyframes dash {
-  to {
-    stroke-dashoffset: 4500; } }
-
-@keyframes hideSVG {
-  to {
-    display: none; } }
-  #golden-ratio-section canvas {
-    position: fixed;
-    transition: 1s; }
-  #golden-ratio-section .spiral {
-    position: fixed;
-    transition: 0.5s;
-    -webkit-backface-visibility: hidden;
-    -webkit-transform: translateZ(0) scale(1, 1);
-    backface-visibility: hidden;
-    transform: translateZ(0); }
-  #golden-ratio-section .section {
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 64px;
-    left: -100%;
-    position: absolute;
-    border-left: 2px solid transparent;
-    border-top: 2px solid transparent;
-    border-right: 2px solid transparent;
-    backface-visibility: hidden;
-    -webkit-font-smoothing: anitaliased;
-    transition: border-radius 0.25s; }
-  #golden-ratio-section .section:hover {
-    border-radius: 10%;
-    border: 3px solid transparent; }
-  #golden-ratio-section .hidden {
-    display: none; }
 

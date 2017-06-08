@@ -1,0 +1,97 @@
+:root {
+  --gr-bg-color: #4ABDAC;
+  --gr-accent-1-color: #FC4A1A;
+  --gr-accent-2-color: #F78733;
+  --gr-text-color: #DFDCE3;
+}
+
+#golden-ratio-section {
+  width: 100vw;
+  height: 100vh;
+  background: var(--gr-bg-color);
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: default;
+  z-index: -1000;
+  color: var(--gr-text-color);
+  transition: background 1s, color 1s, border-color 1s;
+}
+
+#golden-ratio-section .accent1 {
+  color: var(--gr-accent-1-color);
+}
+
+#golden-ratio-section .accent2 {
+  color: var(--gr-accent-2-color);
+}
+
+#golden-ratio-section #svgContainer {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  opacity: 1;
+  background: black;
+  transition: opacity 3s;
+}
+
+#golden-ratio-section #spiralSVG {
+  transform-origin: 0 0;
+}
+
+#golden-ratio-section canvas {
+  position: fixed;
+  transition: 1s;
+  background: transparent;
+}
+
+#golden-ratio-section .spiral {
+  position: fixed;
+  transition: 0.5s;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translateZ(0) scale(1.0, 1.0);
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  white-space: nowrap;
+}
+
+#golden-ratio-section .section {
+  background: var(--gr-accent-1-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  left: -100%;
+  position: absolute;
+  border-style: inset;
+  border-left:  2px solid var(--gr-bg-color);
+  border-top:  2px solid var(--gr-bg-color);
+  border-right:  2px solid var(--gr-bg-color);
+  backface-visibility: hidden;
+  -webkit-font-smoothing: anitaliased;
+  transition: border-radius 0.25s;
+}
+
+#golden-ratio-section .section:hover {
+  border-radius: 5%;
+}
+
+#golden-ratio-section #texture-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  min-height: 100vh;
+  background: url('../app/routes/golden-ratio-site/img/pattern.png') repeat;
+  background-size: 200px;
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: 1;
+}
+
+#golden-ratio-section .hidden {
+  display: none;
+}
