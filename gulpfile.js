@@ -55,8 +55,8 @@ gulp.task('media', function() {
 // ============================================================
 gulp.task('watch', function() {
   gulp.watch(paths.jsSource, ['js']);
-  gulp.watch(paths.sassSource, ['sass/css']);
-  gulp.watch(paths.cssSource, ['sass/css'])
+  gulp.watch(paths.sassSource, ['css/sass']);
+  gulp.watch(paths.cssSource, ['css/sass'])
   gulp.watch(paths.indexSource, ['index']);
   gulp.watch(paths.htmlSource, ['html']);
   gulp.watch(paths.mediaSource, ['media'])
