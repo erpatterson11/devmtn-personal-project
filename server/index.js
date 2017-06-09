@@ -68,38 +68,37 @@ app.get('/api/auth0', function(req,res) {
 app.get('/api/scores', function(req,res) {
   db.get_scores([], function(err, scores) {
     if (err) {
-      res.send(err)
+      res.status(400).send(err)
     } else {
-      res.send(scores)
+      res.status(200).send(scores)
     }
   })
 })
 
 app.post('/api/scores', function(req,res) {
 
-  console.log(req.body);
-
   let score = req.body.score
   let nickname = req.body.nickname
-  let auth0id = req.body.auth0id.data
+  let auth0id = null
+  if (req.body.auth0) {
+    auth0id = req.body.auth0
+  }
 
   if (!score || !nickname) {
-    console.log('error');
-    res.send(`There was an error posting your score.
+    res.status(400).send(`There was an error posting your score.
       This is the information you sent.
       Score: ${score},
       nickname: ${nickname},
-      auth0id: ${auth0id}
-      `)
+      auth0id: ${auth0id}`
+    )
   }
-
   else {
     db.add_score([score, nickname, auth0id], function(err, confirmation) {
       if (err) {
         console.log(err);
         res.send(err)
       } else {
-        res.send(confirmation, req.body)
+        res.status(200).send(confirmation)
       }
     })
   }

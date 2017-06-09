@@ -39,8 +39,14 @@
     </div>
 
     <div id='start-screen' class='game-overlay '>
-      <h1>Game Title!</h1>
-      <button type="button" name="button" id='start-button'>Start Game</button>
+      <h1 class='title'>Galaxy Strike</h1>
+      <svg id='start-button' class="svg-button" ui-sref='space-game' viewBox="0 0 267.7143 124.85715">
+        <g transform="translate(-129 -411.36)">
+          <path class="button-ol-1" style="opacity:0.374;stroke-linejoin:round;stroke:#b3b3b3;stroke-miterlimit:9.4545;stroke-width:2;fill:none" d="m130 428.08h265.71v88.571h-265.71z"/>
+          <path class="button-ol-2" style="opacity:0.374;stroke-linejoin:round;stroke:#b3b3b3;stroke-miterlimit:9.4545;stroke-width:2.2089;fill:none" d="m145.82 412.47h234.08v122.65h-234.08z"/>
+        </g>
+      </svg>
+      <p class='link-text'>Start Game</p>
       <h3>Controls</h3>
       <hr>
       <ul>
@@ -79,13 +85,18 @@
       </div>
 
       <div id='custom-login' class='submission-box-section' ng-show='isShownNicknameInput'>
-        <input type="text" name="Nickname" value="" ng-model='nickname'>
+        <input type="text" name="Nickname" placeholder='nickname' ng-model='nickname'>
         <button type="submit" name='Submit' ng-click='submitFinalScore(nickname)'>Submit</button>
       </div>
+
+      <button class='restart-button' type="button" name="button">Restart</button>
 
       <div id='gameover-high-scores' class='submission-box-section'>
         <h3>High Scores</h3>
         <hr>
+          <ul>
+            <li ng-repeat='player in scores | orderBy: "-score"'>{{player.nickname}}: {{player.score}}</li>
+          </ul>
       </div>
 
     </div>

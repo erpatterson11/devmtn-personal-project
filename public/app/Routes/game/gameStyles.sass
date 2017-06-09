@@ -39,7 +39,6 @@ $charcoal: rgb(20,20,20)
     background-image: -webkit-linear-gradient(left, $charcoal , #8c8b8b, $charcoal)
 
 
-
   #stats-bar
     position: absolute
     display: flex
@@ -95,8 +94,38 @@ $charcoal: rgb(20,20,20)
 
     #start-screen
       background: black
+      h3
+        margin-top: 100px
       hr
         width: 15%
+      ul
+        font-size: 10px
+      .title
+        text-align: center
+        font-size: 90px
+        color: orange
+        text-shadow: -5px 5px #610e0e
+        font-family: 'Faster One', cursive
+        margin-bottom: 50px
+      .svg-button
+        margin: 30px 0
+        position: absolute
+        width: 140px
+        stroke-dasharray: 800px
+        transition: 1s
+      .svg-button:hover
+        cursor: pointer
+        stroke-dashoffset: 1600px
+      .link-text
+        margin: 30px 0
+        position: absolute
+        height: 65px
+        color: #b3b3b3
+        font-size: 18px
+        width: 140px
+        display: flex
+        justify-content: center
+        align-items: center
 
     #game-over-screen
       background: rgba(0,0,0,0.5)

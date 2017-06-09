@@ -107,19 +107,15 @@ angular.module("portfolioApp").controller("gameCtrl", ["$scope", "$timeout", "sc
   $scope.getAuth0Info = function() {
     scoreService.getAuth0Info()
       .then(function(results) {
-        console.log(results.data);
         $scope.userInfo = results.data
       })
   }
 
-
   $scope.getFinalScore = function() {
-    console.log('getFinalScore');
     $scope.finalScore = gameService.getScore()
   }
 
   $scope.getDbScores = function() {
-    console.log('getDbScores');
     scoreService.getScores()
       .then(function(results) {
         $scope.scores = results.data
@@ -129,7 +125,7 @@ angular.module("portfolioApp").controller("gameCtrl", ["$scope", "$timeout", "sc
   $scope.getDbScores()
 
   $scope.submitFinalScore = function(name) {
-    console.log('submitFinalScore', name);
+    $scope.showGuestNicknameEntry()
     if ($scope.userInfo) {
       scoreService.getAuth0Info()
         .then(function(results) {
@@ -148,7 +144,9 @@ angular.module("portfolioApp").controller("gameCtrl", ["$scope", "$timeout", "sc
         score: $scope.finalScore,
         nickname: name
       }
-    scoreService.addScore(obj)
+    scoreService.addScore(obj).then(function() {
+      $scope.getDbScores()
+    })
     }
   }
 
@@ -1071,7 +1069,6 @@ angular.module("portfolioApp").service("scoreService", ["$http", function($http)
     })
   }
   this.addScore = function(obj) {
-    console.log('service addScore', obj);
     return $http({
       method: 'POST',
       url: '/api/scores',
@@ -1240,7 +1237,6 @@ angular.module("portfolioApp").service("goldenRatioService", function() {
           svgContainer.style.opacity = '0'
           setTimeout(()=> {
             svgContainer.style.zIndex='-99'
-            svgContainer.style.opacity = '1'
           },1000)
         }, animationTime*1000/2)
         startOver = true
@@ -1358,13 +1354,11 @@ angular.module("portfolioApp").service("goldenRatioService", function() {
 
 
     let limitNums = (num) => {
-      console.log(num);
       if (num > 10) {
         do {
           num = num - 10
         } while (num > 10)
       }
-      console.log(num);
       return num
     }
 

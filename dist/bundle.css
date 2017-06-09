@@ -17,7 +17,8 @@ time, mark, audio, video {
   font-size: 100%;
   font: inherit;
   vertical-align: baseline;
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  text-decoration: none; }
 
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
@@ -94,6 +95,7 @@ ui-view {
   cursor: default;
   z-index: -1000;
   color: var(--gr-text-color);
+  text-decoration: none;
 }
 
 #golden-ratio-section .accent1 {
@@ -134,7 +136,6 @@ ui-view {
   -webkit-transform: translateZ(0) scale(1.0, 1.0);
   backface-visibility: hidden;
   transform: translateZ(0);
-  white-space: nowrap;
 }
 
 #golden-ratio-section .section {
@@ -156,23 +157,36 @@ ui-view {
 
 #golden-ratio-section .section:hover {
   border-radius: 5%;
+  border-left:  2px solid var(--gr-bg-color);
+  border-top:  2px solid var(--gr-bg-color);
+  border-right:  2px solid var(--gr-bg-color);
 }
 
 #golden-ratio-section .section > div {
+  position: relative;
   width: 50%;
   height: 50%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 2px solid limegreen
-  padding: 10%;
+  padding: 5%;
 }
 
-p {
-  position: relative;
-  width: 40px;
+#golden-ratio-section .section h1 {
+  font-size: 5vw;
 }
+
+#golden-ratio-section .section h3 {
+  font-size: 2.5vw;
+}
+
+#golden-ratio-section .section p {
+  width: 80%;
+  font-size: 1.5vw;
+  margin: 10px
+}
+
 
 #golden-ratio-section .upper-left {
   display: flex;
@@ -199,29 +213,87 @@ p {
 }
 
 #golden-ratio-section #golden-spiralbox-svg {
-  width: 60%;
+  width: 40%;
 }
 
 #golden-ratio-section #golden-spiralbox-svg #small-spiral-path{
   stroke-dasharray: 140px;
   stroke-dashoffset: 140px;
-  animation: smallspiralsvg 3s ease-in infinite;
+  animation: smallspiralsvg 3s linear infinite;
 }
 
-@keyframes smallspiralsvg {
-  to {
-    stroke-dashoffset: -140px;
-  }
+#golden-ratio-section #golden-spiralbox-svg #box1 {
+  stroke-width: 0.1;
+  animation: boxfadein 3s  infinite;
 }
 
-@keyframes boxfadein {
-  0%, 100% {
-    opacity: 0;
-  },
-  50% {
-    opacity: 1;
-  }
+#golden-ratio-section #golden-spiralbox-svg #box2 {
+  stroke-width: 0.1;
+  animation: boxfadein 3s 0.5s infinite;
 }
+
+#golden-ratio-section #golden-spiralbox-svg #box3 {
+  stroke-width: 0.1;
+  animation: boxfadein 3s 0.9s infinite;
+}
+
+#golden-ratio-section #golden-spiralbox-svg #box4 {
+  stroke-width: 0.1;
+  animation: boxfadein 3s 1.1s infinite;
+}
+
+#golden-ratio-section #golden-spiralbox-svg #box5 {
+  stroke-width: 0.1;
+  animation: boxfadein 3s 1.2s infinite;
+}
+
+
+
+
+  @keyframes smallspiralsvg {
+    to {
+      stroke-dashoffset: -140px;
+    }
+  }
+
+  @keyframes boxfadein {
+    0% {
+      stroke-width: 0.1
+    }
+    16.5% {
+      stroke-width: 0.5
+    }
+    33%{
+      stroke-width: 0.5
+    }
+    100% {
+      stroke-width: 0.1
+    }
+  }
+
+
+  @media (min-width: 720px) {
+    #golden-ratio-section #golden-spiralbox-svg {
+      transform: rotate(-90deg)
+    }
+  }
+
+  @media (max-width: 720px) {
+    #golden-ratio-section .section h1 {
+      font-size: 10vw;
+    }
+
+    #golden-ratio-section .section h3 {
+      font-size: 5vw;
+    }
+
+    #golden-ratio-section .section p {
+      font-size: 3vw;
+    }
+    #golden-ratio-section #golden-spiralbox-svg {
+      width: 60%
+    }
+  }
 
 #game-container {
   background: linear-gradient(black 0%, #0f0f0f 100%);
@@ -301,8 +373,38 @@ p {
       background: black; }
     #game-container .canvas-container #start-screen {
       background: black; }
+      #game-container .canvas-container #start-screen h3 {
+        margin-top: 100px; }
       #game-container .canvas-container #start-screen hr {
         width: 15%; }
+      #game-container .canvas-container #start-screen ul {
+        font-size: 10px; }
+      #game-container .canvas-container #start-screen .title {
+        text-align: center;
+        font-size: 90px;
+        color: orange;
+        text-shadow: -5px 5px #610e0e;
+        font-family: 'Faster One', cursive;
+        margin-bottom: 50px; }
+      #game-container .canvas-container #start-screen .svg-button {
+        margin: 30px 0;
+        position: absolute;
+        width: 140px;
+        stroke-dasharray: 800px;
+        transition: 1s; }
+      #game-container .canvas-container #start-screen .svg-button:hover {
+        cursor: pointer;
+        stroke-dashoffset: 1600px; }
+      #game-container .canvas-container #start-screen .link-text {
+        margin: 30px 0;
+        position: absolute;
+        height: 65px;
+        color: #b3b3b3;
+        font-size: 18px;
+        width: 140px;
+        display: flex;
+        justify-content: center;
+        align-items: center; }
     #game-container .canvas-container #game-over-screen {
       background: rgba(0, 0, 0, 0.5); }
     #game-container .canvas-container #gameCanvas {
@@ -380,26 +482,78 @@ p {
   #game-container .hidden {
     display: none !important; }
 
+@import url("https://fonts.googleapis.com/css?family=Bungee+Inline|Bungee+Outline|Bungee+Shade|Faster+One|Monoton");
 #home-container .link-bar {
   width: 100vw;
   height: 80vh;
-  background: linear-gradient(black 0%, grey 100%);
+  background: linear-gradient(black 0%, #141414 100%);
   display: flex;
   overflow: hidden;
   flex-direction: column;
   justify-content: center;
   align-items: center; }
-  #home-container .link-bar button {
-    background: transparent;
-    color: white; }
-  #home-container .link-bar button:hover {
-    cursor: pointer; }
-  #home-container .link-bar button:focus {
-    outline: none; }
+
+#home-container .headline {
+  text-align: center;
+  font-size: 120px; }
 
 #home-container #space-div {
   background: url("./app/routes/home/img/space-game.png");
-  background-size: cover; }
+  background-size: cover;
+  background-position: bottom left; }
+  #home-container #space-div .headline {
+    color: orange;
+    text-shadow: -5px 5px #610e0e;
+    font-family: "Faster One", cursive; }
+
+#home-container #golden-ratio-div .headline {
+  color: #ffca00;
+  text-shadow: -2px 2px #4e4411;
+  font-family: "Cinzel", serif;
+  z-index: 99; }
+
+#home-container #golden-ratio-div #gr-svg-bg {
+  stroke: #111;
+  position: absolute;
+  width: inherit;
+  max-width: 100%;
+  height: inherit;
+  transition: stroke 1s; }
+
+#home-container #golden-ratio-div #gr-svg-bg:hover {
+  stroke: #222; }
+
+#home-container .top, #home-container .bottom {
+  width: 100%;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
+
+#home-container .top {
+  justify-content: flex-end; }
+
+#home-container .svg-button {
+  position: absolute;
+  width: 140px;
+  stroke-dasharray: 800px;
+  transition: 1s; }
+
+#home-container .svg-button:hover {
+  cursor: pointer;
+  stroke-dashoffset: 1600px; }
+
+#home-container .link-text {
+  position: relative;
+  color: #b3b3b3;
+  font-size: 0.6em;
+  width: 140px;
+  text-align: center; }
+
+@media (max-width: 750px) {
+  #home-container .headline {
+    font-size: 68px; } }
 
 #magnifying-glass-container {
   margin: 0;

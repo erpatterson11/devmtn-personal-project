@@ -9,7 +9,6 @@ angular.module("portfolioApp").service("scoreService", function($http) {
     })
   }
   this.addScore = function(obj) {
-    console.log('service addScore', obj);
     return $http({
       method: 'POST',
       url: '/api/scores',

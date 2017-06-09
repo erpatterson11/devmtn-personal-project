@@ -21,19 +21,15 @@ angular.module("portfolioApp").controller("gameCtrl", function($scope, $timeout,
   $scope.getAuth0Info = function() {
     scoreService.getAuth0Info()
       .then(function(results) {
-        console.log(results.data);
         $scope.userInfo = results.data
       })
   }
 
-
   $scope.getFinalScore = function() {
-    console.log('getFinalScore');
     $scope.finalScore = gameService.getScore()
   }
 
   $scope.getDbScores = function() {
-    console.log('getDbScores');
     scoreService.getScores()
       .then(function(results) {
         $scope.scores = results.data
@@ -43,7 +39,7 @@ angular.module("portfolioApp").controller("gameCtrl", function($scope, $timeout,
   $scope.getDbScores()
 
   $scope.submitFinalScore = function(name) {
-    console.log('submitFinalScore', name);
+    $scope.showGuestNicknameEntry()
     if ($scope.userInfo) {
       scoreService.getAuth0Info()
         .then(function(results) {
@@ -62,7 +58,9 @@ angular.module("portfolioApp").controller("gameCtrl", function($scope, $timeout,
         score: $scope.finalScore,
         nickname: name
       }
-    scoreService.addScore(obj)
+    scoreService.addScore(obj).then(function() {
+      $scope.getDbScores()
+    })
     }
   }
 

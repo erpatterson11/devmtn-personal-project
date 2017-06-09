@@ -143,7 +143,6 @@ angular.module("portfolioApp").service("goldenRatioService", function() {
           svgContainer.style.opacity = '0'
           setTimeout(()=> {
             svgContainer.style.zIndex='-99'
-            svgContainer.style.opacity = '1'
           },1000)
         }, animationTime*1000/2)
         startOver = true
@@ -261,13 +260,11 @@ angular.module("portfolioApp").service("goldenRatioService", function() {
 
 
     let limitNums = (num) => {
-      console.log(num);
       if (num > 10) {
         do {
           num = num - 10
         } while (num > 10)
       }
-      console.log(num);
       return num
     }
 
