@@ -42,6 +42,39 @@ table
   border-collapse: collapse
   border-spacing: 0
 
+/////////////////////////////////////////////////////////////////////////////
+
+body
+  -ms-overflow-style: none
+
+body::-webkit-scrollbar
+  display: none
+  width: 0 !important
+
+
 ui-view
-  width: 100%
+  width: 100vw
   height: auto
+
+#main-nav
+  position: fixed
+  top: 0
+  width: 100vw
+  height: 70px
+  display: flex
+  justify-content: center
+  align-items: center
+  background: black
+  color: white
+  box-shadow: 0 5px 5px 5px grey
+  transition: top 0.25s
+
+  #main-links
+    display: flex
+    width: 40%
+    flex-direction: row
+    justify-content: space-around
+    align-items: center
+
+  li
+    cursor: pointer

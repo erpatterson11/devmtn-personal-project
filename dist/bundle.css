@@ -42,9 +42,37 @@ table {
   border-collapse: collapse;
   border-spacing: 0; }
 
+body {
+  -ms-overflow-style: none; }
+
+body::-webkit-scrollbar {
+  display: none;
+  width: 0 !important; }
+
 ui-view {
-  width: 100%;
+  width: 100vw;
   height: auto; }
+
+#main-nav {
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: black;
+  color: white;
+  box-shadow: 0 5px 5px 5px grey;
+  transition: top 0.25s; }
+  #main-nav #main-links {
+    display: flex;
+    width: 40%;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center; }
+  #main-nav li {
+    cursor: pointer; }
 
 :root {
   --gr-bg-color: #4ABDAC;
@@ -66,7 +94,6 @@ ui-view {
   cursor: default;
   z-index: -1000;
   color: var(--gr-text-color);
-  transition: background 1s, color 1s, border-color 1s;
 }
 
 #golden-ratio-section .accent1 {
@@ -75,6 +102,10 @@ ui-view {
 
 #golden-ratio-section .accent2 {
   color: var(--gr-accent-2-color);
+}
+
+#golden-ratio-section .bg {
+  color: var(--gr-bg-color)
 }
 
 #golden-ratio-section #svgContainer {
@@ -109,9 +140,9 @@ ui-view {
 #golden-ratio-section .section {
   background: var(--gr-accent-1-color);
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
   left: -100%;
   position: absolute;
   border-style: inset;
@@ -120,12 +151,35 @@ ui-view {
   border-right:  2px solid var(--gr-bg-color);
   backface-visibility: hidden;
   -webkit-font-smoothing: anitaliased;
-  transition: border-radius 0.25s;
+  transition: 0.25s;
 }
 
 #golden-ratio-section .section:hover {
   border-radius: 5%;
 }
+
+#golden-ratio-section .section > div {
+  width: 50%;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid limegreen
+  padding: 10%;
+}
+
+p {
+  position: relative;
+  width: 40px;
+}
+
+#golden-ratio-section .upper-left {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 
 #golden-ratio-section #texture-overlay {
   position: fixed;
@@ -144,19 +198,44 @@ ui-view {
   display: none;
 }
 
+#golden-ratio-section #golden-spiralbox-svg {
+  width: 60%;
+}
+
+#golden-ratio-section #golden-spiralbox-svg #small-spiral-path{
+  stroke-dasharray: 140px;
+  stroke-dashoffset: 140px;
+  animation: smallspiralsvg 3s ease-in infinite;
+}
+
+@keyframes smallspiralsvg {
+  to {
+    stroke-dashoffset: -140px;
+  }
+}
+
+@keyframes boxfadein {
+  0%, 100% {
+    opacity: 0;
+  },
+  50% {
+    opacity: 1;
+  }
+}
+
 #game-container {
-  background: linear-gradient(black 0%, #050505 100%);
+  background: linear-gradient(black 0%, #0f0f0f 100%);
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: #ddd; }
-  #game-container canvas {
-    position: fixed; }
+  color: #ddd;
+  overflow: hidden; }
   #game-container button {
-    background: transparent;
+    padding: 10px;
     border: none;
+    background: rgba(0, 0, 0, 0.2);
     color: rgba(255, 255, 255, 0.2);
     transition: 0.1s; }
   #game-container button:hover {
@@ -164,57 +243,163 @@ ui-view {
     color: rgba(255, 255, 255, 0.6); }
   #game-container button:focus {
     outline: none; }
+  #game-container canvas {
+    position: fixed; }
+  #game-container hr {
+    width: 100%;
+    color: rgba(200, 200, 200, 0.5);
+    border: 0;
+    height: 1px;
+    background-image: -webkit-linear-gradient(left, #141414, #8c8b8b, #141414); }
   #game-container #stats-bar {
     position: absolute;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     color: #ddd; }
     #game-container #stats-bar #stats-top {
       width: 100%;
-      height: 50%; }
+      height: 50%;
+      display: flex;
+      justify-content: space-around;
+      align-items: flex-start; }
       #game-container #stats-bar #stats-top #health-bar {
         width: 20%;
         height: 20px;
         border: 1px solid black;
+        border-radius: 10px;
         background: linear-gradient(90deg, rgba(189, 195, 199, 0.5) 0%, rgba(44, 62, 80, 0.5) 100%); }
         #game-container #stats-bar #stats-top #health-bar #health-bar-fill {
           float: right;
           width: 0%;
           height: 100%;
-          background: black;
+          border-radius: 10px;
+          background: #141414;
           transition: 0.5s; }
     #game-container #stats-bar #stats-bottom {
       width: 100%;
-      height: 50%; }
+      height: 50%;
+      display: flex;
+      align-items: flex-end; }
   #game-container .canvas-container {
+    position: relative;
     overflow: auto;
     display: flex;
     justify-content: center; }
-    #game-container .canvas-container #start-screen {
+    #game-container .canvas-container .game-overlay {
       position: absolute;
       width: 100%;
       height: 100%;
+      max-width: 100%;
+      max-height: 100%; }
+    #game-container .canvas-container #start-screen, #game-container .canvas-container #game-over-screen {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       background: black; }
+    #game-container .canvas-container #start-screen {
+      background: black; }
+      #game-container .canvas-container #start-screen hr {
+        width: 15%; }
     #game-container .canvas-container #game-over-screen {
-      position: fixed;
-      background: black;
-      width: auto;
-      height: auto;
-      display: flex;
-      justify-content: center;
-      align-items: center; }
+      background: rgba(0, 0, 0, 0.5); }
     #game-container .canvas-container #gameCanvas {
       box-shadow: 0px 0px 15px 10px rgba(20, 20, 20, 0.5); }
     #game-container .canvas-container #bgCanvas {
       background: black; }
+    #game-container .canvas-container #controls-tooltip {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.5); }
+      #game-container .canvas-container #controls-tooltip ul {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center; }
+        #game-container .canvas-container #controls-tooltip ul li {
+          margin: 10px; }
+  #game-container #score-submission-box {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.1); }
+  #game-container #content-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    min-height: 30%;
+    background: #141414;
+    border-radius: 5px;
+    box-shadow: 0 0 25px 0px #323232;
+    transition: 0.35s; }
+    #game-container #content-box button {
+      margin: 10px;
+      width: 70px;
+      height: 30px;
+      color: #ddd;
+      background: #4b4b4b;
+      border-radius: 3px;
+      box-shadow: 0 0 15px 0 #323232; }
+    #game-container #content-box .submission-box-section {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center; }
+    #game-container #content-box .close {
+      width: 100%;
+      align-items: flex-end;
+      transition: color 0.5s; }
+      #game-container #content-box .close #content-close-icon {
+        font-size: 20px;
+        color: white;
+        cursor: pointer; }
+      #game-container #content-box .close #content-close-icon:hover {
+        color: #ddd; }
+    #game-container #content-box .login-buttons {
+      flex: 8;
+      flex-direction: row; }
+      #game-container #content-box .login-buttons a {
+        text-decoration: none; }
+    #game-container #content-box input {
+      background: #323232;
+      border: none;
+      border-radius: 3px;
+      padding: 5px;
+      color: #ddd; }
+    #game-container #content-box input:focus {
+      box-shadow: inset 0 0 20px 0 #191919;
+      outline: none; }
   #game-container .hidden {
     display: none !important; }
+
+#home-container .link-bar {
+  width: 100vw;
+  height: 80vh;
+  background: linear-gradient(black 0%, grey 100%);
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
+  #home-container .link-bar button {
+    background: transparent;
+    color: white; }
+  #home-container .link-bar button:hover {
+    cursor: pointer; }
+  #home-container .link-bar button:focus {
+    outline: none; }
+
+#home-container #space-div {
+  background: url("./app/routes/home/img/space-game.png");
+  background-size: cover; }
 
 #magnifying-glass-container {
   margin: 0;

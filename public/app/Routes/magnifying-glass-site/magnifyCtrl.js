@@ -1,6 +1,22 @@
 // INITILIZE CONTROLLER
 // ============================================================
 angular.module("portfolioApp").controller("magnifyCtrl", function($scope) {
+
+
+
+  $scope.textInput
+  $scope.radio1
+  $scope.radio2
+  $scope.checkbox1
+  $scope.checkbox2
+  $scope.checkbox3
+
+
+
+
+
+
+
   // VARIABLES
   // ============================================================
 
@@ -65,6 +81,15 @@ angular.module("portfolioApp").controller("magnifyCtrl", function($scope) {
   // event function to move mag-glass around zoomed conten t
   function moveGlass(e) {
     if (spacedown && isMagnifying) {
+
+      if (pageCenter.w !== document.body.scrollWidth/2 || pageCenter.h !== document.body.scrollHeight/2) {
+        console.log('adjusted center')
+        pageCenter = {
+          w: document.body.scrollWidth/2,
+          h: document.body.scrollHeight/2
+        }
+      }
+
       mouse = {
           x: e.pageX,
           y: e.pageY

@@ -16,7 +16,9 @@ app.use(express.static('dist'))
 app.use(bodyParser.json())
 app.use(cors())
 
-const massiveInstance = massive.connectSync({connectionString: config.dev.database.connectionString})
+const massiveInstance = massive.connectSync({
+  connectionString: config.dev.database.connectionString
+})
 // massive set-up
 app.set('db', massiveInstance)
 
@@ -36,11 +38,12 @@ passport.use(new Auth0Strategy(config.dev.auth0Strategy, function(accessToken, r
   return done(null, profile)
 }))
 
+// login endpoint
 app.get('/login', passport.authenticate('auth0'))
 
 app.get('/auth/callback',
 passport.authenticate('auth0', {
-  successRedirect: '/index.html',
+  successRedirect: '/#!/space',
   failureRedirect: '/login'
 }))
 
@@ -63,32 +66,43 @@ app.get('/api/auth0', function(req,res) {
 })
 
 app.get('/api/scores', function(req,res) {
-  db.get_scores.sql([], function(err, scores) {
-    res.send(scores)
-  })
-})
-
-app.get('/api/users', function(req,res) {
-  db.get_users.sql([], function(err, users) {
-    res.send(users)
+  db.get_scores([], function(err, scores) {
+    if (err) {
+      res.send(err)
+    } else {
+      res.send(scores)
+    }
   })
 })
 
 app.post('/api/scores', function(req,res) {
-  let userId = req.body.userId
-  let score = req.body.scores
-  let timestamp = req.body.scores
-  db.add_score.sql([userId,score,timestamp], function(err, confirmation) {
-    res.send(confirmation)
-  })
-})
 
-app.post('/api/users', function(req,res) {
+  console.log(req.body);
+
+  let score = req.body.score
   let nickname = req.body.nickname
-  let authId = req.body.authId || null
-  db.add_user.sql([nickname, authId], function(err, confirmation) {
-    res.send(confirmation)
-  })
+  let auth0id = req.body.auth0id.data
+
+  if (!score || !nickname) {
+    console.log('error');
+    res.send(`There was an error posting your score.
+      This is the information you sent.
+      Score: ${score},
+      nickname: ${nickname},
+      auth0id: ${auth0id}
+      `)
+  }
+
+  else {
+    db.add_score([score, nickname, auth0id], function(err, confirmation) {
+      if (err) {
+        console.log(err);
+        res.send(err)
+      } else {
+        res.send(confirmation, req.body)
+      }
+    })
+  }
 })
 
 

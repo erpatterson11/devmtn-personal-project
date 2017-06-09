@@ -1,9 +1,8 @@
 // INITILIZE CONTROLLER
 // ============================================================
-angular.module("portfolioApp").controller("mainCtrl", function($scope) {
-  // VARIABLES
-  // ============================================================
-  
-  // FUNCTIONS
-  // ============================================================
+angular.module("portfolioApp").controller("mainCtrl", function($scope, mainService) {
+
+
+  // mainService.toggleNavBar()
+
 });

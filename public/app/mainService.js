@@ -1,41 +1,43 @@
 // INITILIZE SERVICE
 // ============================================================
-angular.module("portfolioApp").service("collectionService", function($http) {
-  // CRUD FUNCTIONS
-  // ============================================================
-  // this.getCollections = function() {
-  //   return $http({
-  //     method: 'GET',
-  //     url: '/api/collection'
-  //   });
-  // };
-  // this.getCollection = function(id) {
-  //   return $http({
-  //     method: 'GET',
-  //     url: '/api/collection?_id='+id
-  //   });
-  // };
-  // this.createCollection = function(collection) {
-  //   return $http({
-  //     method: 'POST',
-  //     url: '/api/collection',
-  //     data: collection
-  //   });
-  // };
-  // this.editCollection = function(id, collection) {
-  //   return $http({
-  //     method: 'PUT',
-  //     url: "/api/collection/" + id,
-  //     data: collection
-  //   });
-  // };
-  // this.deleteCollection = function(id) {
-  //   return $http({
-  //     method: 'DELETE',
-  //     url: '/api/collection/' + id
-  //   });
-  // };
-  // OTHER FUNCTIONS
-  // ============================================================
+angular.module("portfolioApp").service("mainService", function($http) {
+
+
+
+  this.toggleNavBar = function() {
+    const navbar = document.querySelector('#main-nav')
+    let didScroll = false
+    let lastScrollTop = 0
+    let delta = 5
+    let navHeight = navbar.style.height
+
+    window.addEventListener('scroll', () => {
+      didScroll = true
+    })
+
+    setInterval(() => {
+      if (didScroll) {
+        scroll()
+        didScroll = false
+      }
+    }, 100)
+
+    function scroll() {
+      let currentPos = window.scrollY
+      if (Math.abs(lastScrollTop - currentPos) <= delta) {
+        return
+      }
+      if (currentPos > lastScrollTop && currentPos > navHeight) {
+        navbar.style.top = `-60px`
+        // navbar.style.top = `-${getComputedStyle(navbar).height}`
+      } else {
+        if (currentPos < lastScrollTop) {
+        navbar.style.top = '0px'
+        }
+      }
+      lastScrollTop = currentPos
+    }
+  }
+
 
 });

@@ -18,7 +18,6 @@
   cursor: default;
   z-index: -1000;
   color: var(--gr-text-color);
-  transition: background 1s, color 1s, border-color 1s;
 }
 
 #golden-ratio-section .accent1 {
@@ -27,6 +26,10 @@
 
 #golden-ratio-section .accent2 {
   color: var(--gr-accent-2-color);
+}
+
+#golden-ratio-section .bg {
+  color: var(--gr-bg-color)
 }
 
 #golden-ratio-section #svgContainer {
@@ -61,9 +64,9 @@
 #golden-ratio-section .section {
   background: var(--gr-accent-1-color);
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
   left: -100%;
   position: absolute;
   border-style: inset;
@@ -72,12 +75,35 @@
   border-right:  2px solid var(--gr-bg-color);
   backface-visibility: hidden;
   -webkit-font-smoothing: anitaliased;
-  transition: border-radius 0.25s;
+  transition: 0.25s;
 }
 
 #golden-ratio-section .section:hover {
   border-radius: 5%;
 }
+
+#golden-ratio-section .section > div {
+  width: 50%;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid limegreen
+  padding: 10%;
+}
+
+p {
+  position: relative;
+  width: 40px;
+}
+
+#golden-ratio-section .upper-left {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 
 #golden-ratio-section #texture-overlay {
   position: fixed;
@@ -94,4 +120,29 @@
 
 #golden-ratio-section .hidden {
   display: none;
+}
+
+#golden-ratio-section #golden-spiralbox-svg {
+  width: 60%;
+}
+
+#golden-ratio-section #golden-spiralbox-svg #small-spiral-path{
+  stroke-dasharray: 140px;
+  stroke-dashoffset: 140px;
+  animation: smallspiralsvg 3s ease-in infinite;
+}
+
+@keyframes smallspiralsvg {
+  to {
+    stroke-dashoffset: -140px;
+  }
+}
+
+@keyframes boxfadein {
+  0%, 100% {
+    opacity: 0;
+  },
+  50% {
+    opacity: 1;
+  }
 }

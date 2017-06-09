@@ -8,7 +8,7 @@
       .state('home', {
         url: '/',
         templateUrl: 'app/routes/home/homeTmpl.html',
-        controller: 'mainCtrl'
+        controller: 'homeCtrl'
       })
       .state('golden-ratio', {
         url: '/golden-ratio',

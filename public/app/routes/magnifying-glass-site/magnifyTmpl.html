@@ -16,12 +16,26 @@
     <div class="content content-2">
       Nullam hendrerit justo urna, eget ornare massa tempus a. Proin bibendum id leo eget semper. Fusce scelerisque lectus augue, ut rhoncus quam bibendum in. Fusce pulvinar, odio eget aliquet finibus, mi nulla rhoncus elit, ut dignissim mi velit sit amet nulla. Cras dapibus quam sit amet nibh volutpat consectetur. Nulla arcu nulla, suscipit nec eleifend at, eleifend eu libero. Donec porta accumsan mauris, ut viverra quam tempor vitae. Nullam augue odio, tempus ut risus sit amet, gravida dictum felis. Nullam vitae dapibus ante.
     </div>
+    <video id='video' controls src="https://player.vimeo.com/external/194837908.sd.mp4?s=c350076905b78c67f74d7ee39fdb4fef01d12420&profile_id=164"></video>
     <div class="content content-3">
       <p>
         Quisque interdum laoreet arcu et aliquet. Nulla sapien tellus, convallis eu semper at, laoreet a purus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Cras tristique, nunc sit amet lobortis posuere, nisi lectus consequat ligula, id aliquet elit dui interdum mauris. Nunc sit amet vulputate nisl. Morbi ullamcorper imperdiet mauris sed convallis. Aliquam erat volutpat.
       </p>
     </div>
     <img src='https://media-cdn.tripadvisor.com/media/photo-s/0e/85/48/e6/seven-mile-beach-grand.jpg'/>
+    <form class="" action="index.html" method="post">
+      <input type="text" name="" ng-model='textInput'>
+      <div class="radio-buttons">
+        {{textInput}}
+        <input type="radio" name="male" value="male" ng-model='radio1'>
+        <input type="radio" name="female" value="female" ng-model='radio2'>
+      </div>
+      <div class="checkboxes">
+        <input type="checkbox" name="" value="1" ng-model='checkbox1'>
+        <input type="checkbox" name="" value="2" ng-model='checkbox2'>
+        <input type="checkbox" name="" value="3" ng-model='checkbox3'>
+      </div>
+    </form>
   </div>
 
   <div id='magnifying-glass'></div>

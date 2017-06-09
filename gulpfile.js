@@ -5,7 +5,14 @@ let concat = require('gulp-concat');
 let annotate = require('gulp-ng-annotate');
 let uglify = require('gulp-uglify');
 let sass = require('gulp-sass');
-let merge = require('merge-stream')
+let merge = require('merge-stream');
+let debug = require('gulp-debug');
+let plumber = require('gulp-plumber');
+let gutil = require('gulp-util');
+
+let changeEvent = function(evt) {
+    gutil.log('File', gutil.colors.cyan(evt.path.replace(new RegExp('/.*(?=/' + basePaths.src + ')/'), '')), 'was', gutil.colors.magenta(evt.type));
+};
 // DECLARE FILE PATHS
 // ============================================================
 let paths = {
@@ -20,9 +27,14 @@ let paths = {
 // ============================================================
 gulp.task('js', function() {
   return gulp.src(paths.jsSource)
+  // .pipe(plumber([{ showStack: true},{errorHandler: (err) => {
+  //   console.log(err)
+  //   this.emit('end')
+  // }}]))
+  // .pipe(debug({title: 'unicorn:'}))
   .pipe(concat('bundle.js'))
   .pipe(annotate())
-  //.pipe(uglify()) //Uncomment when code is production ready
+  // .pipe(uglify()) //Uncomment when code is production ready
   .pipe(gulp.dest('./dist'));
 });
 
@@ -50,6 +62,7 @@ gulp.task('media', function() {
   return gulp.src(paths.mediaSource)
   .pipe(gulp.dest('./dist/app'))
 })
+
 
 // WATCH TASK
 // ============================================================
