@@ -52,9 +52,6 @@ angular.module("portfolioApp").controller("magnifyCtrl", function($scope) {
     glass.style.clipPath = `circle(50% at 50% 50%)`
     glass.style.WebkitClipPath = `circle(50% at 50% 50%)`
 
-    console.log(getComputedStyle(glassArtRim).width);
-
-
     glassArt.style.transformOrigin = `29.0668% 29.0061%`
     glassArt.style.transform = `scale(${scale}) translate(${62}px, ${62}px)`
 
@@ -85,6 +82,8 @@ angular.module("portfolioApp").controller("magnifyCtrl", function($scope) {
   // event function to move mag-glass around zoomed conten t
   function moveGlass(e) {
     if (shiftDown && isMagnifying) {
+      glass.style.cursor = 'none'
+
       if (pageCenter.w !== document.body.scrollWidth/2 || pageCenter.h !== document.body.scrollHeight/2) {
         pageCenter = {
           w: document.body.scrollWidth/2,
@@ -110,7 +109,9 @@ angular.module("portfolioApp").controller("magnifyCtrl", function($scope) {
       let glassTranslateX = -mouse.x - centOffsetX + corr
       let glassTranslateY = -mouse.y - centOffsetY + corr
       zoomed.style.transform = `translate(${glassTranslateX}px, ${glassTranslateY}px) scale(${scale})`
-      }
+    } else {
+      glass.style.cursor = 'default'
+    }
     }
 
 

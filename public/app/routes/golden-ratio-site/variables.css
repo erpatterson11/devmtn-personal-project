@@ -96,6 +96,10 @@
   padding: 5%;
 }
 
+#golden-ratio-section .section img {
+  width: 80%
+}
+
 #golden-ratio-section .section h1 {
   font-size: 5vw;
 }
@@ -115,6 +119,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+#golden-spiral-trump {
+  opacity: 0;
+  transition: 1s;
 }
 
 
