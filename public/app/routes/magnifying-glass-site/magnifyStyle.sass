@@ -14,69 +14,27 @@
   #magnifying-glass-art
     pointer-events: none
 
-  #help-box
-    width: 50px
-    height: 50px
-    position: fixed
-    bottom: 15px
-    right: 15px
-    background: grey
-    border-radius: 5px
-    transition: 0.25s
-    p
-      padding: 10px
-      display: none
-
-  #help-box:hover
-    width: 200px
-    height: 200px
-
-  #help-box:hover ~ p
-    display: inline
-
-    #icon
-      color: white
-
   .container1
     position: absolute
-    background: linear-gradient(black 100%, white 100%) 
+    background: rgb(50,50,50)
 
   .zoomed
     position: absolute
     overflow: hidden
 
-  nav
-    width: 100vw
-    height: 100px
-    background: black
-    ul
-      height: inherit
-      display: flex
-      justify-content: space-around
-      align-items: center
-      margin: 0
-      li
-        list-style: none
-        cursor: pointer
-
   .content
-    width: 100%
+    width: 90%
     min-height: 300px
     display: flex
+    flex-direction: column
+    justify-content: center
     align-items: center
     padding: 50px
-  .content-left, .content-right
-    width: 50%
-    height: 100%
-  .colored
-    background: linear-gradient(blue 0%, lightblue 100%)
-  .clear
-    background: white
-
+    background: transparent
 
 
   .separator
     width: 100vw
     height: 100px
-    background: white
+    background: rgb(10,10,10)
     transform: rotate(1deg) skew(1deg)

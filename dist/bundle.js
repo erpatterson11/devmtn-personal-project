@@ -372,18 +372,16 @@ angular.module("portfolioApp").service("gameService", function() {
         let frameSpeed = frameRate/100
 
         let updateSprite = () => {
+          console.log(sp.count, frameSpeed, currentFrame, totalFrames);
             sp.count++
             if (sp.count >= frameSpeed) {
               sp.count = 0
               currentFrame++
               if (currentFrame >= totalFrames) {
-                console.log('current Frame reset');
                 isAnimating = false
                 currentFrame = 0
               }
             }
-            console.log(sp.count, currentFrame, frameSpeed);
-            console.log('calculated starting frame',frameWidth*currentFrame);
           }
 
         let drawSprite = (x, y) => {
@@ -393,8 +391,16 @@ angular.module("portfolioApp").service("gameService", function() {
           let explReq
 
         const animateSprite = (x, y) => {
+          console.log(sp.count, isAnimating);
+           explCtx.clearRect(0,0,cW,cH)
            updateSprite()
            drawSprite(x, y)
+           if (isAnimating) {
+             explReq = requestAnimationFrame(animateSprite)
+           } else {
+             cancelAnimationFrame(explReq)
+             isAnimating = true
+           }
         }
 
         return {
@@ -1144,6 +1150,12 @@ angular.module("portfolioApp").service("scoreService", ["$http", function($http)
 angular.module("portfolioApp").controller("goldenRatioCtrl", ["$scope", "goldenRatioService", function($scope, goldenRatioService) {
 
   goldenRatioService.generateContent()
+
+  document.querySelector('nav').style.display = 'none'
+
+  window.onbeforeunload = function() {
+    document.querySelector('nav').style.display = 'inline'
+  }
 
 }]);
 
