@@ -1,6 +1,6 @@
 // CONFIG
   // ============================================================
-  angular.module("portfolioApp",['ui.router']).config(function($stateProvider, $urlRouterProvider) {
+  angular.module("portfolioApp",['ui.router', 'ngAnimate']).config(function($stateProvider, $urlRouterProvider) {
     // INITILIZE STATES
     // ============================================================
     $stateProvider

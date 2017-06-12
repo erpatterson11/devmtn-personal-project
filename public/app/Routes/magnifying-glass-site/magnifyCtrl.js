@@ -2,8 +2,6 @@
 // ============================================================
 angular.module("portfolioApp").controller("magnifyCtrl", function($scope) {
 
-
-
   $scope.textInput
   $scope.radio1
   $scope.radio2
@@ -11,18 +9,16 @@ angular.module("portfolioApp").controller("magnifyCtrl", function($scope) {
   $scope.checkbox2
   $scope.checkbox3
 
-
-
-
-
-
-
   // VARIABLES
   // ============================================================
 
 
   const body = document.querySelector('body')
   const glass = document.querySelector('#magnifying-glass')
+
+  const glassArt = document.querySelector('#magnifying-glass-art')
+  const glassArtRim = document.querySelector('#glass-circle-art')
+
   const original = document.querySelector('body').children[1]
   // creates a copy of the content to be applied to the magnifying glass div
   const content = document.querySelector('.container1')
@@ -38,9 +34,12 @@ angular.module("portfolioApp").controller("magnifyCtrl", function($scope) {
 
 
   let scale = 2   // scale is ratio of zoomed and original content
-  let glassSize = 700
+  let glassSize = 600
   let isMagnifying = false
-  let spacedown = false
+  let shiftDown = false
+  let corr = glassSize/2
+  let artCorr = 31*scale // accounts for thickenss of rim on glass artwork
+
 
 
   // FUNCTIONS
@@ -48,12 +47,16 @@ angular.module("portfolioApp").controller("magnifyCtrl", function($scope) {
 
 
   function init() {
-    console.log('initialized');
-    glass.style.width = glassSize + 'px'
-    glass.style.height = glassSize + 'px'
-    glass.style.border = '2px solid black'
-    glass.style.clipPath = `circle(40% at 50% 50%)`
-    glass.style.WebkitClipPath = `circle(40% at 50% 50%)`
+    glass.style.width = glassArt.style.width = glassSize + 'px'
+    glass.style.height = glassArt.style.height = glassSize + 'px'
+    glass.style.clipPath = `circle(50% at 50% 50%)`
+    glass.style.WebkitClipPath = `circle(50% at 50% 50%)`
+
+    console.log(getComputedStyle(glassArtRim).width);
+
+
+    glassArt.style.transformOrigin = `29.0668% 29.0061%`
+    glassArt.style.transform = `scale(${scale}) translate(${62}px, ${62}px)`
 
     // applies content copy to magnifying glass div
     glass.append(clone)
@@ -69,10 +72,11 @@ angular.module("portfolioApp").controller("magnifyCtrl", function($scope) {
 
 
   function toggleGlass() {
-    console.log('toggled');
     if (isMagnifying) {
+      glassArt.style.display = 'inline'
       glass.style.display = 'inline'
     } else {
+      glassArt.style.display = 'none'
       glass.style.display = 'none'
     }
   }
@@ -80,10 +84,8 @@ angular.module("portfolioApp").controller("magnifyCtrl", function($scope) {
 
   // event function to move mag-glass around zoomed conten t
   function moveGlass(e) {
-    if (spacedown && isMagnifying) {
-
+    if (shiftDown && isMagnifying) {
       if (pageCenter.w !== document.body.scrollWidth/2 || pageCenter.h !== document.body.scrollHeight/2) {
-        console.log('adjusted center')
         pageCenter = {
           w: document.body.scrollWidth/2,
           h: document.body.scrollHeight/2
@@ -94,13 +96,13 @@ angular.module("portfolioApp").controller("magnifyCtrl", function($scope) {
           x: e.pageX,
           y: e.pageY
         }
-      let corr = glassSize/2
       let centOffsetX = ((scale-1)*(mouse.x-pageCenter.w)/pageCenter.w)*pageCenter.w
       let centOffsetY = ((scale-1)*(mouse.y-pageCenter.h)/pageCenter.h)*pageCenter.h
       let distFromTop = document.querySelector('body').scrollTop
       // translate container div mith mouse move
       let divTranslateX = mouse.x - corr
       let divTranslateY = mouse.y - corr - distFromTop
+      glassArt.style.transform = `scale(${scale}) translate(${artCorr + divTranslateX/scale}px, ${artCorr + divTranslateY/scale}px)`
       glass.style.transform = `translate(${divTranslateX}px, ${divTranslateY}px)`
       // correct container div translations
       // centOffsetX and centOffsetY account for the scaling difference between the original content and the zoom
@@ -128,26 +130,29 @@ angular.module("portfolioApp").controller("magnifyCtrl", function($scope) {
   })
 
   window.addEventListener('keydown', (e) => {
-    if (e.keyCode === 32) {
-      e.preventDefault()
-      spacedown = true
+    if (e.keyCode === 16) {
+      shiftDown = true
     }
-    // keyboard shortcut (shift + 'm') to toggle magnifying glass
-    if (e.keyCode === 77 & e.shiftKey) {
+    // keyboard shortcut (ctrl + shift + 'm') to toggle magnifying glass
+    if (e.keyCode === 90 & e.shiftKey & e.ctrlKey) {
       isMagnifying = !isMagnifying
       toggleGlass()
     }
   })
 
   window.addEventListener('keyup', (e) => {
-    if (e.keyCode === 32) {
-      spacedown = false
+    if (e.keyCode === 16) {
+      shiftDown = false
       // body.style.cursor = 'default'
     }
   })
 
   window.addEventListener('mousemove', (e) => {
     moveGlass(e)
+  })
+
+  window.addEventListener('scroll', (e) => {
+
   })
 
 

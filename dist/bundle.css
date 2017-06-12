@@ -50,7 +50,7 @@ body::-webkit-scrollbar {
   display: none;
   width: 0 !important; }
 
-ui-view {
+#ui-view {
   width: 100vw;
   height: auto; }
 
@@ -59,21 +59,27 @@ ui-view {
   top: 0;
   width: 100vw;
   height: 70px;
+  padding: 0px 50px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   background: black;
-  color: white;
-  box-shadow: 0 5px 5px 5px grey;
+  color: rgba(200, 200, 200, 0.75);
+  box-shadow: 0 10px 10px 0px rgba(20, 20, 20, 0.5);
   transition: top 0.25s; }
   #main-nav #main-links {
     display: flex;
-    width: 40%;
+    width: 300px;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center; }
-  #main-nav li {
-    cursor: pointer; }
+  #main-nav .nav-link-hover {
+    text-align: center;
+    cursor: pointer;
+    transition: 0.25s; }
+  #main-nav .nav-link-hover:hover {
+    color: #c8c8c8;
+    font-size: 17px; }
 
 :root {
   --gr-bg-color: #4ABDAC;
@@ -115,7 +121,7 @@ ui-view {
   width: 100vw;
   height: 100vh;
   opacity: 1;
-  background: black;
+  background: var(--gr-bg-color);
   transition: opacity 3s;
 }
 
@@ -372,7 +378,8 @@ ui-view {
       align-items: center;
       background: black; }
     #game-container .canvas-container #start-screen {
-      background: black; }
+      background: black;
+      transition: 1s; }
       #game-container .canvas-container #start-screen h3 {
         margin-top: 100px; }
       #game-container .canvas-container #start-screen hr {
@@ -406,7 +413,8 @@ ui-view {
         justify-content: center;
         align-items: center; }
     #game-container .canvas-container #game-over-screen {
-      background: rgba(0, 0, 0, 0.5); }
+      background: rgba(0, 0, 0, 0.5);
+      transition: 1s; }
     #game-container .canvas-container #gameCanvas {
       box-shadow: 0px 0px 15px 10px rgba(20, 20, 20, 0.5); }
     #game-container .canvas-container #bgCanvas {
@@ -431,6 +439,13 @@ ui-view {
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.1); }
+  #game-container #highscores {
+    width: 70%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; }
+    #game-container #highscores #highscores-player {
+      flex: 2; }
   #game-container #content-box {
     display: flex;
     flex-direction: column;
@@ -482,78 +497,92 @@ ui-view {
   #game-container .hidden {
     display: none !important; }
 
-@import url("https://fonts.googleapis.com/css?family=Bungee+Inline|Bungee+Outline|Bungee+Shade|Faster+One|Monoton");
-#home-container .link-bar {
-  width: 100vw;
-  height: 80vh;
-  background: linear-gradient(black 0%, #141414 100%);
-  display: flex;
-  overflow: hidden;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center; }
-
-#home-container .headline {
-  text-align: center;
-  font-size: 120px; }
-
-#home-container #space-div {
-  background: url("./app/routes/home/img/space-game.png");
-  background-size: cover;
-  background-position: bottom left; }
-  #home-container #space-div .headline {
-    color: orange;
-    text-shadow: -5px 5px #610e0e;
-    font-family: "Faster One", cursive; }
-
-#home-container #golden-ratio-div .headline {
-  color: #ffca00;
-  text-shadow: -2px 2px #4e4411;
-  font-family: "Cinzel", serif;
-  z-index: 99; }
-
-#home-container #golden-ratio-div #gr-svg-bg {
-  stroke: #111;
-  position: absolute;
-  width: inherit;
-  max-width: 100%;
-  height: inherit;
-  transition: stroke 1s; }
-
-#home-container #golden-ratio-div #gr-svg-bg:hover {
-  stroke: #222; }
-
-#home-container .top, #home-container .bottom {
-  width: 100%;
-  height: 50%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center; }
-
-#home-container .top {
-  justify-content: flex-end; }
-
-#home-container .svg-button {
-  position: absolute;
-  width: 140px;
-  stroke-dasharray: 800px;
-  transition: 1s; }
-
-#home-container .svg-button:hover {
-  cursor: pointer;
-  stroke-dashoffset: 1600px; }
-
-#home-container .link-text {
-  position: relative;
-  color: #b3b3b3;
-  font-size: 0.6em;
-  width: 140px;
-  text-align: center; }
-
-@media (max-width: 750px) {
+#home-container {
+  color: #969696;
+  font-family: "Julius Sans One", sans-serif; }
+  #home-container p {
+    padding: 40px; }
+  #home-container .link-bar {
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(black 0%, #141414 100%);
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; }
   #home-container .headline {
-    font-size: 68px; } }
+    text-align: center;
+    font-size: 120px; }
+  #home-container #space-div {
+    background: url("./app/routes/home/img/space-game-2.png");
+    background-size: cover;
+    background-position: bottom left;
+    background-repeat: no-repeat; }
+    #home-container #space-div .headline {
+      color: orange;
+      text-shadow: -5px 5px #610e0e;
+      font-family: "Faster One", cursive; }
+  #home-container #magnifying-glass-div .headline {
+    font-family: "Playfair Display", serif;
+    color: white; }
+  #home-container #magnifying-glass-div #magnifying-glass-art {
+    position: absolute;
+    transform: scale(0.25); }
+  #home-container #golden-ratio-div .headline {
+    color: #ffca00;
+    text-shadow: -2px 2px #4e4411;
+    font-family: "Cinzel", serif;
+    z-index: 99; }
+  #home-container #golden-ratio-div #gr-svg-bg {
+    stroke: #111;
+    position: absolute;
+    width: inherit;
+    max-width: 100%;
+    height: inherit;
+    transition: stroke 1s; }
+  #home-container #golden-ratio-div:hover #gr-svg-bg {
+    stroke: #333; }
+  #home-container .top, #home-container .bottom {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; }
+  #home-container .top {
+    justify-content: flex-end; }
+  #home-container .svg-button {
+    position: absolute;
+    width: 140px;
+    transition: 1s; }
+  #home-container .svg-button:hover {
+    cursor: pointer; }
+  #home-container .svg-button g .button-ol-1 {
+    stroke-dasharray: 400px;
+    stroke-dashoffset: 400px;
+    transition: 1s; }
+  #home-container .svg-button g .button-ol-2 {
+    stroke-dasharray: 400px;
+    stroke-dashoffset: 0px;
+    transition: 1s; }
+  #home-container .svg-button:hover g .button-ol-1 {
+    stroke-dashoffset: 1200px; }
+  #home-container .svg-button:hover g .button-ol-2 {
+    stroke-dashoffset: -800px; }
+  #home-container .link-text {
+    position: relative;
+    font-size: 1em;
+    width: 140px;
+    text-align: center;
+    transition: 0.5s;
+    font-family: "Julius Sans One", sans-serif; }
+  @media (max-width: 750px) {
+    #home-container .headline {
+      font-size: 68px; } }
+  @media (max-width: 400px) {
+    #home-container .headline {
+      font-size: 48px; } }
 
 #magnifying-glass-container {
   margin: 0;
@@ -561,20 +590,41 @@ ui-view {
   width: 100vw;
   height: auto;
   scroll-behavior: auto; }
-  #magnifying-glass-container #magnifying-glass {
+  #magnifying-glass-container #magnifying-glass, #magnifying-glass-container #magnifying-glass-art {
     position: fixed;
     z-index: 99;
     display: none; }
+  #magnifying-glass-container #magnifying-glass-art {
+    pointer-events: none; }
+  #magnifying-glass-container #help-box {
+    width: 50px;
+    height: 50px;
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    background: grey;
+    border-radius: 5px;
+    transition: 0.25s; }
+    #magnifying-glass-container #help-box p {
+      padding: 10px;
+      display: none; }
+  #magnifying-glass-container #help-box:hover {
+    width: 200px;
+    height: 200px; }
+  #magnifying-glass-container #help-box:hover ~ p {
+    display: inline; }
+    #magnifying-glass-container #help-box:hover ~ p #icon {
+      color: white; }
   #magnifying-glass-container .container1 {
     position: absolute;
-    background: #575757; }
+    background: linear-gradient(black 100%, white 100%); }
   #magnifying-glass-container .zoomed {
     position: absolute;
     overflow: hidden; }
   #magnifying-glass-container nav {
     width: 100vw;
     height: 100px;
-    background: #bada55; }
+    background: black; }
     #magnifying-glass-container nav ul {
       height: inherit;
       display: flex;
@@ -586,4 +636,19 @@ ui-view {
         cursor: pointer; }
   #magnifying-glass-container .content {
     width: 100%;
-    height: 400px; }
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    padding: 50px; }
+  #magnifying-glass-container .content-left, #magnifying-glass-container .content-right {
+    width: 50%;
+    height: 100%; }
+  #magnifying-glass-container .colored {
+    background: linear-gradient(blue 0%, lightblue 100%); }
+  #magnifying-glass-container .clear {
+    background: white; }
+  #magnifying-glass-container .separator {
+    width: 100vw;
+    height: 100px;
+    background: white;
+    transform: rotate(1deg) skew(1deg); }

@@ -298,7 +298,7 @@ angular.module("portfolioApp").service("goldenRatioService", function() {
         shouldAnimate = false
         changeColors(currentSection)
       } else {
-        document.documentElement.style.setProperty('--gr-bg-color', 'black')
+        document.documentElement.style.setProperty('--gr-bg-color', '#18121E')
         shouldAnimate = true
       }
       spiral.css({

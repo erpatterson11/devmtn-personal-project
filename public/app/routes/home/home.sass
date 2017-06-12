@@ -1,15 +1,21 @@
-@import url('https://fonts.googleapis.com/css?family=Bungee+Inline|Bungee+Outline|Bungee+Shade|Faster+One|Monoton')
 
 $faster: 'Faster One', cursive
 $cinzel: 'Cinzel', serif
-$onb: 'Oranienbaum', serif
-$ll: 'Limelight', cursive
+$playfair: 'Playfair Display', serif
+$julius: 'Julius Sans One', sans-serif
+$syncopate: 'Syncopate', sans-serif
 
 
 #home-container
+  color: rgb(150,150,150)
+  font-family: $julius
+
+  p
+    padding: 40px
+
   .link-bar
     width: 100vw
-    height: 80vh
+    height: 100vh
     background: linear-gradient(black 0%, rgb(20,20,20) 100%)
     display: flex
     overflow: hidden
@@ -23,15 +29,22 @@ $ll: 'Limelight', cursive
 
 
   #space-div
-    background: url('./app/routes/home/img/space-game.png')
+    background: url('./app/routes/home/img/space-game-2.png')
     background-size: cover
     background-position: bottom left
+    background-repeat: no-repeat
     .headline
       color: orange
       text-shadow: -5px 5px #610e0e
       font-family: $faster
 
-
+  #magnifying-glass-div
+    .headline
+      font-family: $playfair
+      color: white
+    #magnifying-glass-art
+      position: absolute
+      transform: scale(0.25)
 
   #golden-ratio-div
     .headline
@@ -48,8 +61,8 @@ $ll: 'Limelight', cursive
     height: inherit
     transition: stroke 1s
 
-  #golden-ratio-div #gr-svg-bg:hover
-    stroke: #222
+  #golden-ratio-div:hover #gr-svg-bg
+    stroke: #333
 
   .top, .bottom
     width: 100%
@@ -62,23 +75,45 @@ $ll: 'Limelight', cursive
   .top
     justify-content: flex-end
 
+
   .svg-button
     position: absolute
     width: 140px
-    stroke-dasharray: 800px
     transition: 1s
+
   .svg-button:hover
     cursor: pointer
-    stroke-dashoffset: 1600px
+
+
+  .svg-button g .button-ol-1
+    stroke-dasharray: 400px
+    stroke-dashoffset: 400px
+    transition: 1s
+
+  .svg-button g .button-ol-2
+    stroke-dasharray: 400px
+    stroke-dashoffset: 0px
+    transition: 1s
+
+  .svg-button:hover g .button-ol-1
+    stroke-dashoffset: 1200px
+  .svg-button:hover g .button-ol-2
+    stroke-dashoffset: -800px
 
 
   .link-text
     position: relative
-    color: #b3b3b3
-    font-size: 0.6em
+    font-size: 1em
     width: 140px
     text-align: center
+    transition: 0.5s
+    font-family: $julius
+
 
   @media (max-width: 750px)
     .headline
       font-size: 68px
+
+  @media (max-width: 400px)
+    .headline
+      font-size: 48px

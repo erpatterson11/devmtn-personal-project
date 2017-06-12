@@ -1,6 +1,6 @@
 // CONFIG
   // ============================================================
-  angular.module("portfolioApp",['ui.router']).config(["$stateProvider", "$urlRouterProvider", function($stateProvider, $urlRouterProvider) {
+  angular.module("portfolioApp",['ui.router', 'ngAnimate']).config(["$stateProvider", "$urlRouterProvider", function($stateProvider, $urlRouterProvider) {
     // INITILIZE STATES
     // ============================================================
     $stateProvider
@@ -36,7 +36,6 @@
 angular.module("portfolioApp").controller("mainCtrl", ["$scope", "mainService", function($scope, mainService) {
 
 
-  // mainService.toggleNavBar()
 
 }]);
 
@@ -175,6 +174,8 @@ angular.module("portfolioApp").service("gameService", function() {
 
   const gameCanvas = document.querySelector('#gameCanvas')
   const bgCanvas = document.querySelector('#bgCanvas')
+  const explosionCanvas = document.querySelector('#explosionCanvas')
+
 
   const canvasContainer = document.querySelector('.canvas-container')
   const statsBar = document.querySelector('#stats-bar')
@@ -216,8 +217,6 @@ angular.module("portfolioApp").service("gameService", function() {
   canvasContainer.style.width = statsBar.style.width = `${cW}px`
   canvasContainer.style.height = statsBar.style.height = `${cH}px`
 
-
-
   let ctx = gameCanvas.getContext('2d')
 
   //========================== Background Canvas Setup ================================
@@ -226,6 +225,13 @@ angular.module("portfolioApp").service("gameService", function() {
   bgCanvas.height = gameCanvas.height
 
   let bgCtx = bgCanvas.getContext('2d')
+
+  //========================== Explosion Canvas Setup ================================
+
+  explosionCanvas.width = gameCanvas.width
+  explosionCanvas.height = gameCanvas.height
+
+  let explCtx = explosionCanvas.getContext('2d')
 
   //========================== Image Repo ================================
 
@@ -251,6 +257,16 @@ angular.module("portfolioApp").service("gameService", function() {
       this.powerup1.src = 'app/routes/game/media/img/powerup1.png'
       this.powerup2.src = 'app/routes/game/media/img/powerup2.png'
       this.powerup3.src = 'app/routes/game/media/img/powerup3.png'
+  }
+
+  //========================== Spritesheet Repo ================================
+
+  const spriteRepo = new function() {
+    this.explosion = new Image()
+    this.explosion2 = new Image()
+
+    this.explosion.src = "app/routes/game/media/img/explosion.png"
+    this.explosion2.src = "app/routes/game/media/img/explosion-2.png"
   }
 
   //========================== Audio Repo ================================
@@ -315,7 +331,7 @@ angular.module("portfolioApp").service("gameService", function() {
 
   //========================== Re-usable Factory Functions ================================
 
-    const InitializeBulletPool = (max, speed, image) => {
+    const BulletPoolFactory = (max, speed, image) => {
       let arr = []
       for (let i = 0; i < max; i++) {
         let bullet = {
@@ -335,7 +351,7 @@ angular.module("portfolioApp").service("gameService", function() {
       ctx.drawImage(obj.img, obj.x, obj.y)
     }
 
-    const NewPowerup = (image, interval) => {
+    const NewPowerupFactory = (image, interval) => {
       return {
           alive: false,
           x: -10,
@@ -346,6 +362,45 @@ angular.module("portfolioApp").service("gameService", function() {
           interval: interval
       }
     }
+
+    const DrawSpriteFactory = (sprite, totalFrames, frameRate) => {
+        let sp = sprite
+        sp.count = 0
+        let isAnimating = true
+        let currentFrame = 0
+        let frameWidth = sp.width/totalFrames
+        let frameSpeed = frameRate/100
+
+        let updateSprite = () => {
+            sp.count++
+            if (sp.count >= frameSpeed) {
+              sp.count = 0
+              currentFrame++
+              if (currentFrame >= totalFrames) {
+                console.log('current Frame reset');
+                isAnimating = false
+                currentFrame = 0
+              }
+            }
+            console.log(sp.count, currentFrame, frameSpeed);
+            console.log('calculated starting frame',frameWidth*currentFrame);
+          }
+
+        let drawSprite = (x, y) => {
+           explCtx.drawImage(sp,frameWidth*currentFrame,0,frameWidth,sp.height,x,y,frameWidth,sp.height)
+          }
+
+          let explReq
+
+        const animateSprite = (x, y) => {
+           updateSprite()
+           drawSprite(x, y)
+        }
+
+        return {
+          draw: animateSprite
+        }
+    };
 
     //========================== Draw BackgroundFactory ================================
 
@@ -445,7 +500,7 @@ angular.module("portfolioApp").service("gameService", function() {
       powerup: false
     }
 
-    let bulletPool = InitializeBulletPool(bulletParams.maxBullets,bulletParams.bulletSpeed,images.bullet)
+    let bulletPool = BulletPoolFactory(bulletParams.maxBullets,bulletParams.bulletSpeed,images.bullet)
 
     let moveBullet = (b) => {
       b.x += b.speed
@@ -656,7 +711,7 @@ angular.module("portfolioApp").service("gameService", function() {
       bulletSpeed: 15,
     }
 
-    let enemyBulletPool = InitializeBulletPool(bulletParams.maxBullets,bulletParams.bulletSpeed,images.enemyBullet)
+    let enemyBulletPool = BulletPoolFactory(bulletParams.maxBullets,bulletParams.bulletSpeed,images.enemyBullet)
 
     let moveEnemyBullet = (b) => {
       b.x -= b.speed
@@ -705,9 +760,9 @@ angular.module("portfolioApp").service("gameService", function() {
 
   const PowerupFactory = () => {
 
-    let powerup1 = NewPowerup(images.powerup1, 10)
-    let powerup2 = NewPowerup(images.powerup2, 15)
-    let powerup3 = NewPowerup(images.powerup3, 20)
+    let powerup1 = NewPowerupFactory(images.powerup1, 10)
+    let powerup2 = NewPowerupFactory(images.powerup2, 15)
+    let powerup3 = NewPowerupFactory(images.powerup3, 20)
     let powerup4 = powerup3
 
     let powerupPool = [powerup1,powerup2,powerup3, powerup4]
@@ -809,7 +864,7 @@ angular.module("portfolioApp").service("gameService", function() {
   //========================== Collision Detection Factory ================================
 
 
-  const CollisionDetectionFactory = (player, bullets, enemies, enemyBullets, powerup) => {
+  const CollisionDetectionFactory = (player, bullets, enemies, enemyBullets, powerup, explosion) => {
     let detectCollision = (rect1, rect2) => {
       if (rect1.x < rect2.x + rect2.img.width &&
          rect1.x + rect1.img.width > rect2.x &&
@@ -832,7 +887,7 @@ angular.module("portfolioApp").service("gameService", function() {
       b.y = -100
     }
 
-    let detectEnemyHit = () => {
+    let detectHitOnEnemy = () => {
       for(let i = 0; i < bullets.length; i++) {
         for(let j = 0; j < enemies.length; j++) {
           if (bullets[i].alive) {
@@ -840,6 +895,7 @@ angular.module("portfolioApp").service("gameService", function() {
               Score.change(100)
               audio.explosion.currentTime = 0
               audio.explosion.play()
+              Explosion.draw(enemies[j].x-images.enemy.height,enemies[j].y-images.enemy.height)
               resetEnemy(enemies[j])
               resetBullet(bullets[i])
             }
@@ -875,7 +931,7 @@ angular.module("portfolioApp").service("gameService", function() {
 
 
     const runDetections = () => {
-        detectEnemyHit()
+        detectHitOnEnemy()
         detectPlayerDamage(enemyBullets, player, resetBullet)
         detectPlayerDamage(enemies, player, resetEnemy)
         detectPowerupCollected()
@@ -894,6 +950,7 @@ angular.module("portfolioApp").service("gameService", function() {
   let EnemyBullets
   let Score
   let Powerup
+  let Explosion
   let DetectAllCollisions
   let Background
 
@@ -915,7 +972,8 @@ angular.module("portfolioApp").service("gameService", function() {
       EnemyBullets = EnemyBulletFactory()
       Score = ScoreFactory()
       Powerup = PowerupFactory()
-      DetectAllCollisions = CollisionDetectionFactory(Player.get(), PlayerBullets.get(), Enemies.get(),EnemyBullets.get(),Powerup.get())
+      Explosion = DrawSpriteFactory(spriteRepo.explosion, 46, 60)
+      DetectAllCollisions = CollisionDetectionFactory(Player.get(), PlayerBullets.get(), Enemies.get(),EnemyBullets.get(),Powerup.get(), Explosion)
       Background = BackgroundAnimateFactory()
     }
 
@@ -1027,16 +1085,13 @@ angular.module("portfolioApp").service("gameService", function() {
 
   gameControllerIcon.addEventListener('click', () => {
       if (Game.status()) {
-        console.log('enter',Game.status());
         Game.toggleLoop()
       }
       controlsTooltip.classList.remove('hidden')
     })
 
   gameControllerIcon.addEventListener('blur', () => {
-    console.log('hide',Game.status());
     if (!Game.status()) {
-      console.log('exit',Game.status());
       Game.toggleLoop()
     }
     controlsTooltip.classList.add('hidden')
@@ -1392,7 +1447,7 @@ angular.module("portfolioApp").service("goldenRatioService", function() {
         shouldAnimate = false
         changeColors(currentSection)
       } else {
-        document.documentElement.style.setProperty('--gr-bg-color', 'black')
+        document.documentElement.style.setProperty('--gr-bg-color', '#18121E')
         shouldAnimate = true
       }
       spiral.css({
@@ -1477,14 +1532,51 @@ angular.module("portfolioApp").service("goldenRatioService", function() {
 // ============================================================
 angular.module("portfolioApp").controller("homeCtrl", ["$scope", function($scope) {
 
+  const nav = document.querySelector('#main-nav')
+
+  function debounce(func) {
+    let timeout
+    let wait = 10
+    let immediate = true
+    return function() {
+      let context = this, args = arguments
+      let later = function() {
+        timeout = null
+        if (!immediate) func.apply(context, args)
+      }
+      let callNow = immediate && !timeout
+      clearTimeout(timeout)
+      timeout = setTimeout(later, wait)
+      if (callNow) {
+        func.apply(context, args)
+      }
+    }
+  }
+
+  let lastScrollTop = 0
+  let navHeight = parseInt(getComputedStyle(nav).height)
+
+  let navbarControl = () => {
+    let distFromTop = window.scrollY
+    let deltaScrollY = lastScrollTop - distFromTop
+    if (deltaScrollY < 0) {
+      if (distFromTop > navHeight) {
+        nav.style.top = `-100%`
+      }
+    } else {
+      nav.style.top = `0`
+    }
+    lastScrollTop = distFromTop
+  }
+
+  window.addEventListener('scroll', debounce(navbarControl));
+
 
 }]);
 
 // INITILIZE CONTROLLER
 // ============================================================
 angular.module("portfolioApp").controller("magnifyCtrl", ["$scope", function($scope) {
-
-
 
   $scope.textInput
   $scope.radio1
@@ -1493,18 +1585,16 @@ angular.module("portfolioApp").controller("magnifyCtrl", ["$scope", function($sc
   $scope.checkbox2
   $scope.checkbox3
 
-
-
-
-
-
-
   // VARIABLES
   // ============================================================
 
 
   const body = document.querySelector('body')
   const glass = document.querySelector('#magnifying-glass')
+
+  const glassArt = document.querySelector('#magnifying-glass-art')
+  const glassArtRim = document.querySelector('#glass-circle-art')
+
   const original = document.querySelector('body').children[1]
   // creates a copy of the content to be applied to the magnifying glass div
   const content = document.querySelector('.container1')
@@ -1520,9 +1610,12 @@ angular.module("portfolioApp").controller("magnifyCtrl", ["$scope", function($sc
 
 
   let scale = 2   // scale is ratio of zoomed and original content
-  let glassSize = 700
+  let glassSize = 600
   let isMagnifying = false
-  let spacedown = false
+  let shiftDown = false
+  let corr = glassSize/2
+  let artCorr = 31*scale // accounts for thickenss of rim on glass artwork
+
 
 
   // FUNCTIONS
@@ -1530,12 +1623,16 @@ angular.module("portfolioApp").controller("magnifyCtrl", ["$scope", function($sc
 
 
   function init() {
-    console.log('initialized');
-    glass.style.width = glassSize + 'px'
-    glass.style.height = glassSize + 'px'
-    glass.style.border = '2px solid black'
-    glass.style.clipPath = `circle(40% at 50% 50%)`
-    glass.style.WebkitClipPath = `circle(40% at 50% 50%)`
+    glass.style.width = glassArt.style.width = glassSize + 'px'
+    glass.style.height = glassArt.style.height = glassSize + 'px'
+    glass.style.clipPath = `circle(50% at 50% 50%)`
+    glass.style.WebkitClipPath = `circle(50% at 50% 50%)`
+
+    console.log(getComputedStyle(glassArtRim).width);
+
+
+    glassArt.style.transformOrigin = `29.0668% 29.0061%`
+    glassArt.style.transform = `scale(${scale}) translate(${62}px, ${62}px)`
 
     // applies content copy to magnifying glass div
     glass.append(clone)
@@ -1551,10 +1648,11 @@ angular.module("portfolioApp").controller("magnifyCtrl", ["$scope", function($sc
 
 
   function toggleGlass() {
-    console.log('toggled');
     if (isMagnifying) {
+      glassArt.style.display = 'inline'
       glass.style.display = 'inline'
     } else {
+      glassArt.style.display = 'none'
       glass.style.display = 'none'
     }
   }
@@ -1562,10 +1660,8 @@ angular.module("portfolioApp").controller("magnifyCtrl", ["$scope", function($sc
 
   // event function to move mag-glass around zoomed conten t
   function moveGlass(e) {
-    if (spacedown && isMagnifying) {
-
+    if (shiftDown && isMagnifying) {
       if (pageCenter.w !== document.body.scrollWidth/2 || pageCenter.h !== document.body.scrollHeight/2) {
-        console.log('adjusted center')
         pageCenter = {
           w: document.body.scrollWidth/2,
           h: document.body.scrollHeight/2
@@ -1576,13 +1672,13 @@ angular.module("portfolioApp").controller("magnifyCtrl", ["$scope", function($sc
           x: e.pageX,
           y: e.pageY
         }
-      let corr = glassSize/2
       let centOffsetX = ((scale-1)*(mouse.x-pageCenter.w)/pageCenter.w)*pageCenter.w
       let centOffsetY = ((scale-1)*(mouse.y-pageCenter.h)/pageCenter.h)*pageCenter.h
       let distFromTop = document.querySelector('body').scrollTop
       // translate container div mith mouse move
       let divTranslateX = mouse.x - corr
       let divTranslateY = mouse.y - corr - distFromTop
+      glassArt.style.transform = `scale(${scale}) translate(${artCorr + divTranslateX/scale}px, ${artCorr + divTranslateY/scale}px)`
       glass.style.transform = `translate(${divTranslateX}px, ${divTranslateY}px)`
       // correct container div translations
       // centOffsetX and centOffsetY account for the scaling difference between the original content and the zoom
@@ -1610,26 +1706,29 @@ angular.module("portfolioApp").controller("magnifyCtrl", ["$scope", function($sc
   })
 
   window.addEventListener('keydown', (e) => {
-    if (e.keyCode === 32) {
-      e.preventDefault()
-      spacedown = true
+    if (e.keyCode === 16) {
+      shiftDown = true
     }
-    // keyboard shortcut (shift + 'm') to toggle magnifying glass
-    if (e.keyCode === 77 & e.shiftKey) {
+    // keyboard shortcut (ctrl + shift + 'm') to toggle magnifying glass
+    if (e.keyCode === 90 & e.shiftKey & e.ctrlKey) {
       isMagnifying = !isMagnifying
       toggleGlass()
     }
   })
 
   window.addEventListener('keyup', (e) => {
-    if (e.keyCode === 32) {
-      spacedown = false
+    if (e.keyCode === 16) {
+      shiftDown = false
       // body.style.cursor = 'default'
     }
   })
 
   window.addEventListener('mousemove', (e) => {
     moveGlass(e)
+  })
+
+  window.addEventListener('scroll', (e) => {
+
   })
 
 

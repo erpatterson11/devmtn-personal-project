@@ -4,24 +4,26 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title></title>
-    <link href="https://fonts.googleapis.com/css?family=Cinzel|Faster+One|Limelight|Oranienbaum|Press+Start+2P" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cinzel|Faster+One|Julius+Sans+One|Playfair+Display|Syncopate" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="./bundle.css">
   </head>
   <body ng-controller='mainCtrl'>
 
-    <ui-view></ui-view>
+    <ui-view id='ui-view'></ui-view>
 
-    <!-- <nav id='main-nav'>
+    <nav id='main-nav' class='nav-link-hover'>
+      <div id='navlogo' ui-sref='home' class='nav-link-hover'>Eric Patterson</div>
       <ul id='main-links'>
-        <li ui-sref='home'>Portfolio</li>
-        <li>About</li>
-        <li>Contact</li>
+        <li ui-sref='home' class='nav-link-hover'>Portfolio</li>
+        <li class='nav-link-hover'>About</li>
+        <li class='nav-link-hover'>Contact</li>
       </ul>
-    </nav> -->
+    </nav>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.2/angular-ui-router.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
     <script
       src="https://code.jquery.com/jquery-3.2.1.js"
       integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="

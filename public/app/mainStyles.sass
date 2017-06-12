@@ -53,7 +53,7 @@ body::-webkit-scrollbar
   width: 0 !important
 
 
-ui-view
+#ui-view
   width: 100vw
   height: auto
 
@@ -62,20 +62,27 @@ ui-view
   top: 0
   width: 100vw
   height: 70px
+  padding: 0px 50px
   display: flex
-  justify-content: center
+  justify-content: space-between
   align-items: center
   background: black
-  color: white
-  box-shadow: 0 5px 5px 5px grey
+  color: rgba(200,200,200,0.75)
+  box-shadow: 0 10px 10px 0px rgba(20,20,20,0.5)
   transition: top 0.25s
 
   #main-links
     display: flex
-    width: 40%
+    width: 300px
     flex-direction: row
-    justify-content: space-around
+    justify-content: space-between
     align-items: center
 
-  li
+  .nav-link-hover
+    text-align: center
     cursor: pointer
+    transition: 0.25s
+
+  .nav-link-hover:hover
+    color: rgba(200,200,200,1)
+    font-size: 17px

@@ -5,7 +5,7 @@ const session = require('express-session')
 const massive = require('massive')
 const passport = require('passport')
 const Auth0Strategy = require('passport-auth0')
-const config = require(__dirname + '/config')
+const config = require('/server_config.js')
 
 
 //========================== Setup ================================
@@ -35,11 +35,16 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 passport.use(new Auth0Strategy(config.dev.auth0Strategy, function(accessToken, refreshToken, extraParams, profile, done) {
+  console.log(profile);
   return done(null, profile)
 }))
 
 // login endpoint
-app.get('/login', passport.authenticate('auth0'))
+app.get('/login', passport.authenticate('auth0'), function(req,res) {
+  console.log(passport.session);
+  console.log(req, res);
+  res.redirect('/#!/space')
+})
 
 app.get('/auth/callback',
 passport.authenticate('auth0', {
