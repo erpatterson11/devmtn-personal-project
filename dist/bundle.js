@@ -372,7 +372,6 @@ angular.module("portfolioApp").service("gameService", function() {
         let frameSpeed = frameRate/100
 
         let updateSprite = () => {
-          console.log(sp.count, frameSpeed, currentFrame, totalFrames);
             sp.count++
             if (sp.count >= frameSpeed) {
               sp.count = 0
@@ -391,7 +390,6 @@ angular.module("portfolioApp").service("gameService", function() {
           let explReq
 
         const animateSprite = (x, y) => {
-          console.log(sp.count, isAnimating);
            explCtx.clearRect(0,0,cW,cH)
            updateSprite()
            drawSprite(x, y)

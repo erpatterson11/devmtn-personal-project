@@ -12,7 +12,7 @@ const config = require('./config')
 
 // express setup
 let app = module.exports = express()
-app.use(express.static('dist'))
+app.use(express.static('./../dist'))
 app.use(bodyParser.json())
 app.use(cors())
 
@@ -81,7 +81,6 @@ app.get('/api/scores', function(req,res) {
 })
 
 app.post('/api/scores', function(req,res) {
-
   let score = req.body.score
   let nickname = req.body.nickname
   let auth0id = null
