@@ -5,7 +5,7 @@ const session = require('express-session')
 const massive = require('massive')
 const passport = require('passport')
 const Auth0Strategy = require('passport-auth0')
-const config = require('server_config.js')
+const config = require('./server_config.js')
 
 
 //========================== Setup ================================
