@@ -1,0 +1,311 @@
+#weather-app-section
+
+  nav
+    width: 100%
+    height: 150px
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    position: fixed
+    bottom: 0
+    z-index: 999
+    font-size: 12px
+
+  .data-container
+    width: 100%
+    display: flex
+    justify-content: space-around
+
+
+  #five-day-button
+    position: fixed
+    top: 50px
+    left: 50px
+    width: 50px
+    height: 30px
+    display: flex
+    flex-direction: column
+    justify-content: space-around
+    align-items: center
+    cursor: pointer
+    .bar
+      background: rgba(255,255,255,0.5)
+      width: 40px
+      height: 5px
+      border-radius: 2.5px
+
+  #exitButton
+    cursor: pointer
+
+  .fiveDay
+    position: fixed
+    background: linear-gradient(#2F80ED,#56CCF2)
+    width: 100vw
+    height: 100vh
+    display: flex
+    justify-content: center
+    align-items: center
+    #exitButton
+      position: fixed
+      top: 50px
+      right: 50px
+    #fiveDayCardContainer
+      width: 70%
+      height: 60%
+      display: flex
+      justify-content: space-around
+      align-items: center
+      flex-wrap: wrap
+      color: rgba(125,125,125,0.5)
+
+
+  //-----------------------------------------------------------------------------
+  //                             Artwork Styling
+  //-----------------------------------------------------------------------------
+
+
+  #artwork-container
+    // background-image: radial-gradient(circle at 0% 80%, #e3e5f3, #e38c59, #a33d4b,#46142b)
+    z-index: -1
+
+  .background
+      width: 100vw
+      height: 100vh
+      position: absolute
+      top: 0
+      left: 0
+
+  // .buttons
+  //   position: fixed
+  //   top: 20px
+  //   right: 20px
+  //   #button
+  //     width: 140px
+  //     display: block
+  //     margin-bottom: 5px
+
+
+  #mountainSVG
+    position: fixed
+    max-height: 65vh
+    bottom: 0
+    left: 0
+
+
+  .cloud
+    position: fixed
+
+  .cloud1
+    top: 50
+    left: 50
+    height: 30vh
+
+  #precip-cloud-right-large
+        height: 60vh
+        right: -200vw
+        top: 5vh
+        path
+          fill: rgba(255,255,255,0.5)
+
+  #precip-cloud-right-small
+        height: 30vh
+        right: -200vw
+        top: 30vh
+        path
+          fill: rgba(255,255,255,0.5)
+
+  #precip-cloud-left-large
+        height: 55vh
+        left: -200vw
+        top: 10vh
+        path
+          fill: rgba(255,255,255,0.5)
+
+  #precip-cloud-left-small
+        height: 30vh
+        left: -200vw
+        top: 20vh
+        path
+          fill: rgba(255,255,255,0.5)
+
+  #precip-cloud-top
+        height: 20vh
+        left: 0
+        top: 0
+        filter: drop-shadow(2px 2px 5px #888)
+
+  .gray-sky
+    position: fixed
+    width: 100vw
+    height: 100vh
+    background-image: linear-gradient(0, #ccc, #aaa)
+
+
+  .windPath
+    position: fixed
+    stroke: #ffffff
+    padding-top: 15px
+    width: 150vw
+
+
+  #windPath1
+    top: 30vh
+    stroke-width: 0
+    // stroke-dasharray: 200 5000
+    // stroke-dashoffset: 5000
+    // animation: wind 4s linear forwards infinite
+
+  #windPath2
+    top: 60vh
+    stroke-width: 0
+    // stroke-dasharray: 300 7000
+    // stroke-dashoffset: 7000
+    // animation: wind 6s linear reverse infinite
+
+  #windPath3
+    top: 45vh
+    left: -15vw
+    stroke-width: 0
+    // stroke-dasharray: 200 7000
+    // stroke-dashoffset: 7000
+    // animation: wind 5s linear forwards infinite
+
+  #windPath4
+    top: 15vh
+    left: -27vw
+    stroke-width: 0
+    // stroke-dasharray: 300 5000
+    // stroke-dashoffset: 5000
+    // animation: wind 6s linear reverse infinite
+
+  @keyframes wind
+    to
+      stroke-dashoffset: 0
+
+
+
+  // .sun-pulse
+  //   background-image: radial-gradient(circle at 50% 60%,rgb(255,194,82), rgb(70,20,43) 65%, rgba(0,0,0,0))
+  //   opacity: 0.2
+  //   animation: pulse 3s ease-in-out infinite
+
+  //
+  // @keyframes pulse
+  //   0%, 100%
+  //       opacity: 0.2
+  //
+  //   20%
+  //         opacity: 0.1
+  //
+  //   35%
+  //     opacity: 0.25
+  //
+  //   60%
+  //       opacity: 0.15
+  //
+  //   90%
+  //       opacity: 0.3
+
+
+  //-----------------------------------------------------------------------------
+  //                               Canvas Styling
+  //-----------------------------------------------------------------------------
+
+
+  canvas
+    position: fixed
+    background: rgba(0,0,0,0)
+    #precipCanvas
+      width: 200vw
+      height: 85vh
+      top: 15vh
+      left: -10vw
+    #starsCanvas
+      width: 100vw
+      height: 100vh
+      top: 0
+      left: 0
+
+
+  //-----------------------------------------------------------------------------
+  //                               Slider Styling
+  //-----------------------------------------------------------------------------
+
+  #timeSlider
+    -webkit-appearance: none
+    margin: 10px 0
+    width: 70%
+    background: none
+
+  #timeSlider:focus
+    outline: none
+
+  #timeSlider::-webkit-slider-runnable-track
+    width: 100%
+    height: 30px
+    cursor: pointer
+    animate: 1s
+    // box-shadow: inset 0 0 15px rgba(125,125,125,0.5)
+    border-radius: 15px
+
+
+  #timeSlider::-webkit-slider-thumb
+    background: rgba(255,255,255,0.5)
+    height: 30px
+    width: 45px
+    border-radius: 50px
+    cursor: pointer
+    -webkit-appearance: none
+
+
+  #timeSlider::-moz-range-track
+    width: 100%
+    height: 30px
+    cursor: pointer
+    animate: 0.2s
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.5)
+    border-radius: 15px
+
+
+  #timeSlider::-moz-range-thumb
+    background: rgba(0,0,0,0.5)
+    height: 30px
+    width: 30px
+    border-radius: 50px
+    cursor: pointer
+
+  #timeSlider::-ms-track
+    width: 100%
+    height: 10px
+    cursor: pointer
+    animate: 0.2s
+    background: transparent
+    border-color: transparent
+    color: transparent
+
+  #timeSlider::-ms-fill-lower
+    border-radius: 10px
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.5)
+
+  #timeSlider::-ms-fill-upper
+    border-radius: 10px
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.5)
+
+  #timeSlider::-ms-thumb
+    background: rgba(0,0,0,0.5)
+    height: 30px
+    width: 30px
+    border-radius: 50px
+    cursor: pointer
+
+  //-----------------------------------------------------------------------------
+  //                               Loader Styling
+  //-----------------------------------------------------------------------------
+
+  .loader-wrapper
+    position: fixed
+    width: 100vw
+    height: 100vh
+    background: linear-gradient(#2F80ED,#56CCF2)
+    z-index: 1000

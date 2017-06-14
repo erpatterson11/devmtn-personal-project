@@ -1,6 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
+const request = require('request')
 const session = require('express-session')
 const massive = require('massive')
 const passport = require('passport')
@@ -12,7 +13,7 @@ const config = require('./config')
 
 // express setup
 let app = module.exports = express()
-app.use(express.static('./../dist'))
+app.use(express.static('dist'))
 app.use(bodyParser.json())
 app.use(cors())
 
@@ -35,14 +36,11 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 passport.use(new Auth0Strategy(config.dev.auth0Strategy, function(accessToken, refreshToken, extraParams, profile, done) {
-  console.log(profile);
   return done(null, profile)
 }))
 
 // login endpoint
 app.get('/login', passport.authenticate('auth0'), function(req,res) {
-  console.log(passport.session);
-  console.log(req, res);
   res.redirect('/#!/space')
 })
 
@@ -70,8 +68,28 @@ app.get('/api/auth0', function(req,res) {
   res.send(req.user)
 })
 
+app.get('/api/weather/search', function(req,res) {
+    let address = req.query.location
+    let url = `https://api.geocod.io/v1/geocode?q=${address}+&api_key=${config.dev.geocodio.secret}`
+
+    request(url, function(err, response, body) {
+      res.status(200).send(body)
+    })
+})
+
+app.get('/api/weather/coords/:lat/:long', function(req,res) {
+  console.log(req.params);
+  let lat = req.params.lat
+  let long = req.params.long
+  let url = `https://api.darksky.net/forecast/96b4eea61237b84d5a37ba9fd4faaef2/${lat},${long}`
+
+  request(url, function(err, response, body) {
+    res.status(200).send(body)
+  })
+})
+
 app.get('/api/scores', function(req,res) {
-  db.get_scores([], function(err, scores) {
+  db.get_scores(function(err, scores) {
     if (err) {
       res.status(400).send(err)
     } else {
@@ -99,7 +117,6 @@ app.post('/api/scores', function(req,res) {
   else {
     db.add_score([score, nickname, auth0id], function(err, confirmation) {
       if (err) {
-        console.log(err);
         res.send(err)
       } else {
         res.status(200).send(confirmation)

@@ -1,6 +1,6 @@
 // INITILIZE CONTROLLER
 // ============================================================
-angular.module("portfolioApp").controller("mainCtrl", function($scope, mainService) {
+angular.module("portfolioApp").controller("mainCtrl", function($scope, mainService, reusableFuncsService) {
 
 
 

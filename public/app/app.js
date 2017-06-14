@@ -20,10 +20,15 @@
         templateUrl: 'app/routes/magnifying-glass-site/magnifyTmpl.html',
         controller: 'magnifyCtrl'
       })
-      .state('space-game', {
-        url: '/space',
+      .state('galaxy-strike', {
+        url: '/galaxy-strike',
         templateUrl: 'app/routes/game/gameTmpl.html',
         controller: 'gameCtrl'
+      })
+      .state('weather', {
+        url: '/weather',
+        templateUrl: 'app/routes/weather-app/weatherTmpl.html',
+        controller: 'weatherCtrl'
       })
 
     // ASSIGN OTHERWISE

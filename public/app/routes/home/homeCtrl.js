@@ -1,27 +1,8 @@
 // INITILIZE CONTROLLER
 // ============================================================
-angular.module("portfolioApp").controller("homeCtrl", function($scope) {
+angular.module("portfolioApp").controller("homeCtrl", function($scope, reusableFuncsService) {
 
   const nav = document.querySelector('#main-nav')
-
-  function debounce(func) {
-    let timeout
-    let wait = 10
-    let immediate = true
-    return function() {
-      let context = this, args = arguments
-      let later = function() {
-        timeout = null
-        if (!immediate) func.apply(context, args)
-      }
-      let callNow = immediate && !timeout
-      clearTimeout(timeout)
-      timeout = setTimeout(later, wait)
-      if (callNow) {
-        func.apply(context, args)
-      }
-    }
-  }
 
   let lastScrollTop = 0
   let navHeight = parseInt(getComputedStyle(nav).height)
@@ -39,7 +20,7 @@ angular.module("portfolioApp").controller("homeCtrl", function($scope) {
     lastScrollTop = distFromTop
   }
 
-  window.addEventListener('scroll', debounce(navbarControl));
+  window.addEventListener('scroll', reusableFuncsService.debounce(navbarControl));
 
 
 });

@@ -1,6 +1,6 @@
 // INITILIZE CONTROLLER
 // ============================================================
-angular.module("portfolioApp").controller("magnifyCtrl", function($scope) {
+angular.module("portfolioApp").controller("magnifyCtrl", function($scope, reusableFuncsService) {
 
   $scope.textInput
   $scope.radio1
@@ -17,7 +17,8 @@ angular.module("portfolioApp").controller("magnifyCtrl", function($scope) {
   const glass = document.querySelector('#magnifying-glass')
 
   const glassArt = document.querySelector('#magnifying-glass-art')
-  const glassArtRim = document.querySelector('#glass-circle-art')
+  const glassArtRim = document.querySelector('#glass-rim')
+  const glassArtGlass = document.querySelector('#svg-glass-content')
 
   const original = document.querySelector('body').children[1]
   // creates a copy of the content to be applied to the magnifying glass div
@@ -41,7 +42,6 @@ angular.module("portfolioApp").controller("magnifyCtrl", function($scope) {
   let artCorr = 31*scale // accounts for thickenss of rim on glass artwork
 
 
-
   // FUNCTIONS
   // ============================================================
 
@@ -52,8 +52,9 @@ angular.module("portfolioApp").controller("magnifyCtrl", function($scope) {
     glass.style.clipPath = `circle(50% at 50% 50%)`
     glass.style.WebkitClipPath = `circle(50% at 50% 50%)`
 
+
     glassArt.style.transformOrigin = `29.0668% 29.0061%`
-    glassArt.style.transform = `scale(${scale}) translate(${62}px, ${62}px)`
+    glassArt.style.transform = `scale(${scale}) translate(${artCorr}px, ${artCorr}px)`
 
     // applies content copy to magnifying glass div
     glass.append(clone)
@@ -75,6 +76,7 @@ angular.module("portfolioApp").controller("magnifyCtrl", function($scope) {
     } else {
       glassArt.style.display = 'none'
       glass.style.display = 'none'
+
     }
   }
 
@@ -114,6 +116,10 @@ angular.module("portfolioApp").controller("magnifyCtrl", function($scope) {
     }
     }
 
+    function resizeGlass() {
+
+    }
+
 
     // EVENT LISTENERS
     // ============================================================
@@ -144,7 +150,6 @@ angular.module("portfolioApp").controller("magnifyCtrl", function($scope) {
   window.addEventListener('keyup', (e) => {
     if (e.keyCode === 16) {
       shiftDown = false
-      // body.style.cursor = 'default'
     }
   })
 
@@ -152,9 +157,10 @@ angular.module("portfolioApp").controller("magnifyCtrl", function($scope) {
     moveGlass(e)
   })
 
-  window.addEventListener('scroll', (e) => {
-
-  })
-
+  // window.addEventListener('scroll', reusableFuncsService.debounce(() => {
+  //   console.log(getComputedStyle(zoomed));
+  //   let distFromTop = document.querySelector('body').scrollTop
+  //   // zoomed.style.transform = `translate(0px, ${-distFromTop}px) scale(${scale})`
+  // }))
 
 });

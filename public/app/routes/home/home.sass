@@ -1,4 +1,3 @@
-
 $faster: 'Faster One', cursive
 $cinzel: 'Cinzel', serif
 $playfair: 'Playfair Display', serif
@@ -85,20 +84,35 @@ $syncopate: 'Syncopate', sans-serif
     cursor: pointer
 
 
-  .svg-button g .button-ol-1
+  .svg-button .button-ol-1
+    stroke: #b3b3b3
+    stroke-width: 2px
+    fill: rgba(255,255,255,0)
     stroke-dasharray: 400px
     stroke-dashoffset: 400px
     transition: 1s
 
-  .svg-button g .button-ol-2
+
+  .svg-button .button-ol-2
+    stroke: #b3b3b3
+    stroke-width: 2px
+    fill: rgba(255,255,255,0)
     stroke-dasharray: 400px
     stroke-dashoffset: 0px
     transition: 1s
 
-  .svg-button:hover g .button-ol-1
+  .svg-button:hover .button-ol-1
+    // stroke: rgba(255,255,255,0.05)
+    // fill: rgba(255,255,255,0.1)
+    // stroke-width: 1px
     stroke-dashoffset: 1200px
-  .svg-button:hover g .button-ol-2
+    transition: 1s
+  .svg-button:hover .button-ol-2
+    // stroke: rgba(255,255,255,0.05)
+    // fill: rgba(255,255,255,0.1)
+    // stroke-width: 1px
     stroke-dashoffset: -800px
+    transition: 1s
 
 
   .link-text
@@ -117,4 +131,3 @@ $syncopate: 'Syncopate', sans-serif
   @media (max-width: 400px)
     .headline
       font-size: 48px
-    
