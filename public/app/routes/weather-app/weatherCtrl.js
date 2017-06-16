@@ -21,14 +21,7 @@ $scope.getWeatherDataFromBrowserLocation = function() {
     $scope.weather = results.weather.data
     $scope.hourly = results.weather.data.hourly.data
 
-    $scope.hourly[1].precipIntensity = 1
-    $scope.hourly[1].precipProbability = 1
-    $scope.hourly[1].icon = 'rain'
-
-    $scope.hourly[2].precipIntensity = 1
-    $scope.hourly[2].precipProbability = 1
-    $scope.hourly[2].icon = 'snow'
-
+    $('#timeSlider').val(0)
 
     $scope.changeArtwork($scope.selectedTime)
     $scope.artworkTransition();
@@ -44,6 +37,8 @@ $scope.searchWeatherAndLocationInfo = function(address) {
 
         $scope.weather = results.weather.data
         $scope.hourly = results.weather.data.hourly.data
+
+        $('#timeSlider').val(0)
 
         $scope.changeArtwork($scope.selectedTime)
         $scope.searchLocation = ''

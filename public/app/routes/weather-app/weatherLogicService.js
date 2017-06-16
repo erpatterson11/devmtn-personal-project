@@ -5,6 +5,7 @@ angular.module('portfolioApp').service('weatherLogicService', function(weatherCa
     //------------------------------------------------------------------------------
 
     const artContainer = $('#artwork-container')
+    const mountainSVG = $('#mountainSVG')
     const mountains = $('#mountains')
     const mountainAccents = $('#mountains-accents')
     const mountainLeft = $('#mountain-left')
@@ -12,7 +13,7 @@ angular.module('portfolioApp').service('weatherLogicService', function(weatherCa
     const groundAccent = $('#ground-accent')
     const timeSlider = $('#timeSlider')
     const slider = $('.slider')
-    const graySkyFilter = $('.gray-sky')
+    const graySkyFilter = $('#gray-sky')
     const precipClouds = $('.precip-cloud')
     const starsCanvas = $('#starsCanvas')
     const pcLeftLarge = $('#precip-cloud-left-large')
@@ -157,7 +158,7 @@ angular.module('portfolioApp').service('weatherLogicService', function(weatherCa
         var current = selectedTime
         var time = (unixTo24Hour(current.time)) ? unixTo24Hour(current.time) : 0
         var config = findSunPosition(time)
-        var transTime = 0.7
+        var transTime = 0.3
         var moveClouds = function moveClouds() {
             var tlCloudMovement = new TimelineMax()
             tlCloudMovement.add('initial')
@@ -194,7 +195,7 @@ angular.module('portfolioApp').service('weatherLogicService', function(weatherCa
         if (!isItNight) {
             if (time > 20) {
                 isItNight = true
-                weatherCanvasService.twinkleTwinkle(isItNight)
+                // weatherCanvasService.twinkleTwinkle(isItNight)
                 tlHourChange.from(starsCanvas, transTime, {
                     opacity: 0
                 }, 'initial')
@@ -202,7 +203,7 @@ angular.module('portfolioApp').service('weatherLogicService', function(weatherCa
         } else if (isItNight) {
             if (time > 6 && time < 21) {
                 isItNight = false
-                weatherCanvasService.twinkleTwinkle(isItNight)
+                // weatherCanvasService.twinkleTwinkle(isItNight)
             }
         }
 
@@ -215,33 +216,39 @@ angular.module('portfolioApp').service('weatherLogicService', function(weatherCa
         if (current.icon.includes('snow')) {
             if (!isItSnowing) {
               updateWeatherBools(false,true)
-                weatherCanvasService.makeItSnow(current.precipIntensity, current.windSpeed)
+              weatherCanvasService.makeItSnow(current.precipIntensity, current.windSpeed)
             }
         } else if (current.icon.includes('rain')) {
             if (!isItRaining) {
               updateWeatherBools(true,false)
-                weatherCanvasService.makeItRain(current.precipIntensity, current.windSpeed)
+              weatherCanvasService.makeItRain(current.precipIntensity, current.windSpeed)
             }
         }
 
 
         // Toggle gray sky background if it is raining, snowing, or cloud cover is over 75%
-        if (current.cloudCover >= 0.7 || current.precipIntensity > 0.25) {
+        if (current.cloudCover > 0.65 || current.precipIntensity > 0.25) {
             if (21 <= time || time < 6) {
                 tlHourChange.to(graySkyFilter, transTime, {
                     opacity: 1,
                     backgroundImage: 'linear-gradient(0, #666, #444)'
+                }, 'initial').to(mountainSVG, transTime, {
+                  filter: 'grayscale(40%)'
                 }, 'initial')
             } else if (21 > time || time >= 6) {
                 tlHourChange.to(graySkyFilter, transTime, {
                     opacity: 1,
                     backgroundImage: 'linear-gradient(0, #ccc, #aaa)'
+                }, 'initial').to(mountainSVG, transTime, {
+                  filter: 'grayscale(40%)'
                 }, 'initial')
             }
         } else {
-            tlHourChange.to(graySkyFilter, transTime, {
-                opacity: 0
-            }, 'initial')
+          tlHourChange.to(graySkyFilter, transTime, {
+              opacity: 0
+          }, 'initial').to(mountainSVG, transTime, {
+            filter: 'grayscale(0%)'
+          }, 'initial')
         }
 
         // Show top rain cloud if it is raining or snowing
@@ -280,7 +287,7 @@ angular.module('portfolioApp').service('weatherLogicService', function(weatherCa
                 opacity: 0,
                 onComplete: moveClouds
             }, 'initial')
-        } else if (current.cloudCover >= 0.5 && current.cloudCover < 0.75) {
+        } else if (current.cloudCover >= 0.5 && current.cloudCover < 0.65) {
             tlHourChange.to(pcLeftSmall, transTime, {
                 opacity: 1
             }, 'initial').to(pcRightSmall, transTime*1.2, {
@@ -291,7 +298,7 @@ angular.module('portfolioApp').service('weatherLogicService', function(weatherCa
                 opacity: 0,
                 onComplete: moveClouds
             }, 'initial')
-        } else if (current.cloudCover > 0.75 || isItRaining || isItSnowing) {
+        } else if (current.cloudCover > 0.65 || isItRaining || isItSnowing) {
             tlHourChange.to(pcLeftLarge, transTime, {
                 opacity: 1
             }, 'initial').to(pcLeftSmall, transTime*1.1, {

@@ -15,11 +15,6 @@
         templateUrl: 'app/routes/golden-ratio-site/goldenRatioTmpl.html',
         controller: 'goldenRatioCtrl'
       })
-      .state('magnify', {
-        url: '/magnify',
-        templateUrl: 'app/routes/magnifying-glass-site/magnifyTmpl.html',
-        controller: 'magnifyCtrl'
-      })
       .state('galaxy-strike', {
         url: '/galaxy-strike',
         templateUrl: 'app/routes/game/gameTmpl.html',
@@ -1895,14 +1890,31 @@ this.searchWeatherAndLocationInfo = function(address) {
 
 angular.module('portfolioApp').service('weatherCanvasService', function() {
 
-  //------------------------------------------------------------------------------
-  //            Precipitation Canvas
-  //------------------------------------------------------------------------------
 
   let isItRaining
   let isItSnowing
   let reqR
   let reqS
+
+  let ctx = document.getElementById('precipCanvas').getContext('2d')
+
+  ctx.canvas.height = window.innerHeight
+  ctx.canvas.width = window.innerWidth*1.5
+  let w = ctx.canvas.width,
+      h = ctx.canvas.height
+  ctx.strokeStyle = '#76b1e2'
+  ctx.lineWidth = 1
+  ctx.lineCap = 'round'
+
+
+
+//  SERVICE FUNCTIONS
+/////////////////////
+
+//------------------------------------------------------------------------------
+//            Precipitation Canvas
+//------------------------------------------------------------------------------
+
 
   this.setRainBool = (bool) => {
     isItRaining = bool
@@ -1912,40 +1924,26 @@ angular.module('portfolioApp').service('weatherCanvasService', function() {
     isItSnowing= bool
   }
 
-
   this.makeItSnow = (precipIntensity, windSpeed) => {
-    let ctx = document.getElementById('precipCanvas').getContext('2d');
 
-    ctx.canvas.height = window.innerHeight;
-    ctx.canvas.width = window.innerWidth*2;
-    let w = ctx.canvas.width,
-        h = ctx.canvas.height;
-        console.log(w,h, ctx.canvas.style.width, ctx.canvas.style.height);
-    ctx.strokeStyle = '#76b1e2';
-    ctx.lineWidth = 1;
-    ctx.lineCap = 'round';
-
-
-    let particles = [];
-    let snowIntensity = precipIntensity;
-    let windySnow = windSpeed;
-    let maxParts = snowIntensity * w/4;
+    let particles = []
+    let snowIntensity = precipIntensity
+    let windySnow = windSpeed
+    let maxParts = snowIntensity * w/4
     let shouldAnimate = true
 
     function addParticle() {
-      let s = (Math.random() * 5) + 0.5;
-      let x = Math.random() * w;
-      let y = 0;
-      let xs =Math.random() * 2 - 0.5 + windySnow;
-      let ys = (Math.random() * 2.5) + 2.5;
+      let s = (Math.random() * 5) + 0.5
+      let x = Math.random() * w
+      let y = 0
+      let xs =Math.random() * 2 - 0.5 + windySnow/2
+      let ys = (Math.random() * 2.5) + 2.5
       particles.push({ 's': s, 'x': x, 'y': y, 'xs': xs, 'ys': ys })
     }
 
     function draw() {
       if (particles.length < maxParts) {
-        for (let a = 0; a < 5; a++) {
-          addParticle()
-        }
+        addParticle()
       }
       ctx.clearRect(0, 0, w, h)
       for (let i = 0; i < particles.length; i++) {
@@ -1962,17 +1960,20 @@ angular.module('portfolioApp').service('weatherCanvasService', function() {
       for (let i = 0; i < particles.length; i++) {
         let p = particles[i]
         if (isItSnowing) {
-          p.x += Math.random() * 2 - 0.5 + windySnow/2;
+          p.x += p.xs
           p.y += p.ys
         }
         if (p.y > h && isItSnowing) {
           p.y = 0
           p.x = ~~(Math.random()*w) - (h/2)
-        } else if (p.y > h && !isItSnowing || p.x > w && !isItSnowing){
+        }
+        if (p.y > h && !isItSnowing || p.x > w && !isItSnowing){
           p.ys = 0
           p.y = -5
         } else if (!isItSnowing) {
-          p.ys *= 3
+          p.ys *= 1.2
+          p.x += p.xs
+          p.y += p.ys
         }
       }
   }
@@ -1980,7 +1981,7 @@ angular.module('portfolioApp').service('weatherCanvasService', function() {
 
   function animate() {
     if (!isItSnowing) {
-      setTimeout(() => {
+      setTimeout( () => {
         shouldAnimate = false
         particles = []
         cancelAnimationFrame(reqS)
@@ -2000,27 +2001,17 @@ angular.module('portfolioApp').service('weatherCanvasService', function() {
   }
 
 
-  }; //---------------------------------------------------------------------------
+  } //---------------------------------------------------------------------------
 
 
   // Rain function
 
   this.makeItRain = function(precipIntensity, windSpeed) {
-    let ctx = document.getElementById('precipCanvas').getContext('2d')
-
-    ctx.canvas.height = window.innerHeight;
-    ctx.canvas.width = window.innerWidth;
-    let w = ctx.canvas.width,
-        h = ctx.canvas.height;
-    ctx.strokeStyle = '#76b1e2';
-    ctx.lineWidth = 1;
-    ctx.lineCap = 'round';
-
-    let windyRain = windSpeed;
-    let rainIntensity = precipIntensity;
-    let particles = [];
-    let maxParts = rainIntensity * w;
-    let shouldAnimate = isItRaining
+    let windyRain = windSpeed
+    let rainIntensity = precipIntensity
+    let particles = []
+    let maxParts = rainIntensity * w
+    let shouldAnimate = true
 
     function addParticle() {
       particles.push({
@@ -2029,14 +2020,12 @@ angular.module('portfolioApp').service('weatherCanvasService', function() {
         l: Math.random() * 1,
         xs: Math.random() * 2 - 0.5 + windyRain,
         ys: Math.random() * 10 + 50 + rainIntensity * 2
-      });
+      })
     }
 
     function draw() {
       if (particles.length < maxParts) {
-        for (let a = 0; a < 5; a++) {
-          addParticle()
-        }
+        addParticle()
       }
       ctx.clearRect(0, 0, w, h)
       for (let c = 0; c < particles.length; c++) {
@@ -2046,44 +2035,55 @@ angular.module('portfolioApp').service('weatherCanvasService', function() {
         ctx.lineTo(p.x + p.l * p.xs, p.y + p.l * p.ys)
         ctx.stroke()
       }
-      if (!isItRaining) {
-        shouldAnimate = false;
-        particles = []
-      } else if (isItRaining) {
         move()
-      }
     }
 
 
     function move() {
       for (let b = 0; b < particles.length; b++) {
-        let p = particles[b];
-        p.x += p.xs;
-        p.y += p.ys;
-        if (p.x > w && isItRaining || p.y > h && isItRaining) {
-          p.x = Math.random() * w;
-          p.y = -20;
+        let p = particles[b]
+        if (isItRaining) {
+          p.x += p.xs
+          p.y += p.ys
+        }
+        if (p.y > h && isItRaining) {
+          p.y = 0
+          p.x = ~~(Math.random()*w) - (h/2)
+        }
+        if (p.y > h && !isItRaining || p.x > w && !isItRaining){
+          p.ys = 0
+          p.y = -5
+        } else if (!isItRaining) {
+          p.ys *= 1.2
+          p.x += p.xs
+          p.y += p.ys
         }
       }
     }
 
 
     function animate() {
+      if (!isItRaining) {
+        setTimeout(() => {
+          shouldAnimate = false
+          particles = []
+          cancelAnimationFrame(reqR)
+          ctx.clearRect(0,0,w,h)
+        },500)
+      }
       draw()
-      if (isItRaining) {
+      if (shouldAnimate) {
         reqR = requestAnimationFrame(animate)
       } else {
         return
       }
     }
 
-    if (isItRaining) {
+    if (shouldAnimate) {
       animate()
-    } else {
-      cancelAnimationFrame(reqR)
     }
 
-  }; //---------------------------------------------------------------------------
+  } //---------------------------------------------------------------------------
 
 
 
@@ -2138,10 +2138,10 @@ angular.module('portfolioApp').service('weatherCanvasService', function() {
   //     }
   //   }
   //
-  //   let totalStars = 300;
+  //   let totalStars = 300
   //   let starArray = []
   //
-  //   for (let i = 0; i < totalStars; i++) {
+  //   for (let i = 0 i < totalStars i++) {
   //     let radius = rand(0.25,1)
   //     let x = rand(radius,cW-radius)
   //     let y = rand(radius,cH-radius)
@@ -2162,8 +2162,8 @@ angular.module('portfolioApp').service('weatherCanvasService', function() {
   //
   //     if (!isItNight) {
   //       setTimeout(function () {
-  //         return cancelAnimationFrame(isItNight);
-  //       }, 500);
+  //         return cancelAnimationFrame(isItNight)
+  //       }, 500)
   //     }
   //   }
   //   animation()
@@ -2194,14 +2194,7 @@ $scope.getWeatherDataFromBrowserLocation = function() {
     $scope.weather = results.weather.data
     $scope.hourly = results.weather.data.hourly.data
 
-    $scope.hourly[1].precipIntensity = 1
-    $scope.hourly[1].precipProbability = 1
-    $scope.hourly[1].icon = 'rain'
-
-    $scope.hourly[2].precipIntensity = 1
-    $scope.hourly[2].precipProbability = 1
-    $scope.hourly[2].icon = 'snow'
-
+    $('#timeSlider').val(0)
 
     $scope.changeArtwork($scope.selectedTime)
     $scope.artworkTransition();
@@ -2217,6 +2210,8 @@ $scope.searchWeatherAndLocationInfo = function(address) {
 
         $scope.weather = results.weather.data
         $scope.hourly = results.weather.data.hourly.data
+
+        $('#timeSlider').val(0)
 
         $scope.changeArtwork($scope.selectedTime)
         $scope.searchLocation = ''
@@ -2284,6 +2279,7 @@ angular.module('portfolioApp').service('weatherLogicService', ["weatherCanvasSer
     //------------------------------------------------------------------------------
 
     const artContainer = $('#artwork-container')
+    const mountainSVG = $('#mountainSVG')
     const mountains = $('#mountains')
     const mountainAccents = $('#mountains-accents')
     const mountainLeft = $('#mountain-left')
@@ -2291,7 +2287,7 @@ angular.module('portfolioApp').service('weatherLogicService', ["weatherCanvasSer
     const groundAccent = $('#ground-accent')
     const timeSlider = $('#timeSlider')
     const slider = $('.slider')
-    const graySkyFilter = $('.gray-sky')
+    const graySkyFilter = $('#gray-sky')
     const precipClouds = $('.precip-cloud')
     const starsCanvas = $('#starsCanvas')
     const pcLeftLarge = $('#precip-cloud-left-large')
@@ -2436,7 +2432,7 @@ angular.module('portfolioApp').service('weatherLogicService', ["weatherCanvasSer
         var current = selectedTime
         var time = (unixTo24Hour(current.time)) ? unixTo24Hour(current.time) : 0
         var config = findSunPosition(time)
-        var transTime = 0.7
+        var transTime = 0.3
         var moveClouds = function moveClouds() {
             var tlCloudMovement = new TimelineMax()
             tlCloudMovement.add('initial')
@@ -2473,7 +2469,7 @@ angular.module('portfolioApp').service('weatherLogicService', ["weatherCanvasSer
         if (!isItNight) {
             if (time > 20) {
                 isItNight = true
-                weatherCanvasService.twinkleTwinkle(isItNight)
+                // weatherCanvasService.twinkleTwinkle(isItNight)
                 tlHourChange.from(starsCanvas, transTime, {
                     opacity: 0
                 }, 'initial')
@@ -2481,7 +2477,7 @@ angular.module('portfolioApp').service('weatherLogicService', ["weatherCanvasSer
         } else if (isItNight) {
             if (time > 6 && time < 21) {
                 isItNight = false
-                weatherCanvasService.twinkleTwinkle(isItNight)
+                // weatherCanvasService.twinkleTwinkle(isItNight)
             }
         }
 
@@ -2494,33 +2490,39 @@ angular.module('portfolioApp').service('weatherLogicService', ["weatherCanvasSer
         if (current.icon.includes('snow')) {
             if (!isItSnowing) {
               updateWeatherBools(false,true)
-                weatherCanvasService.makeItSnow(current.precipIntensity, current.windSpeed)
+              weatherCanvasService.makeItSnow(current.precipIntensity, current.windSpeed)
             }
         } else if (current.icon.includes('rain')) {
             if (!isItRaining) {
               updateWeatherBools(true,false)
-                weatherCanvasService.makeItRain(current.precipIntensity, current.windSpeed)
+              weatherCanvasService.makeItRain(current.precipIntensity, current.windSpeed)
             }
         }
 
 
         // Toggle gray sky background if it is raining, snowing, or cloud cover is over 75%
-        if (current.cloudCover >= 0.7 || current.precipIntensity > 0.25) {
+        if (current.cloudCover > 0.65 || current.precipIntensity > 0.25) {
             if (21 <= time || time < 6) {
                 tlHourChange.to(graySkyFilter, transTime, {
                     opacity: 1,
                     backgroundImage: 'linear-gradient(0, #666, #444)'
+                }, 'initial').to(mountainSVG, transTime, {
+                  filter: 'grayscale(40%)'
                 }, 'initial')
             } else if (21 > time || time >= 6) {
                 tlHourChange.to(graySkyFilter, transTime, {
                     opacity: 1,
                     backgroundImage: 'linear-gradient(0, #ccc, #aaa)'
+                }, 'initial').to(mountainSVG, transTime, {
+                  filter: 'grayscale(40%)'
                 }, 'initial')
             }
         } else {
-            tlHourChange.to(graySkyFilter, transTime, {
-                opacity: 0
-            }, 'initial')
+          tlHourChange.to(graySkyFilter, transTime, {
+              opacity: 0
+          }, 'initial').to(mountainSVG, transTime, {
+            filter: 'grayscale(0%)'
+          }, 'initial')
         }
 
         // Show top rain cloud if it is raining or snowing
@@ -2559,7 +2561,7 @@ angular.module('portfolioApp').service('weatherLogicService', ["weatherCanvasSer
                 opacity: 0,
                 onComplete: moveClouds
             }, 'initial')
-        } else if (current.cloudCover >= 0.5 && current.cloudCover < 0.75) {
+        } else if (current.cloudCover >= 0.5 && current.cloudCover < 0.65) {
             tlHourChange.to(pcLeftSmall, transTime, {
                 opacity: 1
             }, 'initial').to(pcRightSmall, transTime*1.2, {
@@ -2570,7 +2572,7 @@ angular.module('portfolioApp').service('weatherLogicService', ["weatherCanvasSer
                 opacity: 0,
                 onComplete: moveClouds
             }, 'initial')
-        } else if (current.cloudCover > 0.75 || isItRaining || isItSnowing) {
+        } else if (current.cloudCover > 0.65 || isItRaining || isItSnowing) {
             tlHourChange.to(pcLeftLarge, transTime, {
                 opacity: 1
             }, 'initial').to(pcLeftSmall, transTime*1.1, {

@@ -96,10 +96,10 @@
       <h3>Data for nerds</h3>
       </br>
       <ul>
-        <li>Humidity: {{ Math.floor(hourly[selectedTime].humidity*100) }}%</li>
+        <li>Humidity: {{ hourly[selectedTime].humidity*100 }}%</li>
         <li>Cloud cover: {{ hourly[selectedTime].cloudCover*100 }}%</li>
         <li>Chance of precip: {{ hourly[selectedTime].precipProbability*100 }}%</li>
-        <li>Precip intensity: {{ hourly[selectedTime].precipIntensity*10 }}/10</li>
+        <li>Precip intensity: {{ hourly[selectedTime].precipIntensity*100 }}/100</li>
         <li>Pressure: {{ hourly[selectedTime].pressure }}mbar</li>
         <li>Wind bearing: {{ hourly[selectedTime].windBearing }}deg</li>
         <li>Wind gust: {{ hourly[selectedTime].windGust }}mph</li>
