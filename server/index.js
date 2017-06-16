@@ -68,17 +68,29 @@ app.get('/api/auth0', function(req,res) {
   res.send(req.user)
 })
 
+// Get coordinates from a search using geocodio
 app.get('/api/weather/search', function(req,res) {
-    let address = req.query.location
-    let url = `https://api.geocod.io/v1/geocode?q=${address}+&api_key=${config.dev.geocodio.secret}`
+    if (req.query.location) {
+        let address = req.query.location
+        let url = `https://api.geocod.io/v1/geocode?q=${address}+&api_key=${config.dev.geocodio.secret}`
 
-    request(url, function(err, response, body) {
-      res.status(200).send(body)
-    })
+        request(url, function(err, response, body) {
+          res.status(200).send(body)
+        })
+    } else if (req.query.latitude && req.query.longitude) {
+        let address = req.query.location
+        let url = `https://api.geocod.io/v1/reverse?q=${req.query.latitude},${req.query.longitude}&api_key=${config.dev.geocodio.secret}`
+
+        request(url, function(err, response, body) {
+          res.status(200).send(body)
+        })
+    }
+
 })
 
-app.get('/api/weather/coords/:lat/:long', function(req,res) {
-  console.log(req.params);
+
+// Get weather from coordinates
+app.get('/api/weather/coords/:lat/:long/', function(req,res) {
   let lat = req.params.lat
   let long = req.params.long
   let url = `https://api.darksky.net/forecast/96b4eea61237b84d5a37ba9fd4faaef2/${lat},${long}`
@@ -106,7 +118,7 @@ app.post('/api/scores', function(req,res) {
     auth0id = req.body.auth0
   }
 
-  if (!score || !nickname) {
+  if (typeof score !== 'number' || typeof nickname !== 'string') {
     res.status(400).send(`There was an error posting your score.
       This is the information you sent.
       Score: ${score},

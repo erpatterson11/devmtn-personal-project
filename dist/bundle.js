@@ -115,6 +115,10 @@ angular.module("portfolioApp").service("reusableFuncsService", ["$http", functio
 
 angular.module("portfolioApp").controller("gameCtrl", ["$scope", "$timeout", "scoreService", "gameService", function($scope, $timeout, scoreService, gameService) {
 
+
+
+  document.querySelector('#main-nav').style.display = 'none'
+
   //========================== Variables ================================
 
   $scope.isShownSubmissionForm = false
@@ -179,11 +183,19 @@ angular.module("portfolioApp").controller("gameCtrl", ["$scope", "$timeout", "sc
     }
   }
 
+
+// ensures game is stopped before user navigates to other route
+  $scope.$on('$locationChangeStart', (e) => {
+    gameService.stopGame()
+  })
+
+
+
 }]);
 
 // INITILIZE SERVICE
 // ============================================================
-angular.module("portfolioApp").service("gameService", function() {
+angular.module("portfolioApp").service("gameService", ["reusableFuncsService", function(reusableFuncsService) {
 
 
 // note: there is a getScore function attached to the service
@@ -206,8 +218,7 @@ angular.module("portfolioApp").service("gameService", function() {
   const bgCanvas = document.querySelector('#bgCanvas')
   const explosionCanvas = document.querySelector('#explosionCanvas')
 
-
-  const canvasContainer = document.querySelector('.canvas-container')
+  const gameContainer = document.querySelector('#game-container')
   const statsBar = document.querySelector('#stats-bar')
 
   const startScreen = document.querySelector('#start-screen')
@@ -234,34 +245,7 @@ angular.module("portfolioApp").service("gameService", function() {
   const customLoginForm = document.querySelector('#custom-login')
   const finalScoreText = document.querySelector('#final-score-text')
 
-  //========================== Canvas SetUp ================================
 
-  let gameAspect = 1200 / 780
-  let screenW = window.innerWidth
-  let screenH = window.innerHeight
-  let userAspect = screenW / screenH
-
-  let cW = gameCanvas.width = 900
-  let cH = gameCanvas.height = 600
-
-  canvasContainer.style.width = statsBar.style.width = `${cW}px`
-  canvasContainer.style.height = statsBar.style.height = `${cH}px`
-
-  let ctx = gameCanvas.getContext('2d')
-
-  //========================== Background Canvas Setup ================================
-
-  bgCanvas.width = gameCanvas.width
-  bgCanvas.height = gameCanvas.height
-
-  let bgCtx = bgCanvas.getContext('2d')
-
-  //========================== Explosion Canvas Setup ================================
-
-  explosionCanvas.width = gameCanvas.width
-  explosionCanvas.height = gameCanvas.height
-
-  let explCtx = explosionCanvas.getContext('2d')
 
   //========================== Image Repo ================================
 
@@ -287,6 +271,16 @@ angular.module("portfolioApp").service("gameService", function() {
       this.powerup1.src = 'app/routes/game/media/img/powerup1.png'
       this.powerup2.src = 'app/routes/game/media/img/powerup2.png'
       this.powerup3.src = 'app/routes/game/media/img/powerup3.png'
+
+      this.scaleImages = function(scaleX, scaleY) {
+        let keys = Object.keys(this)
+        keys.map(img => {
+          if (typeof images[img] === 'object') {
+            images[img].width = images[img].naturalWidth * scaleX
+            images[img].height = images[img].naturalHeight * scaleY
+          }
+        })
+      }
   }
 
   //========================== Spritesheet Repo ================================
@@ -297,6 +291,16 @@ angular.module("portfolioApp").service("gameService", function() {
 
     this.explosion.src = "app/routes/game/media/img/explosion.png"
     this.explosion2.src = "app/routes/game/media/img/explosion-2.png"
+
+    this.scaleImages = function(scaleX, scaleY) {
+      let keys = Object.keys(this)
+      keys.map(sprite => {
+        if (typeof spriteRepo[sprite] === 'object') {
+          spriteRepo[sprite].width = spriteRepo[sprite].naturalWidth * scaleX
+          spriteRepo[sprite].height = spriteRepo[sprite].naturalHeight * scaleY
+        }
+      })
+    }
   }
 
   //========================== Audio Repo ================================
@@ -316,6 +320,54 @@ angular.module("portfolioApp").service("gameService", function() {
     this.laser2.volume = 0.5
     this.laser3.volume = 0.5
   }
+
+
+  //========================== Canvas SetUp ================================
+
+  let ctx = gameCanvas.getContext('2d')
+
+  //========================== Background Canvas Setup ================================
+
+  let bgCtx = bgCanvas.getContext('2d')
+
+  //========================== Explosion Canvas Setup ================================
+
+  let explCtx = explosionCanvas.getContext('2d')
+
+  //========================== Canvas Sizing ================================
+    let gameW = 1200
+    let gameH = 780
+    let gameAspect = gameW / gameH
+    let cW
+    let cH
+    let imgScaleX
+    let imgScaleY
+
+  function sizeGame() {
+    let screenW = window.innerWidth
+    let screenH = window.innerHeight
+    let userAspect = screenW / screenH
+    if (userAspect > gameAspect) {
+      cW = screenH * gameAspect
+      cH = screenH
+    } else if ( userAspect < gameAspect ) {
+      cW = screenW
+      cH = screenW / gameAspect
+    }
+    gameCanvas.width = bgCanvas.width = explosionCanvas.width = cW
+    gameCanvas.height = bgCanvas.height = explosionCanvas.height = cH
+    gameContainer.style.width = gameCanvas.style.width = bgCanvas.style.width = explosionCanvas.style.width = cW + 'px'
+    gameContainer.style.height = gameCanvas.style.height = bgCanvas.style.height = explosionCanvas.style.height = cH + 'px'
+
+    imgScaleX = cW / gameW
+    imgScaleY = (cW / gameAspect) / gameH
+    images.scaleImages(imgScaleX,imgScaleY)
+    spriteRepo.scaleImages(imgScaleX,imgScaleY)
+  }
+
+  sizeGame()
+
+  window.addEventListener('resize', reusableFuncsService.debounce(sizeGame))
 
   //========================== Player Movement Logic ================================
 
@@ -353,9 +405,7 @@ angular.module("portfolioApp").service("gameService", function() {
   }
 
   //====================================================================
-
   //                          Factory Functions
-
   //====================================================================
 
 
@@ -378,7 +428,7 @@ angular.module("portfolioApp").service("gameService", function() {
 
     const DrawObject = (obj, callback) => {
       callback(obj)
-      ctx.drawImage(obj.img, obj.x, obj.y)
+      ctx.drawImage(obj.img, obj.x, obj.y, obj.img.width, obj.img.height)
     }
 
     const NewPowerupFactory = (image, interval) => {
@@ -393,8 +443,8 @@ angular.module("portfolioApp").service("gameService", function() {
       }
     }
 
-    const DrawSpriteFactory = (sprite, totalFrames, frameRate) => {
-        let sp = sprite
+    const DrawSpriteFactory = (totalFrames, frameRate) => {
+        let sp = spriteRepo.explosion
         sp.count = 0
         let isAnimating = true
         let currentFrame = 0
@@ -414,10 +464,10 @@ angular.module("portfolioApp").service("gameService", function() {
           }
 
         let drawSprite = (x, y) => {
-           explCtx.drawImage(sp,frameWidth*currentFrame,0,frameWidth,sp.height,x,y,frameWidth,sp.height)
+           explCtx.drawImage(sp,spriteRepo.explosion.width/totalFrames*currentFrame,0,spriteRepo.explosion.width/totalFrames,spriteRepo.explosion.height/totalFrames,x,y,frameWidth,sp.height)
           }
 
-          let explReq
+        let explReq
 
         const animateSprite = (x, y) => {
            explCtx.clearRect(0,0,cW,cH)
@@ -498,7 +548,7 @@ angular.module("portfolioApp").service("gameService", function() {
         }
         if (KeyStatus.right) {
             player.x += player.speed
-            player.x >= (cW - player.width) ? player.x = cW - player.width : null
+            player.x >= (cW - player.img.width) ? player.x = cW - player.img.width : null
         }
         if (KeyStatus.up) {
             player.y -= player.speed
@@ -506,7 +556,7 @@ angular.module("portfolioApp").service("gameService", function() {
         }
         if (KeyStatus.down) {
             player.y += player.speed
-            player.y >= (cH - player.height) ? player.y = cH - player.height : null
+            player.y >= (cH - player.img.height) ? player.y = cH - player.img.height : null
         }
     }
 
@@ -519,8 +569,7 @@ angular.module("portfolioApp").service("gameService", function() {
       get: getPlayerInfo,
       draw: drawPlayer
     }
-  };
-
+  }
 
   //========================== Player Bullet Factory ================================
 
@@ -551,8 +600,8 @@ angular.module("portfolioApp").service("gameService", function() {
         audio.laser1.currentTime=0;
         audio.laser1.play()
         b.alive = true
-        b.x = player.x + player.width
-        b.y = player.y + player.height / 2
+        b.x = player.x + player.img.width
+        b.y = player.y + player.img.height / 2
         bulletPool.push(bulletPool.shift())
       }
     }
@@ -564,8 +613,8 @@ angular.module("portfolioApp").service("gameService", function() {
         audio.laser1.currentTime=0;
         audio.laser1.play()
         b.alive = true
-        b.x = player.x + player.width
-        b.y = player.y + player.height * 0.25
+        b.x = player.x + player.img.width
+        b.y = player.y + player.img.height * 0.25
         bulletPool.push(bulletPool.shift())
       }
       let bn = bulletPool[0]
@@ -573,8 +622,8 @@ angular.module("portfolioApp").service("gameService", function() {
         audio.laser2.currentTime=0;
         audio.laser2.play()
         bn.alive = true
-        bn.x = player.x + player.width
-        bn.y = player.y + player.height * 0.75
+        bn.x = player.x + player.img.width
+        bn.y = player.y + player.img.height * 0.75
         bulletPool.push(bulletPool.shift())
       }
     }
@@ -586,8 +635,8 @@ angular.module("portfolioApp").service("gameService", function() {
         audio.laser1.currentTime=0;
         audio.laser1.play()
         b.alive = true
-        b.x = player.x + player.width
-        b.y = player.y + player.height * 0.25
+        b.x = player.x + player.img.width
+        b.y = player.y + player.img.height * 0.25
         bulletPool.push(bulletPool.shift())
       }
       let bn = bulletPool[0]
@@ -595,8 +644,8 @@ angular.module("portfolioApp").service("gameService", function() {
         audio.laser2.currentTime=0;
         audio.laser2.play()
         bn.alive = true
-        bn.x = player.x + player.width
-        bn.y = player.y + player.height * 0.75
+        bn.x = player.x + player.img.width
+        bn.y = player.y + player.img.height * 0.75
         bulletPool.push(bulletPool.shift())
       }
       let by = bulletPool[0]
@@ -604,15 +653,15 @@ angular.module("portfolioApp").service("gameService", function() {
         audio.laser3.currentTime=0;
         audio.laser3.play()
         by.alive = true
-        by.x = player.x + player.width
+        by.x = player.x + player.img.width
         by.y = player.y
         bulletPool.push(bulletPool.shift())
       }
       let bz = bulletPool[0]
       if (!bz.alive) {
         bz.alive = true
-        bz.x = player.x + player.width
-        bz.y = player.y + player.height
+        bz.x = player.x + player.img.width
+        bz.y = player.y + player.img.height
         bulletPool.push(bulletPool.shift())
       }
     }
@@ -1006,7 +1055,7 @@ angular.module("portfolioApp").service("gameService", function() {
       EnemyBullets = EnemyBulletFactory()
       Score = ScoreFactory()
       Powerup = PowerupFactory()
-      Explosion = DrawSpriteFactory(spriteRepo.explosion, 46, 60)
+      Explosion = DrawSpriteFactory(46, 60)
       DetectAllCollisions = CollisionDetectionFactory(Player.get(), PlayerBullets.get(), Enemies.get(),EnemyBullets.get(),Powerup.get(), Explosion)
       Background = BackgroundAnimateFactory()
     }
@@ -1081,7 +1130,8 @@ angular.module("portfolioApp").service("gameService", function() {
       loop: gameloop,
       status: loopStatus,
       toggleLoop: toggleGameLoop,
-      toggleMute: toggleMutePage
+      toggleMute: toggleMutePage,
+      stop: cancelRAF
     }
   };
 
@@ -1131,6 +1181,8 @@ angular.module("portfolioApp").service("gameService", function() {
     controlsTooltip.classList.add('hidden')
     })
 
+
+
 ////////////////////////////////////////////////////////////////////
 // END GAME CODE
 
@@ -1143,9 +1195,13 @@ angular.module("portfolioApp").service("gameService", function() {
     return Score.get()
   }
 
+  this.stopGame = function() {
+    return Game.stop()
+  }
 
 
-});
+
+}]);
 
 // INITILIZE SERVICE
 // ============================================================
@@ -1181,10 +1237,6 @@ angular.module("portfolioApp").controller("goldenRatioCtrl", ["$scope", "goldenR
 
   document.querySelector('nav').style.display = 'none'
 
-  window.onbeforeunload = function() {
-    document.querySelector('nav').style.display = 'inline'
-  }
-
 }]);
 
 // INITILIZE SERVICE
@@ -1204,8 +1256,6 @@ angular.module("portfolioApp").service("goldenRatioService", function() {
 
     const canvas = document.querySelector('#spiral-canvas')
     const ctx = canvas.getContext('2d')
-
-    const trumpImg = document.querySelector('#golden-spiral-trump')
 
     let startOver = false
     let shouldAnimate = false
@@ -1227,6 +1277,9 @@ angular.module("portfolioApp").service("goldenRatioService", function() {
     let chgInt = 178
     let createSpiral
     let spiralSpeed = 11
+    let moved
+    let touchStartX
+    let touchStartY
 
     let colorSchemes = {
       0: {
@@ -1268,7 +1321,7 @@ angular.module("portfolioApp").service("goldenRatioService", function() {
       6: {
         bg: "#A23988",
         accent1: "#0E0B16",
-        accent2: "#0E0B16",
+        accent2: "#A23988",
         text: "#ffffff"
       },
       7: {
@@ -1318,15 +1371,7 @@ angular.module("portfolioApp").service("goldenRatioService", function() {
       path.getBoundingClientRect()
       path.style.transition = path.style.WebkitTransition =
         `stroke-dashoffset ${animationTime}s ease-in`
-      // if (offSet) {
-      //   console.log('forward');
         path.style.strokeDashoffset = `${length + (2*length*direction)}`
-      // } else {
-      //   path.style.strokeDashoffset = 0
-      //   path.style.strokeDashoffset = `${length*direction}`
-      //   console.log(path.style.strokeDashoffset);
-      // }
-
 
       if (!startOver) {
         setTimeout(() => {
@@ -1379,27 +1424,15 @@ angular.module("portfolioApp").service("goldenRatioService", function() {
         drawLine(spiralSpeed)
       }
 
-      win.on('wheel keydown click', (e) => {
+      // canvas spiral animation controll. ignores r key for 'reset'
+      win.on('wheel keydown click touchmove', (e) => {
         if(shouldAnimate && e.keyCode!==82) {
           animate()
-        } else {
-          ctx.resetTransform(1,0,0,1,0,0)
-          ctx.clearRect(0,0,wW,wH)
-          resetSpiralSVG()
-          // startingAnimation(1,1, false)
         }
       })
 
-      $('canvas').on('click', () => {
-        currentSection = 0
-        updateSpiral()
-        ctx.resetTransform(1,0,0,1,0,0)
-        ctx.clearRect(0,0,wW,wH)
-        resetSpiralSVG()
-        // startingAnimation(1,1, false)
-      })
-    }
 
+      // wheel navigation
       win.on('wheel', (e) => {
         let dY = e.originalEvent.deltaY
         if (dY > 0) {
@@ -1410,6 +1443,7 @@ angular.module("portfolioApp").service("goldenRatioService", function() {
         updateSpiral()
       })
 
+      // arrow key navigation
       win.on('keydown', (e) => {
         if(e.keyCode === 38 || e.keyCode === 39) {
           currentSection++
@@ -1423,22 +1457,30 @@ angular.module("portfolioApp").service("goldenRatioService", function() {
         }
       })
 
-    // win.on('click', () => {
-    //   if
-    // })
+    // touch scroll navigation
+    window.addEventListener('touchstart', (e) => {
+      let touch = e.touches[0] || e.changedTouches[0]
+      moved = 0
+      touchStartX = touch.clientX
+      touchStartY = touch.clientY
+    })
+    window.addEventListener('touchmove', (e) => {
+      let touch = e.touches[0] || e.changedTouches[0]
+      moved = (touchStartY - touch.clientX + touchStartX - touch.clientY) * 3
+      touchStartX = touch.clientX
+      touchStartY = touch.clientY
+      rotation += moved/-10
+      if (rotation > 50) {
+        currentSection--
+        rotation = 0
+        updateSpiral()
+      } else if (rotation < -50) {
+        currentSection++
+        rotation = 0
+        updateSpiral()
+      }
+    })
 
-    // win.on('touchstart', (e) => {
-    //   e.preventDefault()
-    //   let touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0]
-    //   touchStartX = touch.pageX
-    //   thouchStartY = touch.pageY
-    // })
-    //
-    // win.on('touchmove', (e) => {
-    //   e.preventDefault()
-    //   let touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0]
-    //
-    // })
 
     sections.each((i)=>{
       $(sections[i]).on('click',(e)=> {
@@ -1448,7 +1490,7 @@ angular.module("portfolioApp").service("goldenRatioService", function() {
         }
       })
     })
-
+}
 
     let limitNums = (num) => {
       if (num > 10) {
@@ -1479,13 +1521,21 @@ angular.module("portfolioApp").service("goldenRatioService", function() {
       }
     }
 
+    let hideBehindCurrent = () => {
+      sections.each((i) => {
+        if (i < currentSection - 1) {
+          $(sections[i]).css({'display':'none'})
+        } else {
+          $(sections[i]).css({'display':'flex'})
+        }
+      })
+    }
 
-    let showTrump = () => {
-      if (currentSection >= sections.length-1) {
-        trumpImg.style.opacity = 1
-      } else {
-        trumpImg.style.opacity = 0
-      }
+    let resetCanvas = () => {
+      shouldAnimate = false
+      ctx.resetTransform(1,0,0,1,0,0)
+      ctx.clearRect(0,0,wW,wH)
+      rotate = 0
     }
 
   // callback function to move to the next or previous section (depending on currentSection)
@@ -1495,7 +1545,9 @@ angular.module("portfolioApp").service("goldenRatioService", function() {
     let inBounds = (currentSection > -zoomOutLimit && currentSection < sections.length + 3)
     if (inBounds) {
       if (currentSection < sections.length + 2 && currentSection >= -1)  {
-        shouldAnimate = false
+        // hide sections after rotation animation. make sure this time matches transition delay set in css on .spiral element
+        hideBehindCurrent()
+        resetCanvas()
         changeColors(currentSection)
       } else {
         document.documentElement.style.setProperty('--gr-bg-color', '#18121E')
@@ -1508,7 +1560,6 @@ angular.module("portfolioApp").service("goldenRatioService", function() {
     } else {
       currentSection > 0 ? currentSection-- : currentSection++
     }
-    showTrump()
   }
 
   // generates spiral from all divs with class 'section'
@@ -1585,6 +1636,9 @@ angular.module("portfolioApp").service("goldenRatioService", function() {
 angular.module("portfolioApp").controller("homeCtrl", ["$scope", "reusableFuncsService", function($scope, reusableFuncsService) {
 
   const nav = document.querySelector('#main-nav')
+
+  // re-enable nav-bar if it was disabled in a route
+  nav.style.display = 'flex'
 
   let lastScrollTop = 0
   let navHeight = parseInt(getComputedStyle(nav).height)
@@ -1775,443 +1829,563 @@ angular.module("portfolioApp").controller("magnifyCtrl", ["$scope", "reusableFun
 }]);
 
 
-// document.addEventListener("DOMContentLoaded", function(event) {
-//
-// //------------------------------------------------------------------------------
-// //            Variables
-// //------------------------------------------------------------------------------
-//
-//   var artContainer = document.getElementById('artwork-container')
-//
-//
-//   //------------------------------------------------------------------------------
-//   //            timelines
-//   //------------------------------------------------------------------------------
-//
-//   var tlTest = new TimelineMax({});
-//
-//   tlTest.to(artContainer, 5, {backgroundImage: `radial-gradient(circle at 0% 90%, #e3e5f3, #e38c59, #a33d4b,#46142b)`})
-//
-//// $('#btnPlay').on('click', () => tlTest.play());
-// $('#btnPause').on('click', () => tlTest.pause());
-// $('#btnResume').on('click', () => tlTest.resume());
-// $('#btnReverse').on('click', () => tlTest.reverse());
-// $('#btnSpeedUp').on('click', () => tlTest.timeScale(3));
-// $('#btnSlowDown').on('click', () => tlTest.timeScale(0.2));
-// $('#btnSeek').on('click', () => tlTest.seek(2));//goes to a labeled position or time in the animation
-// $('#btnProgress').on('click', () => tlTest.progress(0.5));// goes to progress of animation (0-1 start-finish)
-// $('#btnRestart').on('click', () => tlTest.restart());
-//
+angular.module('portfolioApp').service('weatherApiService', ["$http", "$q", function($http, $q){
 
 
-// var setSunPosition = function(time) {
-//   var hour = $scope.unixTo24Hour(time);
-//   var timePositions = {
-//     '0': [30, 48, "#00000c"],
-//     '1': [50, 40, "#020111 85%,#191621 100%"],
-//     '2': [60, 43, "#020111 60%,#20202c 100%"],
-//     '3': [70, 48, "#020111 10%,#3a3a52 100%"],
-//     '4': [80, 57, '#20202c 0%,#515175 100%'],
-//     '5': [90, 69, '#40405c 0%,#6f71aa 80%,#8a76ab 100%'],
-//     '6': [100, 80, '#4a4969 0%,#7072ab 50%,#cd82a0 100%'],
-//     '7': [0, 150, '#757abf 0%,#8583be 60%,#eab0d1 100%'],
-//     '8': [8, 69, '#82addb 0%,#ebb2b1 100%'],
-//     '9': [16, 59, '#94c5f8 1%,#a6e6ff 70%,#b1b5ea 100%'],
-//     '10': [25, 50, '#b7eaff 0%,#94dfff 100%'],
-//     '11': [33, 44, '#9be2fe 0%,#67d1fb 100%'],
-//     '12': [41, 41, '#90dffe 0%,#38a3d1 100%'],
-//     '13': [50, 40, '#57c1eb 0%,#246fa8 100%'],
-//     '14': [50, 40, '#2d91c2 0%,#1e528e 100%'],
-//     '15': [58, 41, '#2473ab 0%,#1e528e 70%,#5b7983 100%'],
-//     '16': [66, 44, '#1e528e 0%,#265889 50%,#9da671 100%'],
-//     '17': [75, 50, '#1e528e 0%,#728a7c 50%,#e9ce5d 100%'],
-//     '18': [83, 58, '#154277 0%,#576e71 30%,#e1c45e 70%,#b26339 100%'],
-//     '19': [91, 68, '#163C52 0%,#4F4F47 30%,#C5752D 60%,#B7490F 80%, #2F1107 100%'],
-//     '20': [100, 82, '#071B26 0%,#071B26 30%,#8A3B12 80%,#240E03 100%'],
-//     '21': [100, 150, '#010A10 30%,#59230B 80%,#2F1107 100%'],
-//     '22': [0, 80, '#090401 50%,#4B1D06 100%'],
-//     '23': [10, 69, '#00000c 80%,#150800 100%'],
-//     '24': [40, 43, '#00000c'],
-//   };
-//   return timePositions[hour];
-//   }
+let searchedLocation = {}
+let currentLocation = {}
+
+// gets user location from browser, returns lat & lng
+function getBrowserLocation() {
+  let deferred = $q.defer();
+  navigator.geolocation.getCurrentPosition(deferred.resolve);
+  return deferred.promise
+}
+
+// search by lat & lng, return weather data
+function getWeatherData(latitude,longitude) {
+  let url = `/api/weather/coords/${encodeURIComponent(latitude)}/${encodeURIComponent(longitude)}`
+  return $http.get(url)
+}
+
+// search by city or zip, returns coordinates and location name info
+ function searchLocationByAddress(address) {
+   return $http.get(`/api/weather/search/?location=${encodeURIComponent(address)}`)
+}
+
+// search by coordinates, returns coordinates and location name info
+function getLocationByCoords(latitude, longitude) {
+  return $http.get(`/api/weather/search/?latitude=${encodeURIComponent(latitude)}&longitude=${encodeURIComponent(longitude)}`)
+}
 
 
+// Gets coordinates from browser and injects them into location-from-coordinates and weather API calls.
+// If getBrowserLocation API call fails, then return error message to tell controller to bring up prompt to search location
+
+this.getWeatherDataFromBrowserLocation = function() {
+  return getBrowserLocation().then(function(results) {
+     return $q.all({weather: getWeatherData(results.coords.latitude, results.coords.longitude), location: getLocationByCoords(results.coords.latitude, results.coords.longitude)})
+      .then(function(apiResults) {
+          currentLocation.weather = apiResults.weather;
+          currentLocation.city = apiResults.location.data.results[0].address_components.city;
+          currentLocation.state = apiResults.location.data.results[0].address_components.state;
+        return currentLocation;
+      })
+  })
+}
 
 
-// });
+// Takes in a "city,state" or "zip-code" search and makes API call to return location info. Corrdinates from results are used to make weather API call.
+// Weather info, city name, and state name are added to a currentLocation object that is passed on to the controller.
 
-angular.module('portfolioApp').controller('weatherCtrl', ["$scope", "$q", "weatherService", function($scope, $q, weatherService) {
+this.searchWeatherAndLocationInfo = function(address) {
+  return searchLocationByAddress(address)
+    .then(function(location) {
+      searchedLocation.city = location.data.results[0].address_components.city;
+      searchedLocation.state = location.data.results[0].address_components.state;
+      return getWeatherData(location.data.results[0].location.lat,location.data.results[0].location.lng).then(function(weather) {
+        searchedLocation.weather = weather;
+        return searchedLocation;
+      })
+    })
+}
 
-    // $scope.hidePreloader=false;
-    //
-    //
-    // var togglePreloader = function() {
-    //   $scope.hidePreloader = true;
-    //   $('.loader-wrapper').remove()
-    //   console.log("removed!")
-    // }
-    //
-    // $scope.fadePreloader = function() {
-    //   TweenMax.to($('.loader-wrapper'), 2, {opacity: 0, onComplete: togglePreloader})
-    // }
 
-    $scope.getWeatherDataFromSearch = function(search) {
-        weatherService.getWeatherDataFromSearch(search)
-            .then(function(results) {
-                console.log('second weather API call', results)
-                $scope.weather = results;
-            })
+}])//---------------------------------------------------------------------------
+
+angular.module('portfolioApp').service('weatherCanvasService', function() {
+
+  //------------------------------------------------------------------------------
+  //            Precipitation Canvas
+  //------------------------------------------------------------------------------
+
+  let isItRaining
+  let isItSnowing
+  let reqR
+  let reqS
+
+  this.setRainBool = (bool) => {
+    isItRaining = bool
+  }
+
+  this.setSnowBool = (bool) => {
+    isItSnowing= bool
+  }
+
+
+  this.makeItSnow = (precipIntensity, windSpeed) => {
+    let ctx = document.getElementById('precipCanvas').getContext('2d');
+
+    ctx.canvas.height = window.innerHeight;
+    ctx.canvas.width = window.innerWidth*2;
+    let w = ctx.canvas.width,
+        h = ctx.canvas.height;
+        console.log(w,h, ctx.canvas.style.width, ctx.canvas.style.height);
+    ctx.strokeStyle = '#76b1e2';
+    ctx.lineWidth = 1;
+    ctx.lineCap = 'round';
+
+
+    let particles = [];
+    let snowIntensity = precipIntensity;
+    let windySnow = windSpeed;
+    let maxParts = snowIntensity * w/4;
+    let shouldAnimate = true
+
+    function addParticle() {
+      let s = (Math.random() * 5) + 0.5;
+      let x = Math.random() * w;
+      let y = 0;
+      let xs =Math.random() * 2 - 0.5 + windySnow;
+      let ys = (Math.random() * 2.5) + 2.5;
+      particles.push({ 's': s, 'x': x, 'y': y, 'xs': xs, 'ys': ys })
     }
 
-    $scope.getWeatherData = function() {
-        var deferred = $q.defer();
-        navigator.geolocation.getCurrentPosition(deferred.resolve);
-        deferred.promise
-            .then((res) => weatherService.getWeatherData(res.coords.latitude, res.coords.longitude))
-            .then(function(results) {
-                console.log(results)
-                $scope.weather = results;
-                $scope.daily = results.data.daily.data
-                $scope.current = results.data.currently
-                $scope.hourly = results.data.hourly.data
-                $scope.hourly[1].icon = 'snow'
-                $scope.hourly[1].windSpeed = 10
-                $scope.hourly[1].precipIntensity = 1
-                // $scope.fadePreloader();
-                $scope.$watch('selectedTime', function(sliderTime) {
+    function draw() {
+      if (particles.length < maxParts) {
+        for (let a = 0; a < 5; a++) {
+          addParticle()
+        }
+      }
+      ctx.clearRect(0, 0, w, h)
+      for (let i = 0; i < particles.length; i++) {
+        ctx.fillStyle = 'rgba(255,255,255,0.8)'
+        ctx.beginPath()
+        // arc(x,y,radius,startAndle,endAndle,anticlockwise)
+        ctx.arc(particles[i].x, particles[i].y, particles[i].s, 0, Math.PI * 2, false)
+        ctx.fill()
+      }
+        move()
+    }
 
-                    // Set variables for function
-
-                    var current = $scope.hourly[sliderTime]
-                    var time = current.time || 0
-                    var config = findSunPosition(time)
-                    var moveClouds = function() {
-                        var tlCloudMovement = new TimelineMax();
-                        tlCloudMovement.add('initial')
-                        tlCloudMovement.to(pcLeftLarge, 1000 / current.windSpeed, {
-                                x: "0vw",
-                                repeat: -1,
-                                yoyo: true
-                            }, 'initial')
-                            .to(pcLeftSmall, 500 / current.windSpeed, {
-                                x: "150vw",
-                                repeat: -1,
-                                yoyo: true
-                            }, 'initial')
-                            .to(pcRightLarge, 100 / current.windSpeed, {
-                                x: "100vw",
-                                repeat: -1,
-                                yoyo: true
-                            }, 'initial')
-                            .to(pcRightSmall, 300 / current.windSpeed, {
-                                x: "250vw",
-                                repeat: -1,
-                                yoyo: true
-                            }, 'initial')
-                    }
+    function move() {
+      for (let i = 0; i < particles.length; i++) {
+        let p = particles[i]
+        if (isItSnowing) {
+          p.x += Math.random() * 2 - 0.5 + windySnow/2;
+          p.y += p.ys
+        }
+        if (p.y > h && isItSnowing) {
+          p.y = 0
+          p.x = ~~(Math.random()*w) - (h/2)
+        } else if (p.y > h && !isItSnowing || p.x > w && !isItSnowing){
+          p.ys = 0
+          p.y = -5
+        } else if (!isItSnowing) {
+          p.ys *= 3
+        }
+      }
+  }
 
 
-                    // Toggle rain or snow depending on conditions
+  function animate() {
+    if (!isItSnowing) {
+      setTimeout(() => {
+        shouldAnimate = false
+        particles = []
+        cancelAnimationFrame(reqS)
+        ctx.clearRect(0,0,w,h)
+      },500)
+    }
+    draw()
+    if (shouldAnimate) {
+      reqS = requestAnimationFrame(animate)
+    } else {
+      return
+    }
+  }
 
-                    if (current.icon.includes('snow')) {
-                        if (!isItSnowing) {
-                            isItRaining = false;
-                            isItSnowing = true;
-                            setTimeout(() => makeItSnow(current.precipIntensity, current.windSpeed), 500);
-                        }
-                    } else if (current.icon.includes('rain')) {
-                        if (!isItRaining) {
-                            isItSnowing = false;
-                            isItRaining = true;
-                            setTimeout(() => makeItRain(current.precipIntensity, current.windSpeed), 500);
-                        }
-                    } else {
-                        isItSnowing = false;
-                        isItRaining = false;
-                    }
-
-                    // Toggle gray sky background if it is raining, snowing, or cloud cover is over 75%
-
-
-
-                    if (current.cloudCover >= 0.7 || current.precipIntensity > 0.25) {
-                        if (21 <= time || time < 6) {
-                            tlHourChange.to(graySkyFilter, 0.5, {
-                                opacity: 1,
-                                backgroundImage: 'linear-gradient(0, #666, #444)'
-                            }, 'initial')
-                        } else if (21 > time || time >= 6) {
-                            tlHourChange.to(graySkyFilter, 0.5, {
-                                opacity: 1,
-                                backgroundImage: 'linear-gradient(0, #ccc, #aaa)'
-                            }, 'initial')
-                        }
-                    } else {
-                        tlHourChange.to(graySkyFilter, 0.5, {
-                            opacity: 0
-                        }, 'initial')
-                    }
-
-                    // Show top rain cloud if it is raining or snowing
-
-                    if (isItRaining || isItSnowing) {
-                        tlHourChange.to(pcTop, 0.5, {
-                            opacity: 1
-                        }, 'initial')
-
-                    } else if (!isItRaining && !isItSnowing) {
-                        tlHourChange.to(pcTop, 0.5, {
-                            opacity: 0
-                        }, 'initial')
-                    }
-
-                    // Show background precipitation clouds if it is raining, snowing, or if the cloud cover is greater than 50%
-
-                    if (!precipCloudsShown) {
-                        if (current.cloudCover > 0.05 && current.cloudCover < 0.25) {
-                            tlHourChange.to(pcLeftSmall, 0.5, {
-                                left: "-10vw"
-                            }, 'initial')
-                        } else if (current.cloudCover > 0.25 && current.cloudCover < 0.5) {
-                            tlHourChange.to(pcLeftSmall, 0.5, {
-                                    left: "-10vw"
-                                }, 'initial')
-                                .to(pcRightSmall, 0.5, {
-                                    right: "-20vw"
-                                }, 'initial')
-                        } else if (current.cloudCover > 0.5 || isItRaining || isItSnowing) {
-                            tlHourChange.to(pcLeftLarge, 0.5, {
-                                    left: "-20vw"
-                                }, 'initial')
-                                .to(pcLeftSmall, 0.5, {
-                                    left: "-10vw"
-                                }, 'initial')
-                                .to(pcRightLarge, 0.5, {
-                                    right: "-20vw"
-                                }, 'initial')
-                                .to(pcRightSmall, 0.5, {
-                                    right: "-20vw",
-                                    onComplete: moveClouds()
-                                }, 'initial')
-                            precipCloudsShown = true;
-                        }
-                    } else if (!isItRaining && !isItSnowing) {
-                        if (current.cloudCover < 0.5) {
-                            tlHourChange.to([pcLeftLarge, pcLeftSmall], 0.5, {
-                                    left: '-250vw'
-                                }, 'initial')
-                                .to([pcRightSmall, pcRightLarge], 0.5, {
-                                    right: '-200vw'
-                                }, 'initial')
-                            precipCloudsShown = false;
-                        }
-                    }
+  if (shouldAnimate) {
+    animate()
+  }
 
 
-                    // Add wind if windSpeed > 2mph. Animation speed is determined by wind speed
-
-                    if (current.windSpeed >= 3) {
-
-                        var rand = function(range, min) {
-                            return ~~(Math.random() * range + min)
-                        }
-
-                        tlHourChange.set(windPath1, {
-                            strokeWidth: "0.1%",
-                            strokeDasharray: '200 7000',
-                            strokeDashoffset: '7000',
-                            animation: 'wind ' + ~~rand(3, 30 / current.windSpeed) + 's linear reverse infinite'
-                        }, 'initial')
-                        tlHourChange.set(windPath3, {
-                            strokeWidth: "0.1%",
-                            strokeDasharray: '200 5000',
-                            strokeDashoffset: '5000',
-                            animation: 'wind ' + ~~rand(3, 30 / current.windSpeed) + 's linear reverse infinite'
-                        }, 'initial')
-                        tlHourChange.set(windPath2, {
-                            strokeWidth: "0.1%",
-                            strokeDasharray: '150 7000',
-                            strokeDashoffset: '7000',
-                            animation: 'wind ' + ~~rand(3, 30 / current.windSpeed) + 's linear forwards infinite'
-                        }, 'initial')
-                        tlHourChange.set(windPath4, {
-                            strokeWidth: "0.1%",
-                            strokeDasharray: '150 5000',
-                            strokeDashoffset: '5000',
-                            animation: 'wind ' + ~~rand(3, 30 / current.windSpeed) + 's linear forwards infinite'
-                        }, 'initial')
-                    } else if (current.windSpeed < 3) {
-                        tlHourChange.set([windPath1, windPath2, windPath3, windPath4], {
-                            strokeWidth: 0
-                        }, 'initial')
-                    }
+  }; //---------------------------------------------------------------------------
 
 
-                    // Change sun/moon position and colors of artwork
+  // Rain function
 
-                    tlHourChange.to(artContainer, 0.2, {
-                            ease: Linear.easeNone,
-                            backgroundImage: `radial-gradient(circle at ${config[0]}% ${config[1]}%, ${config[2]}`
-                        }, 'initial')
-                        .to(mountains, 0.2, {
-                            ease: Linear.easeNone,
-                            fill: config[3]
-                        }, 'initial')
-                        .to(mountainAccents, 0.2, {
-                            ease: Linear.easeNone,
-                            fill: config[4]
-                        }, 'initial')
-                        .to(ground, 0.2, {
-                            ease: Linear.easeNone,
-                            fill: config[5]
-                        }, 'initial')
-                        .to(groundAccent, 0.2, {
-                            ease: Linear.easeNone,
-                            fill: config[6]
-                        }, 'initial')
-                        .to(mountainLeft, 0.2, {
-                            ease: Linear.easeNone,
-                            fill: config[7]
-                        }, 'initial')
+  this.makeItRain = function(precipIntensity, windSpeed) {
+    let ctx = document.getElementById('precipCanvas').getContext('2d')
 
-                    tlHourChange = new TimelineMax();
+    ctx.canvas.height = window.innerHeight;
+    ctx.canvas.width = window.innerWidth;
+    let w = ctx.canvas.width,
+        h = ctx.canvas.height;
+    ctx.strokeStyle = '#76b1e2';
+    ctx.lineWidth = 1;
+    ctx.lineCap = 'round';
 
-                })
-            })
+    let windyRain = windSpeed;
+    let rainIntensity = precipIntensity;
+    let particles = [];
+    let maxParts = rainIntensity * w;
+    let shouldAnimate = isItRaining
+
+    function addParticle() {
+      particles.push({
+        x: Math.random() * w,
+        y: 0,
+        l: Math.random() * 1,
+        xs: Math.random() * 2 - 0.5 + windyRain,
+        ys: Math.random() * 10 + 50 + rainIntensity * 2
+      });
+    }
+
+    function draw() {
+      if (particles.length < maxParts) {
+        for (let a = 0; a < 5; a++) {
+          addParticle()
+        }
+      }
+      ctx.clearRect(0, 0, w, h)
+      for (let c = 0; c < particles.length; c++) {
+        let p = particles[c]
+        ctx.beginPath()
+        ctx.moveTo(p.x, p.y)
+        ctx.lineTo(p.x + p.l * p.xs, p.y + p.l * p.ys)
+        ctx.stroke()
+      }
+      if (!isItRaining) {
+        shouldAnimate = false;
+        particles = []
+      } else if (isItRaining) {
+        move()
+      }
     }
 
 
-    $scope.getWeatherData();
-
-    $scope.unixToTime = function(time) {
-        var date = new Date(time * 1000)
-        return date;
-    }
-
-    $scope.unixTo24Hour = function(time) {
-        var date = new Date(time * 1000).getHours();
-        return date;
-    }
-
-    $scope.selectedTime = 0;
-
-    var setCurrentState = function(sliderValue) {
-        return $scope.hourly[sliderValue];
-    }
-
-    $scope.fiveDay = false;
-
-    $scope.toggleFiveDay = function() {
-        $scope.fiveDay = !$scope.fiveDay
-        console.log($scope.fiveDay)
+    function move() {
+      for (let b = 0; b < particles.length; b++) {
+        let p = particles[b];
+        p.x += p.xs;
+        p.y += p.ys;
+        if (p.x > w && isItRaining || p.y > h && isItRaining) {
+          p.x = Math.random() * w;
+          p.y = -20;
+        }
+      }
     }
 
 
+    function animate() {
+      draw()
+      if (isItRaining) {
+        reqR = requestAnimationFrame(animate)
+      } else {
+        return
+      }
+    }
+
+    if (isItRaining) {
+      animate()
+    } else {
+      cancelAnimationFrame(reqR)
+    }
+
+  }; //---------------------------------------------------------------------------
+
+
+
+
+  //---------------------------------------------------------------------------
+  //                 Stars Canvas
+  //---------------------------------------------------------------------------
+
+
+
+  // this.twinkleTwinkle = function(isItNight) {
+  //
+  //   const canvas = document.getElementById('starsCanvas')
+  //
+  //   canvas.width = window.innerWidth
+  //   canvas.height = window.innerHeight
+  //
+  //   const c = canvas.getContext('2d')
+  //   const rand =  function(min,max) {
+  //                   return ((Math.random()*(max-min+1))+min)
+  //                 }
+  //
+  //   let cW = canvas.width
+  //   let cH = canvas.height
+  //
+  //   window.addEventListener('resize', function() {
+  //     canvas.width = window.innerWidth
+  //     canvas.height = window.innerHeight
+  //   })
+  //
+  //
+  //   function Star(radius,x,y,opacity,spd) {
+  //     this.radius = radius
+  //     this.x = x
+  //     this.y = y
+  //     this.opacity = opacity
+  //     this.maxOpacity = opacity
+  //     this.minOpacity = rand(0,0.2)
+  //     this.spd = spd
+  //     this.draw = function() {
+  //       c.beginPath()
+  //       c.fillStyle = `rgba(255,255,255,${this.opacity})`
+  //       c.arc(this.x,this.y,this.radius,0,Math.PI*2,false)
+  //       c.fill()
+  //     }
+  //     this.twinkle = function() {
+  //       if (this.opacity < 0 || this.opacity > this.maxOpacity) {
+  //         this.spd = -this.spd
+  //       }
+  //       this.opacity -= this.spd
+  //       this.draw()
+  //     }
+  //   }
+  //
+  //   let totalStars = 300;
+  //   let starArray = []
+  //
+  //   for (let i = 0; i < totalStars; i++) {
+  //     let radius = rand(0.25,1)
+  //     let x = rand(radius,cW-radius)
+  //     let y = rand(radius,cH-radius)
+  //     let opacity = rand(0.4,0.8)
+  //     let spd = ((Math.random()+0.1))/50
+  //
+  //     starArray.push(new Star(radius,x,y,opacity,spd))
+  //   }
+  //
+  //
+  //   function animation() {
+  //     requestAnimationFrame(animation)
+  //     c.clearRect(0,0,cW,cH)
+  //
+  //     for (let i in starArray) {
+  //       starArray[i].twinkle()
+  //     }
+  //
+  //     if (!isItNight) {
+  //       setTimeout(function () {
+  //         return cancelAnimationFrame(isItNight);
+  //       }, 500);
+  //     }
+  //   }
+  //   animation()
+  // }
+
+}) //-------------------------------------------------------------
+
+angular.module('portfolioApp').controller('weatherCtrl', ["$scope", "$location", "weatherApiService", "weatherLogicService", function($scope, $location, weatherApiService, weatherLogicService){
+
+  //------------------------------------------------------------------------------
+  //            $scope Variables
+  //------------------------------------------------------------------------------
+
+$scope.fiveDay = false;
+$scope.selectedTime = 0;
+
+  //------------------------------------------------------------------------------
+  //            $scope Functions
+  //------------------------------------------------------------------------------
+
+
+$scope.getWeatherDataFromBrowserLocation = function() {
+  weatherApiService.getWeatherDataFromBrowserLocation()
+  .then(function(results) {
+    $scope.currentCity = results.city
+    $scope.currentState = results.state
+
+    $scope.weather = results.weather.data
+    $scope.hourly = results.weather.data.hourly.data
+
+    $scope.hourly[1].precipIntensity = 1
+    $scope.hourly[1].precipProbability = 1
+    $scope.hourly[1].icon = 'rain'
+
+    $scope.hourly[2].precipIntensity = 1
+    $scope.hourly[2].precipProbability = 1
+    $scope.hourly[2].icon = 'snow'
+
+
+    $scope.changeArtwork($scope.selectedTime)
+    $scope.artworkTransition();
+    localStorage.weather = JSON.stringify(results.weather.data)
+    })
+}
+
+
+$scope.searchWeatherAndLocationInfo = function(address) {
+      weatherApiService.searchWeatherAndLocationInfo(address).then(function(results) {
+        $scope.currentCity = results.city
+        $scope.currentState = results.state
+
+        $scope.weather = results.weather.data
+        $scope.hourly = results.weather.data.hourly.data
+
+        $scope.changeArtwork($scope.selectedTime)
+        $scope.searchLocation = ''
+        $scope.artworkTransition()
+        localStorage.weather = JSON.stringify(results.weather.data)
+      })
+}
+
+
+// human readable time
+$scope.unixToTime = function (time) {
+  var humanDate = new Date(time * 1000);
+  return humanDate;
+};
+
+
+$scope.artworkTransition = function() {
+  $('#artwork-container').removeClass('hidden')
+  $('#landing-page-background').addClass('slide-up-animation')
+}
+
+$scope.changeArtwork = function(inputTime) {
+  let time = $scope.hourly[inputTime]
+  weatherLogicService.changeArtwork(time)
+}
+
+$scope.toggleNav = function() {
+  if ($('#side-nav').css('left') == "-300px") {
+    $('#side-nav').css({'left':'20px'})
+    $('.data-header').css({'transform':'translateY(-150px)'})
+    $('.controlls').css({'transform':'translateY(150px)'})
+  }
+  else {
+    $('#side-nav').css({'left':'-300px'})
+    $('.data-header').css({'transform':'translateY(0px)'})
+    $('.controlls').css({'transform':'translateY(0px)'})
+  }
+}
+
+$(document).mouseup(function(e) {
+    var container = $("#side-nav");
+    if (!container.is(e.target) && container.has(e.target).length === 0) {
+      $('#side-nav').css({'left':'-300px'})
+      $('.data-header').css({'transform':'translateY(0px)'})
+      $('.controlls').css({'transform':'translateY(0px)'})
+    }
+});
+
+
+//-------------------------------------------------------------------
+//            Other Functions
+//--------------------------------------------------------------------
+
+
+let nav = document.querySelector('#main-nav')
+nav.style.display = 'none'
+
+
+}])//---------------------------------------------------------------------------------
+
+angular.module('portfolioApp').service('weatherLogicService', ["weatherCanvasService", function(weatherCanvasService) {
 
     //------------------------------------------------------------------------------
-    //            Variables
+    //            Constants
     //------------------------------------------------------------------------------
 
-    var artContainer = $('#artwork-container');
-    var sun = $('.sun');
-    var pulse = $('.sun-pulse');
-    var mountains = $('#mountains');
-    var mountainAccents = $('#mountains-accents');
-    var mountainLeft = $('#mountain-left');
-    var ground = $('#ground');
-    var groundAccent = $('#ground-accent');
-    var timeSlider = $('#timeSlider');
-    var slider = $('.slider')
-    var graySkyFilter = $('.gray-sky')
-    var precipClouds = $('.precip-cloud')
-    var pcLeftLarge = ('#precip-cloud-left-large')
-    var pcLeftSmall = ('#precip-cloud-left-small')
-    var pcRightLarge = ('#precip-cloud-right-large')
-    var pcRightSmall = ('#precip-cloud-right-small')
-    var pcTop = $('#precip-cloud-top')
-    var windPath1 = $('#windPath1')
-    var windPath2 = $('#windPath2')
-    var windPath3 = $('#windPath3')
-    var windPath4 = $('#windPath4')
+    const artContainer = $('#artwork-container')
+    const mountains = $('#mountains')
+    const mountainAccents = $('#mountains-accents')
+    const mountainLeft = $('#mountain-left')
+    const ground = $('#ground')
+    const groundAccent = $('#ground-accent')
+    const timeSlider = $('#timeSlider')
+    const slider = $('.slider')
+    const graySkyFilter = $('.gray-sky')
+    const precipClouds = $('.precip-cloud')
+    const starsCanvas = $('#starsCanvas')
+    const pcLeftLarge = $('#precip-cloud-left-large')
+    const pcLeftSmall = $('#precip-cloud-left-small')
+    const pcRightLarge = $('#precip-cloud-right-large')
+    const pcRightSmall = $('#precip-cloud-right-small')
+    const pcTop = $('#precip-cloud-top')
+    const windPath1 = $('#windPath1')
+    const windPath2 = $('#windPath2')
+    const windPath3 = $('#windPath3')
+    const windPath4 = $('#windPath4')
+    const sideNav = $('#side-nav')
+
+    const nightColors = "#ffffff 3%,#e3e5f3 5%,#64676b 8%,#3a3a3a,#282828,#101111"
+    const duskColors = '#ffffff 3%,#e3e5f3 5%,#64676b 8%,#414345,#232526,#101111'
+    const sunriseColors1 = '#ffdd93 3%,#64676b 8%,#cd82a0,#8a76ab,#3a3a52'
+    const sunriseColors2 = 'rgb(255,194,82) 3%,#e3e5f3 8%,#eab0d1,#cd82a0,#7072ab'
+    const sunriseColors3 = 'rgb(255,194,82) 3%,#e3e5f3 8%,#a6e6ff,#67d1fb,#eab0d1'
+    const dayColors = "rgb(255,194,82) 3%,#e3e5f3 8%,#56CCF2,#4fa9ff,#008be2"
+    const sunsetColors1 = 'rgb(255,194,82) 3%,#ffdd93 8%,#90dffe,#38a3d1,#154277'
+    const sunsetColors2 = 'rgb(255,194,82) 3%,#e3e5f3 8%,#e38c59,#a33d4b,#46142b'
+    const sunsetColors3 = 'rgb(255,194,82) 3%,#e9ce5d 8%,#B7490F,#8A3B12,#2F1107'
+
+    const mountainFillDay = 'hsl(40,54%,35%)'
+    const mountainAccentFillDay = 'hsl(40,85%,84%)'
+    const groundFillDay = 'hsl(78,60%,42%)'
+    const groundAccentFillDay = 'hsl(78,76%,72%)'
+    const leftMountainFillDay = 'hsl(41,76%,22%)'
+
+    const mountainFillSunrise3 = '#7f5f4c'
+    const mountainAccentFillSunrise3 = '#FFE9AD'
+    const groundFillSunrise3 = '#6c8c21'
+    const groundAccentFillSunrise3 = '#a5b754'
+    const leftMountainFillSunrise3 = '#724f0c'
+
+    const mountainFillSunrise2 = '#704545'
+    const mountainAccentFillSunrise2 = '#ffa100'
+    const groundFillSunrise2 = '#af7700'
+    const groundAccentFillSunrise2 = '#2e3a30'
+    const leftMountainFillSunrise2 = '#333333'
+
+    const mountainFillSunrise1 = '#5b343a'
+    const mountainAccentFillSunrise1 = '#aa4419'
+    const groundFillSunrise1 = '#50450b'
+    const groundAccentFillSunrise1 = '#2e3a30'
+    const leftMountainFillSunrise1 = '#333333'
+
+    const mountainFillSunset1 = '#7f5f4c'
+    const mountainAccentFillSunset1 = '#FFE9AD'
+    const groundFillSunset1 = '#6c8c21'
+    const groundAccentFillSunset1 = '#a5b754'
+    const leftMountainFillSunset1 = '#724f0c'
+
+    const mountainFillSunset2 = '#704545'
+    const mountainAccentFillSunset2 = '#ffa100'
+    const groundFillSunset2 = '#af7700'
+    const groundAccentFillSunset2 = '#2e3a30'
+    const leftMountainFillSunset2 = '#333333'
+
+    const mountainFillSunset3 = '#5b343a'
+    const mountainAccentFillSunset3 = '#aa4419'
+    const groundFillSunset3 = '#50450b'
+    const groundAccentFillSunset3 = '#2e3a30'
+    const leftMountainFillSunset3 = '#333333'
+
+    const mountainFillNight = 'hsl(278,7%,16%)'
+    const mountainAccentFillNight = 'hsl(279,6%,12%)'
+    const groundFillNight = 'hsl(130,11%,22%)'
+    const groundAccentFillNight = 'hsl(130,6%,10%)'
+    const leftMountainFillNight = 'hsl(0,0%,10%)'
 
 
+    //-------------------------------------------------------------------
+    //            Weather State Variables
+    //--------------------------------------------------------------------
 
-
-    var nightColors = "#ffffff 3%,#e3e5f3 5%,#64676b 8%,#3a3a3a,#282828,#101111";
-    var duskColors = '#ffffff 3%,#e3e5f3 5%,#64676b 8%,#414345,#232526,#101111';
-    var sunriseColors1 = '#ffdd93 3%,#64676b 8%,#cd82a0,#8a76ab,#3a3a52';
-    var sunriseColors2 = 'rgb(255,194,82) 3%,#e3e5f3 8%,#eab0d1,#cd82a0,#7072ab';
-    var sunriseColors3 = 'rgb(255,194,82) 3%,#e3e5f3 8%,#a6e6ff,#67d1fb,#eab0d1';
-    var dayColors = "rgb(255,194,82) 3%,#e3e5f3 8%,#56CCF2,#4fa9ff,#008be2";
-    var sunsetColors1 = 'rgb(255,194,82) 3%,#ffdd93 8%,#90dffe,#38a3d1,#154277';
-    var sunsetColors2 = 'rgb(255,194,82) 3%,#e3e5f3 8%,#e38c59,#a33d4b,#46142b';
-    var sunsetColors3 = 'rgb(255,194,82) 3%,#e9ce5d 8%,#B7490F,#8A3B12,#2F1107';
-
-
-
-    var mountainFillDay = 'hsl(40,54%,35%)'
-    var mountainAccentFillDay = 'hsl(40,85%,84%)'
-    var groundFillDay = 'hsl(78,60%,42%)'
-    var groundAccentFillDay = 'hsl(78,76%,72%)'
-    var leftMountainFillDay = 'hsl(41,76%,22%)'
-
-    var mountainFillSunrise3 = '#7f5f4c'
-    var mountainAccentFillSunrise3 = '#FFE9AD'
-    var groundFillSunrise3 = '#6c8c21'
-    var groundAccentFillSunrise3 = '#a5b754'
-    var leftMountainFillSunrise3 = '#724f0c'
-
-    var mountainFillSunrise2 = '#704545'
-    var mountainAccentFillSunrise2 = '#ffa100'
-    var groundFillSunrise2 = '#af7700'
-    var groundAccentFillSunrise2 = '#2e3a30'
-    var leftMountainFillSunrise2 = '#333333'
-
-    var mountainFillSunrise1 = '#5b343a'
-    var mountainAccentFillSunrise1 = '#aa4419'
-    var groundFillSunrise1 = '#50450b'
-    var groundAccentFillSunrise1 = '#2e3a30'
-    var leftMountainFillSunrise1 = '#333333'
-
-    var mountainFillSunset1 = '#7f5f4c'
-    var mountainAccentFillSunset1 = '#FFE9AD'
-    var groundFillSunset1 = '#6c8c21'
-    var groundAccentFillSunset1 = '#a5b754'
-    var leftMountainFillSunset1 = '#724f0c'
-
-    var mountainFillSunset2 = '#704545'
-    var mountainAccentFillSunset2 = '#ffa100'
-    var groundFillSunset2 = '#af7700'
-    var groundAccentFillSunset2 = '#2e3a30'
-    var leftMountainFillSunset2 = '#333333'
-
-    var mountainFillSunset3 = '#5b343a'
-    var mountainAccentFillSunset3 = '#aa4419'
-    var groundFillSunset3 = '#50450b'
-    var groundAccentFillSunset3 = '#2e3a30'
-    var leftMountainFillSunset3 = '#333333'
-
-    var mountainFillNight = 'hsl(278,7%,16%)'
-    var mountainAccentFillNight = 'hsl(279,6%,12%)'
-    var groundFillNight = 'hsl(130,11%,22%)'
-    var groundAccentFillNight = 'hsl(130,6%,10%)'
-    var leftMountainFillNight = 'hsl(0,0%,10%)'
-
-    var tlHourChange = new TimelineMax();
-    var isItRaining = false;
-    var isItSnowing = false;
-    var precipCloudsShown = false;
-    var stars = false;
-
+    let isItRaining = false
+    let isItSnowing = false
+    let precipCloudsShown = false
+    let isItNight = false
+    let stars = false
 
     //------------------------------------------------------------------------------
     //            Functions
     //------------------------------------------------------------------------------
 
-    var findSunPosition = function(time) {
-        var hour = $scope.unixTo24Hour(time);
-        var timePositions = {
+    // time to hours in integers
+    const unixTo24Hour = function(time) {
+        let hours = new Date(time * 1000).getHours()
+        return hours
+    }
+
+    const findSunPosition = function(time) {
+        const stateByTime = {
             '0': [30, 25, nightColors, mountainFillNight, mountainAccentFillNight, groundFillNight, groundAccentFillNight, leftMountainFillNight, stars = true],
             '1': [50, 20, nightColors, mountainFillNight, mountainAccentFillNight, groundFillNight, groundAccentFillNight, leftMountainFillNight, stars = true],
             '2': [70, 25, nightColors, mountainFillNight, mountainAccentFillNight, groundFillNight, groundAccentFillNight, leftMountainFillNight, stars = true],
@@ -2236,336 +2410,255 @@ angular.module('portfolioApp').controller('weatherCtrl', ["$scope", "$q", "weath
             '21': [50, 420, duskColors, mountainFillNight, mountainAccentFillNight, groundFillNight, groundAccentFillNight, leftMountainFillNight, stars = true],
             '22': [0, 120, nightColors, mountainFillNight, mountainAccentFillNight, groundFillNight, groundAccentFillNight, leftMountainFillNight, stars = true],
             '23': [15, 40, nightColors, mountainFillNight, mountainAccentFillNight, groundFillNight, groundAccentFillNight, leftMountainFillNight, stars = true],
-            '24': [30, 25, nightColors, mountainFillNight, mountainAccentFillNight, groundFillNight, groundAccentFillNight, leftMountainFillNight, stars = true],
-        };
-        return timePositions[hour];
-    }
-
-
-    var changeArt = function() {
-        let config = findSunPosition(0)
-        let shadowX = (config[0] - 50) / 5;
-        TweenMax.to(artContainer, 1, {
-            ease: Power2.easeOut,
-            backgroundImage: `radial-gradient(circle at ${config[0]}% ${config[1]}%,` + config[2]
-        })
-    }
-
-
-    var hexToHSL = function(hex) {
-        hex = hex.replace(/^#/, "")
-        r = parseInt(hex.substring(0, 2), 16) / 255;
-        g = parseInt(hex.substring(2, 4), 16) / 255;
-        b = parseInt(hex.substring(4, 6), 16) / 255;
-
-        console.log(r, g, b)
-
-        var max = Math.max(r, g, b),
-            min = Math.min(r, g, b);
-        var h, s, l = (max + min) / 2;
-
-        if (max == min) {
-            h = s = 0; // achromatic
-        } else {
-            var d = max - min;
-            s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-            switch (max) {
-                case r:
-                    h = (g - b) / d + (g < b ? 6 : 0);
-                    break;
-                case g:
-                    h = (b - r) / d + 2;
-                    break;
-                case b:
-                    h = (r - g) / d + 4;
-                    break;
-            }
-            h /= 6;
+            '24': [30, 25, nightColors, mountainFillNight, mountainAccentFillNight, groundFillNight, groundAccentFillNight, leftMountainFillNight, stars = true]
         }
-
-        return [~~(h * 360), ~~(s * 100), ~~(l * 100)];
+        return stateByTime[time]
     }
 
     //------------------------------------------------------------------------------
     //            Time Change Animation
     //------------------------------------------------------------------------------
 
+    // all animations generated in this.changeArtwork() will be added to this timeline
+    let tlHourChange = new TimelineMax()
     tlHourChange.add('initial')
 
-    // adds scope listener for changes to slider.
-    // moves progress of timeline to progress position based on slider position
-    // TweenMax makes movements between progress smooth
+    //-------------------------------------------------------------------
+    //            Service Functions
+    //--------------------------------------------------------------------
 
+    // Main artwork changing function
 
-    //------------------------------------------------------------------------------
-    //            Precipitation Canvas
-    //------------------------------------------------------------------------------
+    this.changeArtwork = function(selectedTime) {
 
-    var makeItSnow = function(precipIntensity, windSpeed) {
-        var ctx = document.getElementById('precipCanvas').getContext('2d');
-        ctx.canvas.width = window.innerWidth * 2;
-        ctx.canvas.height = window.innerHeight;
-        var cW = ctx.canvas.width,
-            cH = ctx.canvas.height;
-        var particles = [];
-        //  var maxParticles = precipIntensity * cW/2;
-        var snowIntensity = precipIntensity;
-        var windySnow = windSpeed;
-        var maxParticles = snowIntensity * cW;
+        // Set variables for function
 
-        function addParticle() {
-            var s = ~~(Math.random() * 10) + 1;
-            var yv = s;
-            var xv = -1 + Math.random() * 2 + 0.5 + windySnow;
-            var x = ~~(Math.random() * cW) + 1 - (cW / 2);
-            var y = 0;
-            particles.push({
-                'x': x,
-                'y': y,
-                's': s,
-                'yv': yv,
-                'xv': xv
-            })
+        var current = selectedTime
+        var time = (unixTo24Hour(current.time)) ? unixTo24Hour(current.time) : 0
+        var config = findSunPosition(time)
+        var transTime = 0.7
+        var moveClouds = function moveClouds() {
+            var tlCloudMovement = new TimelineMax()
+            tlCloudMovement.add('initial')
+            tlCloudMovement.to(pcLeftLarge, 100 / current.windSpeed, {
+                x: "0vw",
+                repeat: -1,
+                yoyo: true
+            }, 'initial').to(pcLeftSmall, 500 / current.windSpeed, {
+                x: "150vw",
+                repeat: -1,
+                yoyo: true
+            }, 'initial').to(pcRightLarge, 100 / current.windSpeed, {
+                x: "100vw",
+                repeat: -1,
+                yoyo: true
+            }, 'initial').to(pcRightSmall, 300 / current.windSpeed, {
+                x: "250vw",
+                repeat: -1,
+                yoyo: true
+            }, 'initial')
+        }
+        var updateWeatherBools = (rain,snow) => {
+          isItRaining = rain
+          isItSnowing = snow
+          weatherCanvasService.setRainBool(rain)
+          weatherCanvasService.setSnowBool(snow)
         }
 
-        function precip() {
-            if (particles.length < maxParticles && isItSnowing) {
-                addParticle();
+        // set side-menu background based on chosen time
+        sideNav.css({'background':`radial-gradient(circle at -10px 110%, ${config[2]})`})
+
+        // Toggle stars if it is night
+
+        if (!isItNight) {
+            if (time > 20) {
+                isItNight = true
+                weatherCanvasService.twinkleTwinkle(isItNight)
+                tlHourChange.from(starsCanvas, transTime, {
+                    opacity: 0
+                }, 'initial')
             }
-            for (var i = 0; i < particles.length; i++) {
-                ctx.fillStyle = 'rgba(255,255,255,0.8)';
-                ctx.beginPath();
-                // arc(x,y,radius,startAndle,endAndle,anticlockwise)
-                ctx.arc(particles[i].x += particles[i].xv, particles[i].y += particles[i].yv, particles[i].s * 0.5, 0, Math.PI * 2, false);
-                ctx.fill();
-                if (particles[i].y > cH && isItSnowing) {
-                    particles[i].y = 0
-                    particles[i].x = ~~(Math.random() * cW) - (cW / 2);
-                } else if (particles[i].y > cH && !isItSnowing) {
-                    particles[i].yv = 0;
-                    particles[i].y = -5;
-                } else if (!isItSnowing) {
-                    particles[i].yv *= 3;
-                }
+        } else if (isItNight) {
+            if (time > 6 && time < 21) {
+                isItNight = false
+                weatherCanvasService.twinkleTwinkle(isItNight)
             }
         }
 
-        function animate() {
+        // Toggle rain or snow depending on conditions
 
-            ctx.save();
-            ctx.clearRect(0, 0, cW, cH);
-            ctx.fillStyle = 'rgba(0,0,0,0)';
-            ctx.fillRect(0, 0, cW, cH);
-            //rotates the canvas
-            //  ctx.rotate(~~(-windySnow/10));
-            precip();
-            ctx.restore();
+        if (!current.icon.includes('snow') && isItSnowing || !current.icon.includes('rain') && isItRaining) {
+             updateWeatherBools(false,false)
+         }
 
-        }
-
-        var animateInterval = setInterval(function() {
-            animate();
+        if (current.icon.includes('snow')) {
             if (!isItSnowing) {
-                setTimeout(() => clearInterval(animateInterval), 500)
+              updateWeatherBools(false,true)
+                weatherCanvasService.makeItSnow(current.precipIntensity, current.windSpeed)
             }
-        }, 30);
-
-    };
-
-
-    var makeItRain = function(precipIntensity, windSpeed) {
-        var ctx = document.getElementById('precipCanvas').getContext('2d');
-        ctx.canvas.width = window.innerWidth;
-        ctx.canvas.height = window.innerHeight;
-        var w = ctx.canvas.width,
-            h = ctx.canvas.height;
-        ctx.strokeStyle = '#76b1e2';
-        ctx.lineWidth = 1;
-        ctx.lineCap = 'round';
-
-
-        //  var windyRain = Math.random()*5 + 2.5;
-        var windyRain = windSpeed
-        var rainIntensity = precipIntensity
-
-        var particles = [];
-        var maxParts = rainIntensity * w
-
-        function addParticle() {
-
-            particles.push({
-                x: Math.random() * w,
-                y: 0,
-                l: Math.random() * 1,
-                xs: -1 + Math.random() * 2 + 0.5 + windyRain,
-                ys: Math.random() * 10 + 50 + rainIntensity * 2
-            })
-        }
-
-        function draw() {
-
-            if (particles.length < maxParts) {
-                for (var a = 0; a < 5; a++) {
-                    addParticle();
-                }
-            }
-
-            ctx.clearRect(0, 0, w, h);
-            for (var c = 0; c < particles.length; c++) {
-                var p = particles[c];
-                ctx.beginPath();
-                ctx.moveTo(p.x, p.y);
-                ctx.lineTo(p.x + p.l * p.xs, p.y + p.l * p.ys);
-                ctx.stroke();
-            }
-            move();
-        }
-
-        function move() {
-            for (var b = 0; b < particles.length; b++) {
-                var p = particles[b];
-                p.x += p.xs;
-                p.y += p.ys;
-                if (p.x > w && isItRaining || p.y > h && isItRaining) {
-                    p.x = Math.random() * w;
-                    p.y = -20;
-                } else if (!isItRaining) {
-                    ctx.globalAlpha -= 0.1;
-                }
-
-
-
-                //  (p.x > w && !isItRaining || p.y > h && !isItRaining){
-                //    p.ys = 0;
-                //    p.xs = 0;
-                //    p.y = -5;
-                //  } else if (!isItRaining) {
-                //    p.ys *= 5;
-                //  }
-            }
-        }
-
-        var animateInterval = setInterval(function() {
-            draw();
+        } else if (current.icon.includes('rain')) {
             if (!isItRaining) {
-                setTimeout(() => clearInterval(animateInterval), 500)
+              updateWeatherBools(true,false)
+                weatherCanvasService.makeItRain(current.precipIntensity, current.windSpeed)
             }
-        }, 30);
-    };
+        }
 
-    //---------------------------------------------------------------------------
-    //                 Stars Canvas
-    //---------------------------------------------------------------------------
 
-    // var starShine = function() {
-    //                   var ctx = document.getElementById('starsCanvas').getContext('2d');
-    //                   ctx.canvas.width = window.innerWidth;
-    //                   ctx.canvas.height = window.innerHeight;
-    //                   var cW = ctx.canvas.width, cH = ctx.canvas.height;
-    //                   var starsTemp = [];
-    //                   var stars2 = [];
-    //                   var stars3 = [];
-    //                   var stars4 = [];
-    //                   var stars5 = [];
-    //                   var maxStars = 150;
-    //
-    //                   function makeStar(arr) {
-    //                     var x = ~~(Math.random()*cW)+1;
-    //                     var y = ~~(Math.random()*cH)+1;
-    //                     var s = ~~(Math.random()*2)+1;
-    //                     var inc = true;
-    //                     arr.push({'x':x,'y':y,'s':s})
-    //                   }
-    //
-    //                   for (let j = 0; j < 5; j++) {
-    //                     for (let i = 0; i < maxStars/5; i++) {
-    //                       makeStar()
-    //                     }
-    //
-    //                     for(let i = 0; i < stars[j].length; i++) {
-    //                       ctx.fillStyle = 'rgb(255,255,255)';
-    //                       ctx.beginPath();
-    //                         // arc(x,y,radius,startAndle,endAndle,anticlockwise)
-    //                       ctx.arc(stars[i].x,stars[i].y, stars[i].s*0.5, 0, Math.PI*2, false);
-    //                       ctx.globalAlpha = stars[i].s
-    //                       ctx.fill();
-    //                      }
-    //                    }
-    //
-    //
-    //                   function twinkle(index) {
-    //                      TweenMax.to(stars)
-    //                   }
-    //
-    //
-    // };
+        // Toggle gray sky background if it is raining, snowing, or cloud cover is over 75%
+        if (current.cloudCover >= 0.7 || current.precipIntensity > 0.25) {
+            if (21 <= time || time < 6) {
+                tlHourChange.to(graySkyFilter, transTime, {
+                    opacity: 1,
+                    backgroundImage: 'linear-gradient(0, #666, #444)'
+                }, 'initial')
+            } else if (21 > time || time >= 6) {
+                tlHourChange.to(graySkyFilter, transTime, {
+                    opacity: 1,
+                    backgroundImage: 'linear-gradient(0, #ccc, #aaa)'
+                }, 'initial')
+            }
+        } else {
+            tlHourChange.to(graySkyFilter, transTime, {
+                opacity: 0
+            }, 'initial')
+        }
 
-}])
+        // Show top rain cloud if it is raining or snowing
 
-angular.module('portfolioApp').service('weatherService', ["$http", "$q", function($http, $q) {
+        if (isItRaining || isItSnowing) {
+            tlHourChange.to(pcTop, transTime, {
+                opacity: 1
+            }, 'initial')
+        } else if (!isItRaining && !isItSnowing) {
+            tlHourChange.to(pcTop, transTime, {
+                opacity: 0
+            }, 'initial')
+        }
 
-    var location;
-    var lat;
-    var long;
-    var weather;
+        // Show background precipitation clouds if it is raining, snowing, or if the cloud cover is greater than 50%
+        // if (!precipCloudsShown) {
+        if (current.cloudCover > 0.05 && current.cloudCover < 0.25) {
+            tlHourChange.to(pcLeftSmall, transTime, {
+                opacity: 1
+            }, 'initial').to(pcLeftLarge, transTime, {
+                opacity: 0
+            }, 'initial').to(pcRightLarge, transTime, {
+                opacity: 0
+            }, 'initial').to(pcRightSmall, transTime, {
+                opacity: 0,
+                onComplete: moveClouds
+            }, 'initial')
+        } else if (current.cloudCover >= 0.25 && current.cloudCover < 0.5) {
+            tlHourChange.to(pcLeftSmall, transTime, {
+                opacity: 1
+            }, 'initial').to(pcRightSmall, transTime*0.8, {
+                opacity: 1
+            }, 'initial').to(pcLeftLarge, transTime*1.5, {
+                opacity: 0
+            }, 'initial').to(pcRightLarge, transTime*2.1, {
+                opacity: 0,
+                onComplete: moveClouds
+            }, 'initial')
+        } else if (current.cloudCover >= 0.5 && current.cloudCover < 0.75) {
+            tlHourChange.to(pcLeftSmall, transTime, {
+                opacity: 1
+            }, 'initial').to(pcRightSmall, transTime*1.2, {
+                opacity: 1
+            }, 'initial').to(pcLeftLarge, transTime*1.3, {
+                opacity: 1
+            }, 'initial').to(pcRightLarge, transTime*1.7, {
+                opacity: 0,
+                onComplete: moveClouds
+            }, 'initial')
+        } else if (current.cloudCover > 0.75 || isItRaining || isItSnowing) {
+            tlHourChange.to(pcLeftLarge, transTime, {
+                opacity: 1
+            }, 'initial').to(pcLeftSmall, transTime*1.1, {
+                opacity: 1
+            }, 'initial').to(pcRightLarge, transTime*1.4, {
+                opacity: 1
+            }, 'initial').to(pcRightSmall, transTime*2.5, {
+                opacity: 1,
+                onComplete: moveClouds
+            }, 'initial')
+            // }
+        } else if (!isItRaining && !isItSnowing) {
+            if (current.cloudCover < 0.5) {
+                tlHourChange.to([pcLeftLarge, pcLeftSmall], transTime, {
+                    opacity: 1
+                }, 'initial').to([pcRightSmall, pcRightLarge], transTime, {
+                    opacity: 1,
+                    onComplete: moveClouds
+                }, 'initial')
+            }
+        }
 
-    this.getWeatherData = function(lat, long) {
-        return $http.get({
-          method: 'GET',
-          url: `/api/weather/coords/${lat}/${long}`
-        })
-      }
+        // Add wind if windSpeed > 2mph. Animation speed is determined by wind speed
 
-    this.getBrowserLocation = function() {
-        var deferred = $q.defer();
-        navigator.geolocation.getCurrentPosition(deferred.resolve);
-        return deferred.promise
+        if (current.windSpeed >= 3) {
+
+            var rand = function rand(range, min) {
+                return ~~(Math.random() * range + min)
+            }
+
+            tlHourChange.set(windPath1, {
+                strokeWidth: "0.1%",
+                strokeDasharray: '200 7000',
+                strokeDashoffset: '7000',
+                animation: 'wind ' + ~~rand(3, 30 / current.windSpeed) + 's linear reverse infinite'
+            }, 'initial')
+            tlHourChange.set(windPath3, {
+                strokeWidth: "0.1%",
+                strokeDasharray: '200 5000',
+                strokeDashoffset: '5000',
+                animation: 'wind ' + ~~rand(3, 30 / current.windSpeed) + 's linear reverse infinite'
+            }, 'initial')
+            tlHourChange.set(windPath2, {
+                strokeWidth: "0.1%",
+                strokeDasharray: '150 7000',
+                strokeDashoffset: '7000',
+                animation: 'wind ' + ~~rand(3, 30 / current.windSpeed) + 's linear forwards infinite'
+            }, 'initial')
+            tlHourChange.set(windPath4, {
+                strokeWidth: "0.1%",
+                strokeDasharray: '150 5000',
+                strokeDashoffset: '5000',
+                animation: 'wind ' + ~~rand(3, 30 / current.windSpeed) + 's linear forwards infinite'
+            }, 'initial')
+        } else if (current.windSpeed < 3) {
+            tlHourChange.set([windPath1, windPath2, windPath3, windPath4], {
+                strokeWidth: 0
+            }, 'initial')
+        }
+
+        // Change sun/moon position and colors of artwork
+
+        tlHourChange.to(artContainer, transTime, {
+                ease: Linear.easeNone,
+                backgroundImage: 'radial-gradient(circle at ' + config[0] + '% ' + config[1] + '%, ' + config[2]
+            }, 'initial')
+            .to(mountains, transTime, {
+                ease: Linear.easeNone,
+                fill: config[3]
+            }, 'initial')
+            .to(mountainAccents, transTime, {
+                ease: Linear.easeNone,
+                fill: config[4]
+            }, 'initial')
+            .to(ground, transTime, {
+                ease: Linear.easeNone,
+                fill: config[5]
+            }, 'initial')
+            .to(groundAccent, transTime, {
+                ease: Linear.easeNone,
+                fill: config[6]
+            }, 'initial')
+            .to(mountainLeft, transTime, {
+                ease: Linear.easeNone,
+                fill: config[7]
+            }, 'initial')
+
+        tlHourChange = new TimelineMax()
     }
 
-    this.searchLocation = function(address) {
-      let encodedAddress = encodeURIComponent(address)
-      console.log(encodedAddress);
-        return $http.get({
-          method: 'GET',
-          url: `/api/weather/search/?location=${encodedAddress}`
-        })
-    }
-
-    var getWeatherData = this.getWeatherData
-    var getBrowserLocation = this.getBrowserLocation
-    var searchLocation = this.searchLocation
-
-    this.getWeatherDataFromSearch = function(address) {
-        // console.log('address',address)
-        searchLocation(address)
-            .then(function(results) {
-                var locationData = results.data.results[0]
-                // console.log(results, "getWeatherDataFromSearch")
-                getWeatherData(locationData.location.lat, locationData.location.lng)
-                    .then(function(results) {
-                        // console.log(results,'weather')
-                        return {
-                            weather: results,
-                            location: locationData
-                        }
-                    })
-            })
-    }
-
-
-    // this.getWeatherDataFromSearch = function(address) {
-    //   $http.get('https://api.geocod.io/v1/geocode?q='+ encodeURIComponent(address) +'&api_key=f00109f6f598100219c5f209f121138022256f8')
-    //     .then(function(response) {
-    //       location = [response.data.results[0].address_components.city,response.data.results[0].address_components.state]
-    //       lat = response.data.results[0].location.lat
-    //       long = response.data.results[0].location.lng
-    //     }).then(function() {
-    //       $http.get('https://api.darksky.net/forecast/51ad5a6fd44830ae0a78d025de05e749/' + lat  + ',' + long)
-    //         .then(function(results) {
-    //           weather = results
-    //           return {location: location, weather: weather}
-    //         })
-    //     })
-    // }
-
-}]);
+}]) //--------------------------------------------------------------

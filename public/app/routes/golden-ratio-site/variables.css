@@ -64,6 +64,7 @@
 #golden-ratio-section .section {
   background: var(--gr-accent-1-color);
   display: flex;
+  flex-direction: column-reverse;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
@@ -115,10 +116,15 @@
 }
 
 
-#golden-ratio-section .upper-left {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+#golden-ratio-section div .upper-left {
+  display: none
+}
+
+#golden-ratio-section div .upper-right {
+  order: 3;
+}
+#golden-ratio-section div .lower-right {
+  flex: 1;
 }
 
 #golden-spiral-trump {
@@ -224,5 +230,8 @@
     }
     #golden-ratio-section #golden-spiralbox-svg {
       width: 60%
+    }
+    #golden-ratio-section .section p {
+      font-size: 3vw;
     }
   }

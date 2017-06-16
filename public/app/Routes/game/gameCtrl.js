@@ -1,5 +1,9 @@
 angular.module("portfolioApp").controller("gameCtrl", function($scope, $timeout, scoreService, gameService) {
 
+
+
+  document.querySelector('#main-nav').style.display = 'none'
+
   //========================== Variables ================================
 
   $scope.isShownSubmissionForm = false
@@ -63,5 +67,13 @@ angular.module("portfolioApp").controller("gameCtrl", function($scope, $timeout,
     })
     }
   }
+
+
+// ensures game is stopped before user navigates to other route
+  $scope.$on('$locationChangeStart', (e) => {
+    gameService.stopGame()
+  })
+
+
 
 });

@@ -43,10 +43,14 @@ table
   border-collapse: collapse
   border-spacing: 0
 
+button:focus
+  outline: none
+
 /////////////////////////////////////////////////////////////////////////////
 
 body
   -ms-overflow-style: none
+  background: black
 
 body::-webkit-scrollbar
   display: none
@@ -59,7 +63,7 @@ body::-webkit-scrollbar
 
 #main-nav
   position: fixed
-  top: 0
+  top: 0%
   width: 100vw
   height: 70px
   padding: 0px 50px
@@ -69,7 +73,8 @@ body::-webkit-scrollbar
   background: black
   color: rgba(200,200,200,0.75)
   box-shadow: 0 10px 10px 0px rgba(20,20,20,0.5)
-  transition: top 1s
+  transition: top 0.5s
+  z-index: 10000
 
   #main-links
     display: flex

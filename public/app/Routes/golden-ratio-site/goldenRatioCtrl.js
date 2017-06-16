@@ -6,8 +6,4 @@ angular.module("portfolioApp").controller("goldenRatioCtrl", function($scope, go
 
   document.querySelector('nav').style.display = 'none'
 
-  window.onbeforeunload = function() {
-    document.querySelector('nav').style.display = 'inline'
-  }
-
 });

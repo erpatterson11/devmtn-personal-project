@@ -8,9 +8,11 @@ $syncopate: 'Syncopate', sans-serif
 #home-container
   color: rgb(150,150,150)
   font-family: $julius
+  margin-top: 70px
 
   p
     padding: 40px
+    text-align: center
 
   .link-bar
     width: 100vw
@@ -50,7 +52,8 @@ $syncopate: 'Syncopate', sans-serif
       color: rgb(255, 202, 0)
       text-shadow: -2px 2px #4e4411
       font-family: $cinzel
-      z-index: 99
+    .top
+      z-index: 1
 
   #golden-ratio-div #gr-svg-bg
     stroke: #111
@@ -62,6 +65,12 @@ $syncopate: 'Syncopate', sans-serif
 
   #golden-ratio-div:hover #gr-svg-bg
     stroke: #333
+
+  $baloo: 'Baloo Bhaina', cursive
+
+  #weather-app-div
+    .headline
+      font-family: $baloo
 
   .top, .bottom
     width: 100%
@@ -82,6 +91,9 @@ $syncopate: 'Syncopate', sans-serif
 
   .svg-button:hover
     cursor: pointer
+
+  .svg-hover:active
+    transform: translateY(12px)
 
 
   .svg-button .button-ol-1

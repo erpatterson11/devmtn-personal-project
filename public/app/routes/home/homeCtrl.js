@@ -4,6 +4,9 @@ angular.module("portfolioApp").controller("homeCtrl", function($scope, reusableF
 
   const nav = document.querySelector('#main-nav')
 
+  // re-enable nav-bar if it was disabled in a route
+  nav.style.display = 'flex'
+
   let lastScrollTop = 0
   let navHeight = parseInt(getComputedStyle(nav).height)
 

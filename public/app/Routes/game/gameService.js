@@ -1,6 +1,6 @@
 // INITILIZE SERVICE
 // ============================================================
-angular.module("portfolioApp").service("gameService", function() {
+angular.module("portfolioApp").service("gameService", function(reusableFuncsService) {
 
 
 // note: there is a getScore function attached to the service
@@ -23,8 +23,7 @@ angular.module("portfolioApp").service("gameService", function() {
   const bgCanvas = document.querySelector('#bgCanvas')
   const explosionCanvas = document.querySelector('#explosionCanvas')
 
-
-  const canvasContainer = document.querySelector('.canvas-container')
+  const gameContainer = document.querySelector('#game-container')
   const statsBar = document.querySelector('#stats-bar')
 
   const startScreen = document.querySelector('#start-screen')
@@ -51,34 +50,7 @@ angular.module("portfolioApp").service("gameService", function() {
   const customLoginForm = document.querySelector('#custom-login')
   const finalScoreText = document.querySelector('#final-score-text')
 
-  //========================== Canvas SetUp ================================
 
-  let gameAspect = 1200 / 780
-  let screenW = window.innerWidth
-  let screenH = window.innerHeight
-  let userAspect = screenW / screenH
-
-  let cW = gameCanvas.width = 900
-  let cH = gameCanvas.height = 600
-
-  canvasContainer.style.width = statsBar.style.width = `${cW}px`
-  canvasContainer.style.height = statsBar.style.height = `${cH}px`
-
-  let ctx = gameCanvas.getContext('2d')
-
-  //========================== Background Canvas Setup ================================
-
-  bgCanvas.width = gameCanvas.width
-  bgCanvas.height = gameCanvas.height
-
-  let bgCtx = bgCanvas.getContext('2d')
-
-  //========================== Explosion Canvas Setup ================================
-
-  explosionCanvas.width = gameCanvas.width
-  explosionCanvas.height = gameCanvas.height
-
-  let explCtx = explosionCanvas.getContext('2d')
 
   //========================== Image Repo ================================
 
@@ -104,6 +76,16 @@ angular.module("portfolioApp").service("gameService", function() {
       this.powerup1.src = 'app/routes/game/media/img/powerup1.png'
       this.powerup2.src = 'app/routes/game/media/img/powerup2.png'
       this.powerup3.src = 'app/routes/game/media/img/powerup3.png'
+
+      this.scaleImages = function(scaleX, scaleY) {
+        let keys = Object.keys(this)
+        keys.map(img => {
+          if (typeof images[img] === 'object') {
+            images[img].width = images[img].naturalWidth * scaleX
+            images[img].height = images[img].naturalHeight * scaleY
+          }
+        })
+      }
   }
 
   //========================== Spritesheet Repo ================================
@@ -114,6 +96,16 @@ angular.module("portfolioApp").service("gameService", function() {
 
     this.explosion.src = "app/routes/game/media/img/explosion.png"
     this.explosion2.src = "app/routes/game/media/img/explosion-2.png"
+
+    this.scaleImages = function(scaleX, scaleY) {
+      let keys = Object.keys(this)
+      keys.map(sprite => {
+        if (typeof spriteRepo[sprite] === 'object') {
+          spriteRepo[sprite].width = spriteRepo[sprite].naturalWidth * scaleX
+          spriteRepo[sprite].height = spriteRepo[sprite].naturalHeight * scaleY
+        }
+      })
+    }
   }
 
   //========================== Audio Repo ================================
@@ -133,6 +125,54 @@ angular.module("portfolioApp").service("gameService", function() {
     this.laser2.volume = 0.5
     this.laser3.volume = 0.5
   }
+
+
+  //========================== Canvas SetUp ================================
+
+  let ctx = gameCanvas.getContext('2d')
+
+  //========================== Background Canvas Setup ================================
+
+  let bgCtx = bgCanvas.getContext('2d')
+
+  //========================== Explosion Canvas Setup ================================
+
+  let explCtx = explosionCanvas.getContext('2d')
+
+  //========================== Canvas Sizing ================================
+    let gameW = 1200
+    let gameH = 780
+    let gameAspect = gameW / gameH
+    let cW
+    let cH
+    let imgScaleX
+    let imgScaleY
+
+  function sizeGame() {
+    let screenW = window.innerWidth
+    let screenH = window.innerHeight
+    let userAspect = screenW / screenH
+    if (userAspect > gameAspect) {
+      cW = screenH * gameAspect
+      cH = screenH
+    } else if ( userAspect < gameAspect ) {
+      cW = screenW
+      cH = screenW / gameAspect
+    }
+    gameCanvas.width = bgCanvas.width = explosionCanvas.width = cW
+    gameCanvas.height = bgCanvas.height = explosionCanvas.height = cH
+    gameContainer.style.width = gameCanvas.style.width = bgCanvas.style.width = explosionCanvas.style.width = cW + 'px'
+    gameContainer.style.height = gameCanvas.style.height = bgCanvas.style.height = explosionCanvas.style.height = cH + 'px'
+
+    imgScaleX = cW / gameW
+    imgScaleY = (cW / gameAspect) / gameH
+    images.scaleImages(imgScaleX,imgScaleY)
+    spriteRepo.scaleImages(imgScaleX,imgScaleY)
+  }
+
+  sizeGame()
+
+  window.addEventListener('resize', reusableFuncsService.debounce(sizeGame))
 
   //========================== Player Movement Logic ================================
 
@@ -170,9 +210,7 @@ angular.module("portfolioApp").service("gameService", function() {
   }
 
   //====================================================================
-
   //                          Factory Functions
-
   //====================================================================
 
 
@@ -195,7 +233,7 @@ angular.module("portfolioApp").service("gameService", function() {
 
     const DrawObject = (obj, callback) => {
       callback(obj)
-      ctx.drawImage(obj.img, obj.x, obj.y)
+      ctx.drawImage(obj.img, obj.x, obj.y, obj.img.width, obj.img.height)
     }
 
     const NewPowerupFactory = (image, interval) => {
@@ -210,8 +248,8 @@ angular.module("portfolioApp").service("gameService", function() {
       }
     }
 
-    const DrawSpriteFactory = (sprite, totalFrames, frameRate) => {
-        let sp = sprite
+    const DrawSpriteFactory = (totalFrames, frameRate) => {
+        let sp = spriteRepo.explosion
         sp.count = 0
         let isAnimating = true
         let currentFrame = 0
@@ -231,10 +269,10 @@ angular.module("portfolioApp").service("gameService", function() {
           }
 
         let drawSprite = (x, y) => {
-           explCtx.drawImage(sp,frameWidth*currentFrame,0,frameWidth,sp.height,x,y,frameWidth,sp.height)
+           explCtx.drawImage(sp,spriteRepo.explosion.width/totalFrames*currentFrame,0,spriteRepo.explosion.width/totalFrames,spriteRepo.explosion.height/totalFrames,x,y,frameWidth,sp.height)
           }
 
-          let explReq
+        let explReq
 
         const animateSprite = (x, y) => {
            explCtx.clearRect(0,0,cW,cH)
@@ -315,7 +353,7 @@ angular.module("portfolioApp").service("gameService", function() {
         }
         if (KeyStatus.right) {
             player.x += player.speed
-            player.x >= (cW - player.width) ? player.x = cW - player.width : null
+            player.x >= (cW - player.img.width) ? player.x = cW - player.img.width : null
         }
         if (KeyStatus.up) {
             player.y -= player.speed
@@ -323,7 +361,7 @@ angular.module("portfolioApp").service("gameService", function() {
         }
         if (KeyStatus.down) {
             player.y += player.speed
-            player.y >= (cH - player.height) ? player.y = cH - player.height : null
+            player.y >= (cH - player.img.height) ? player.y = cH - player.img.height : null
         }
     }
 
@@ -336,8 +374,7 @@ angular.module("portfolioApp").service("gameService", function() {
       get: getPlayerInfo,
       draw: drawPlayer
     }
-  };
-
+  }
 
   //========================== Player Bullet Factory ================================
 
@@ -368,8 +405,8 @@ angular.module("portfolioApp").service("gameService", function() {
         audio.laser1.currentTime=0;
         audio.laser1.play()
         b.alive = true
-        b.x = player.x + player.width
-        b.y = player.y + player.height / 2
+        b.x = player.x + player.img.width
+        b.y = player.y + player.img.height / 2
         bulletPool.push(bulletPool.shift())
       }
     }
@@ -381,8 +418,8 @@ angular.module("portfolioApp").service("gameService", function() {
         audio.laser1.currentTime=0;
         audio.laser1.play()
         b.alive = true
-        b.x = player.x + player.width
-        b.y = player.y + player.height * 0.25
+        b.x = player.x + player.img.width
+        b.y = player.y + player.img.height * 0.25
         bulletPool.push(bulletPool.shift())
       }
       let bn = bulletPool[0]
@@ -390,8 +427,8 @@ angular.module("portfolioApp").service("gameService", function() {
         audio.laser2.currentTime=0;
         audio.laser2.play()
         bn.alive = true
-        bn.x = player.x + player.width
-        bn.y = player.y + player.height * 0.75
+        bn.x = player.x + player.img.width
+        bn.y = player.y + player.img.height * 0.75
         bulletPool.push(bulletPool.shift())
       }
     }
@@ -403,8 +440,8 @@ angular.module("portfolioApp").service("gameService", function() {
         audio.laser1.currentTime=0;
         audio.laser1.play()
         b.alive = true
-        b.x = player.x + player.width
-        b.y = player.y + player.height * 0.25
+        b.x = player.x + player.img.width
+        b.y = player.y + player.img.height * 0.25
         bulletPool.push(bulletPool.shift())
       }
       let bn = bulletPool[0]
@@ -412,8 +449,8 @@ angular.module("portfolioApp").service("gameService", function() {
         audio.laser2.currentTime=0;
         audio.laser2.play()
         bn.alive = true
-        bn.x = player.x + player.width
-        bn.y = player.y + player.height * 0.75
+        bn.x = player.x + player.img.width
+        bn.y = player.y + player.img.height * 0.75
         bulletPool.push(bulletPool.shift())
       }
       let by = bulletPool[0]
@@ -421,15 +458,15 @@ angular.module("portfolioApp").service("gameService", function() {
         audio.laser3.currentTime=0;
         audio.laser3.play()
         by.alive = true
-        by.x = player.x + player.width
+        by.x = player.x + player.img.width
         by.y = player.y
         bulletPool.push(bulletPool.shift())
       }
       let bz = bulletPool[0]
       if (!bz.alive) {
         bz.alive = true
-        bz.x = player.x + player.width
-        bz.y = player.y + player.height
+        bz.x = player.x + player.img.width
+        bz.y = player.y + player.img.height
         bulletPool.push(bulletPool.shift())
       }
     }
@@ -823,7 +860,7 @@ angular.module("portfolioApp").service("gameService", function() {
       EnemyBullets = EnemyBulletFactory()
       Score = ScoreFactory()
       Powerup = PowerupFactory()
-      Explosion = DrawSpriteFactory(spriteRepo.explosion, 46, 60)
+      Explosion = DrawSpriteFactory(46, 60)
       DetectAllCollisions = CollisionDetectionFactory(Player.get(), PlayerBullets.get(), Enemies.get(),EnemyBullets.get(),Powerup.get(), Explosion)
       Background = BackgroundAnimateFactory()
     }
@@ -898,7 +935,8 @@ angular.module("portfolioApp").service("gameService", function() {
       loop: gameloop,
       status: loopStatus,
       toggleLoop: toggleGameLoop,
-      toggleMute: toggleMutePage
+      toggleMute: toggleMutePage,
+      stop: cancelRAF
     }
   };
 
@@ -948,6 +986,8 @@ angular.module("portfolioApp").service("gameService", function() {
     controlsTooltip.classList.add('hidden')
     })
 
+
+
 ////////////////////////////////////////////////////////////////////
 // END GAME CODE
 
@@ -958,6 +998,10 @@ angular.module("portfolioApp").service("gameService", function() {
 
   this.getScore = function() {
     return Score.get()
+  }
+
+  this.stopGame = function() {
+    return Game.stop()
   }
 
 

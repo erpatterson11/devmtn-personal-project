@@ -16,8 +16,6 @@ angular.module("portfolioApp").service("goldenRatioService", function() {
     const canvas = document.querySelector('#spiral-canvas')
     const ctx = canvas.getContext('2d')
 
-    const trumpImg = document.querySelector('#golden-spiral-trump')
-
     let startOver = false
     let shouldAnimate = false
     let currentSection = 0
@@ -38,6 +36,9 @@ angular.module("portfolioApp").service("goldenRatioService", function() {
     let chgInt = 178
     let createSpiral
     let spiralSpeed = 11
+    let moved
+    let touchStartX
+    let touchStartY
 
     let colorSchemes = {
       0: {
@@ -79,7 +80,7 @@ angular.module("portfolioApp").service("goldenRatioService", function() {
       6: {
         bg: "#A23988",
         accent1: "#0E0B16",
-        accent2: "#0E0B16",
+        accent2: "#A23988",
         text: "#ffffff"
       },
       7: {
@@ -129,15 +130,7 @@ angular.module("portfolioApp").service("goldenRatioService", function() {
       path.getBoundingClientRect()
       path.style.transition = path.style.WebkitTransition =
         `stroke-dashoffset ${animationTime}s ease-in`
-      // if (offSet) {
-      //   console.log('forward');
         path.style.strokeDashoffset = `${length + (2*length*direction)}`
-      // } else {
-      //   path.style.strokeDashoffset = 0
-      //   path.style.strokeDashoffset = `${length*direction}`
-      //   console.log(path.style.strokeDashoffset);
-      // }
-
 
       if (!startOver) {
         setTimeout(() => {
@@ -190,27 +183,15 @@ angular.module("portfolioApp").service("goldenRatioService", function() {
         drawLine(spiralSpeed)
       }
 
-      win.on('wheel keydown click', (e) => {
+      // canvas spiral animation controll. ignores r key for 'reset'
+      win.on('wheel keydown click touchmove', (e) => {
         if(shouldAnimate && e.keyCode!==82) {
           animate()
-        } else {
-          ctx.resetTransform(1,0,0,1,0,0)
-          ctx.clearRect(0,0,wW,wH)
-          resetSpiralSVG()
-          // startingAnimation(1,1, false)
         }
       })
 
-      $('canvas').on('click', () => {
-        currentSection = 0
-        updateSpiral()
-        ctx.resetTransform(1,0,0,1,0,0)
-        ctx.clearRect(0,0,wW,wH)
-        resetSpiralSVG()
-        // startingAnimation(1,1, false)
-      })
-    }
 
+      // wheel navigation
       win.on('wheel', (e) => {
         let dY = e.originalEvent.deltaY
         if (dY > 0) {
@@ -221,6 +202,7 @@ angular.module("portfolioApp").service("goldenRatioService", function() {
         updateSpiral()
       })
 
+      // arrow key navigation
       win.on('keydown', (e) => {
         if(e.keyCode === 38 || e.keyCode === 39) {
           currentSection++
@@ -234,22 +216,30 @@ angular.module("portfolioApp").service("goldenRatioService", function() {
         }
       })
 
-    // win.on('click', () => {
-    //   if
-    // })
+    // touch scroll navigation
+    window.addEventListener('touchstart', (e) => {
+      let touch = e.touches[0] || e.changedTouches[0]
+      moved = 0
+      touchStartX = touch.clientX
+      touchStartY = touch.clientY
+    })
+    window.addEventListener('touchmove', (e) => {
+      let touch = e.touches[0] || e.changedTouches[0]
+      moved = (touchStartY - touch.clientX + touchStartX - touch.clientY) * 3
+      touchStartX = touch.clientX
+      touchStartY = touch.clientY
+      rotation += moved/-10
+      if (rotation > 50) {
+        currentSection--
+        rotation = 0
+        updateSpiral()
+      } else if (rotation < -50) {
+        currentSection++
+        rotation = 0
+        updateSpiral()
+      }
+    })
 
-    // win.on('touchstart', (e) => {
-    //   e.preventDefault()
-    //   let touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0]
-    //   touchStartX = touch.pageX
-    //   thouchStartY = touch.pageY
-    // })
-    //
-    // win.on('touchmove', (e) => {
-    //   e.preventDefault()
-    //   let touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0]
-    //
-    // })
 
     sections.each((i)=>{
       $(sections[i]).on('click',(e)=> {
@@ -259,7 +249,7 @@ angular.module("portfolioApp").service("goldenRatioService", function() {
         }
       })
     })
-
+}
 
     let limitNums = (num) => {
       if (num > 10) {
@@ -290,13 +280,21 @@ angular.module("portfolioApp").service("goldenRatioService", function() {
       }
     }
 
+    let hideBehindCurrent = () => {
+      sections.each((i) => {
+        if (i < currentSection - 1) {
+          $(sections[i]).css({'display':'none'})
+        } else {
+          $(sections[i]).css({'display':'flex'})
+        }
+      })
+    }
 
-    let showTrump = () => {
-      if (currentSection >= sections.length-1) {
-        trumpImg.style.opacity = 1
-      } else {
-        trumpImg.style.opacity = 0
-      }
+    let resetCanvas = () => {
+      shouldAnimate = false
+      ctx.resetTransform(1,0,0,1,0,0)
+      ctx.clearRect(0,0,wW,wH)
+      rotate = 0
     }
 
   // callback function to move to the next or previous section (depending on currentSection)
@@ -306,7 +304,9 @@ angular.module("portfolioApp").service("goldenRatioService", function() {
     let inBounds = (currentSection > -zoomOutLimit && currentSection < sections.length + 3)
     if (inBounds) {
       if (currentSection < sections.length + 2 && currentSection >= -1)  {
-        shouldAnimate = false
+        // hide sections after rotation animation. make sure this time matches transition delay set in css on .spiral element
+        hideBehindCurrent()
+        resetCanvas()
         changeColors(currentSection)
       } else {
         document.documentElement.style.setProperty('--gr-bg-color', '#18121E')
@@ -319,7 +319,6 @@ angular.module("portfolioApp").service("goldenRatioService", function() {
     } else {
       currentSection > 0 ? currentSection-- : currentSection++
     }
-    showTrump()
   }
 
   // generates spiral from all divs with class 'section'

@@ -1,89 +1,155 @@
 #weather-app-section
 
-  nav
-    width: 100%
-    height: 150px
-    display: flex
-    flex-direction: column
-    justify-content: center
-    align-items: center
+  .flex-center
+  	display: flex
+  	flex-direction: column
+  	justify-content: center
+  	align-items: center
+
+  .flex-wrap
+  	flex-wrap: wrap
+
+  .controlls
     position: fixed
     bottom: 0
-    z-index: 999
-    font-size: 12px
+    width: 100vw
+    padding-bottom: 50px
+    color: white
+    transition: 0.5s
+    input
+      background: rgba(255,255,255,0.05)
+      margin: 10px
+      border-radius: 10px
+      box-shadow: inset 0px 0px 10px 0px rgba(255,255,255,0.15)
+      color: white
+    input:focus
+      outline: none
 
-  .data-container
-    width: 100%
-    display: flex
-    justify-content: space-around
 
-
-  #five-day-button
-    position: fixed
-    top: 50px
-    left: 50px
-    width: 50px
-    height: 30px
-    display: flex
-    flex-direction: column
-    justify-content: space-around
-    align-items: center
-    cursor: pointer
-    .bar
-      background: rgba(255,255,255,0.5)
-      width: 40px
-      height: 5px
-      border-radius: 2.5px
-
-  #exitButton
-    cursor: pointer
-
-  .fiveDay
-    position: fixed
-    background: linear-gradient(#2F80ED,#56CCF2)
+  #landing-page-background
+    z-index: 10000
+    color: #cccccc
     width: 100vw
     height: 100vh
-    display: flex
-    justify-content: center
-    align-items: center
-    #exitButton
-      position: fixed
-      top: 50px
-      right: 50px
-    #fiveDayCardContainer
-      width: 70%
-      height: 60%
-      display: flex
+    position: fixed
+    background: linear-gradient(#B06AB3 0%, #4568DC 100%)
+
+  .slide-up-animation
+    animation: slide-up 1s forwards
+
+  @keyframes slide-up
+    20%
+      transform: translateY(5%)
+    100%
+      transform: translateY(-100%)
+      display: none
+
+  .landing-page-background
+    *
+    	padding-top: 1em
+
+
+
+  .landing-lower-content
+    width: 100vw
+    height: 50vh
+    *
+      margin: 1em
+      flex-direction: column
       justify-content: space-around
       align-items: center
-      flex-wrap: wrap
-      color: rgba(125,125,125,0.5)
+
+  #site-title
+    width: 100vw
+    height: 50vh
+    font-size: 96px
+    text-align: center
 
 
-  //-----------------------------------------------------------------------------
-  //                             Artwork Styling
-  //-----------------------------------------------------------------------------
+  button
+    padding: 10px 15px
+    background: none
+    color: rgba(200,200,200,0.75)
+    border: 0.5px solid rgba(200,200,200,0.75)
+    border-radius: 20px
+    transition: 0.15s
+
+  button:hover
+    cursor: pointer
+    color: rgba(200,200,200,1)
+    border: 0.5px solid rgba(200,200,200,1)
+    box-shadow: 0px 2px 10px 0px rgba(255,255,255,0.15)
+    transform: translate(0px, -1px)
+
+  button:focus
+    outline: none
+
+  button:active
+    outline: none
+    transform: translate(0px, 3px)
+    box-shadow: 0px 1px 5px 0px rgba(255,255,255,0.15)
+
+  .search-input-container
+    input
+    	background: none
+
+  .search-input
+    border: none
+    background: transparent
+    padding: 10px
+    margin-bottom: 0px
+    border-radius: 20px
+    box-shadow: inset 0px 0px 10px 0px rgba(255,255,255,0.15)
+    text-align: center
+    color: #cccccc
+    transition: 0.5s
+
+  .search-input::placeholder
+  	color: rgba(255,255,255,0.25)
+  	text-align: center
+
+  .search-input:focus
+    background: rgba(255,255,255,0.05)
+    box-shadow: inset 0px 0px 20px 0px rgba(255,255,255,0.15)
+    outline: none
+    width: 250px
 
 
-  #artwork-container
-    // background-image: radial-gradient(circle at 0% 80%, #e3e5f3, #e38c59, #a33d4b,#46142b)
-    z-index: -1
+  .data-header
+    position: fixed
+    width: 80%
+    top: 0
+    right: 0
+    display: flex
+    justify-content: space-between
+    align-items: center
+    z-index: 10000
+    color: rgba(250,250,250,0.8)
+    font-size: 36px
+    transition: 0.5s
+
+  .data-header
+     *
+    	padding: 50px
+      margin: 10px
+    	flex: 1
+
+
 
   .background
-      width: 100vw
-      height: 100vh
-      position: absolute
-      top: 0
-      left: 0
+    width: 100vw
+    height: 100vh
+    position: absolute
+    top: 0
+    left: 0
 
-  // .buttons
-  //   position: fixed
-  //   top: 20px
-  //   right: 20px
-  //   #button
-  //     width: 140px
-  //     display: block
-  //     margin-bottom: 5px
+
+  #gray-sky
+  	opacity: 0
+    position: fixed
+    width: 100vw
+    height: 100vh
+    background-image: linear-gradient(0, #ccc, #aaa)
 
 
   #mountainSVG
@@ -96,51 +162,54 @@
   .cloud
     position: fixed
 
+
   .cloud1
     top: 50
     left: 50
     height: 30vh
 
+
   #precip-cloud-right-large
-        height: 60vh
-        right: -200vw
-        top: 5vh
-        path
-          fill: rgba(255,255,255,0.5)
+    height: 50vh
+    top: 5vh
+    right: -5vw
+    opacity: 0
+    path
+      fill: rgba(255, 255, 255, 0.5)
+
 
   #precip-cloud-right-small
-        height: 30vh
-        right: -200vw
-        top: 30vh
-        path
-          fill: rgba(255,255,255,0.5)
+    height: 30vh
+    right: -5vw
+    top: 30vh
+    opacity: 0
+    path
+      fill: rgba(255, 255, 255, 0.5)
+
 
   #precip-cloud-left-large
-        height: 55vh
-        left: -200vw
-        top: 10vh
-        path
-          fill: rgba(255,255,255,0.5)
+    height: 55vh
+    top: 10vh
+    left: -10vw
+    opacity: 0
+    path
+      fill: rgba(255, 255, 255, 0.5)
+
 
   #precip-cloud-left-small
-        height: 30vh
-        left: -200vw
-        top: 20vh
-        path
-          fill: rgba(255,255,255,0.5)
+    height: 30vh
+    top: 20vh
+    left: -10vw
+    opacity: 0
+    path
+      fill: rgba(255, 255, 255, 0.5)
+
 
   #precip-cloud-top
-        height: 20vh
-        left: 0
-        top: 0
-        filter: drop-shadow(2px 2px 5px #888)
-
-  .gray-sky
-    position: fixed
-    width: 100vw
-    height: 100vh
-    background-image: linear-gradient(0, #ccc, #aaa)
-
+    height: 20vh
+    left: 0
+    top: 0
+    filter: drop-shadow(2px 2px 5px #888)
 
   .windPath
     position: fixed
@@ -152,160 +221,226 @@
   #windPath1
     top: 30vh
     stroke-width: 0
-    // stroke-dasharray: 200 5000
-    // stroke-dashoffset: 5000
-    // animation: wind 4s linear forwards infinite
+
 
   #windPath2
     top: 60vh
     stroke-width: 0
-    // stroke-dasharray: 300 7000
-    // stroke-dashoffset: 7000
-    // animation: wind 6s linear reverse infinite
+
 
   #windPath3
     top: 45vh
     left: -15vw
     stroke-width: 0
-    // stroke-dasharray: 200 7000
-    // stroke-dashoffset: 7000
-    // animation: wind 5s linear forwards infinite
+
 
   #windPath4
     top: 15vh
     left: -27vw
     stroke-width: 0
-    // stroke-dasharray: 300 5000
-    // stroke-dashoffset: 5000
-    // animation: wind 6s linear reverse infinite
+
 
   @keyframes wind
     to
       stroke-dashoffset: 0
 
-
-
-  // .sun-pulse
-  //   background-image: radial-gradient(circle at 50% 60%,rgb(255,194,82), rgb(70,20,43) 65%, rgba(0,0,0,0))
-  //   opacity: 0.2
-  //   animation: pulse 3s ease-in-out infinite
-
-  //
-  // @keyframes pulse
-  //   0%, 100%
-  //       opacity: 0.2
-  //
-  //   20%
-  //         opacity: 0.1
-  //
-  //   35%
-  //     opacity: 0.25
-  //
-  //   60%
-  //       opacity: 0.15
-  //
-  //   90%
-  //       opacity: 0.3
-
-
-  //-----------------------------------------------------------------------------
-  //                               Canvas Styling
-  //-----------------------------------------------------------------------------
-
-
   canvas
     position: fixed
-    background: rgba(0,0,0,0)
-    #precipCanvas
+    background: transparent
+    transition: 0.5s
+
+
+  #precipCanvas
       width: 200vw
       height: 85vh
       top: 15vh
       left: -10vw
-    #starsCanvas
+
+  #starsCanvas
       width: 100vw
       height: 100vh
       top: 0
       left: 0
-
-
-  //-----------------------------------------------------------------------------
-  //                               Slider Styling
-  //-----------------------------------------------------------------------------
+      opacity: 0
 
   #timeSlider
     -webkit-appearance: none
     margin: 10px 0
     width: 70%
     background: none
+    transition: 0.25s
+
 
   #timeSlider:focus
     outline: none
+    transition: 0.25s
+
 
   #timeSlider::-webkit-slider-runnable-track
     width: 100%
     height: 30px
     cursor: pointer
-    animate: 1s
-    // box-shadow: inset 0 0 15px rgba(125,125,125,0.5)
     border-radius: 15px
+    transition: 0.25s
+
 
 
   #timeSlider::-webkit-slider-thumb
-    background: rgba(255,255,255,0.5)
+    background: rgba(255, 255, 255, 0.5)
     height: 30px
     width: 45px
     border-radius: 50px
     cursor: pointer
     -webkit-appearance: none
+    transition: 0.25s
 
 
   #timeSlider::-moz-range-track
     width: 100%
     height: 30px
     cursor: pointer
-    animate: 0.2s
-    box-shadow: inset 0 0 15px rgba(0,0,0,0.5)
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5)
     border-radius: 15px
+    transition: 0.25s
+
 
 
   #timeSlider::-moz-range-thumb
-    background: rgba(0,0,0,0.5)
+    background: rgba(0, 0, 0, 0.5)
     height: 30px
     width: 30px
     border-radius: 50px
     cursor: pointer
+    transition: 0.25s
+
 
   #timeSlider::-ms-track
     width: 100%
     height: 10px
     cursor: pointer
-    animate: 0.2s
     background: transparent
     border-color: transparent
     color: transparent
+    transition: 0.25s
+
+
 
   #timeSlider::-ms-fill-lower
     border-radius: 10px
-    box-shadow: inset 0 0 15px rgba(0,0,0,0.5)
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5)
+
 
   #timeSlider::-ms-fill-upper
     border-radius: 10px
-    box-shadow: inset 0 0 15px rgba(0,0,0,0.5)
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5)
+
 
   #timeSlider::-ms-thumb
-    background: rgba(0,0,0,0.5)
+    background: rgba(0, 0, 0, 0.5)
     height: 30px
     width: 30px
     border-radius: 50px
     cursor: pointer
+    transition: 0.25s
 
-  //-----------------------------------------------------------------------------
-  //                               Loader Styling
-  //-----------------------------------------------------------------------------
 
-  .loader-wrapper
+  #side-nav
     position: fixed
-    width: 100vw
-    height: 100vh
-    background: linear-gradient(#2F80ED,#56CCF2)
-    z-index: 1000
+    top: 0
+    left: -300px
+    width: 300px
+    height: 90vh
+    margin-top: 30px
+    padding-top: 75px
+    background: linear-gradient(#2F80ED 0%, #56CCF2 100%)
+    border-radius: 10px
+    overflow-x: hidden
+    display: flex
+    flex-direction: column
+    align-items: center
+    transition: 1s
+    color: white
+    box-shadow: 0 0 20px 2px rgba(100,100,100,0.3)
+    *
+      margin: 5px 0px
+    h3
+      font-size: 24px
+      font-weight: bold
+      margin-top: 10px
+    a
+      text-decoration: none
+      color: #ccc
+
+
+  #ham-menu
+    position: fixed
+    top: 50px
+    left: 40px
+    width: 50px
+    height: 30px
+    display: flex
+    flex-direction: column
+    justify-content: space-around
+    align-items: center
+    cursor: pointer
+    .bar
+      background: rgba(255, 255, 255, 0.5)
+      width: 40px
+      height: 5px
+      border-radius: 2.5px
+      transition: 0.33s
+    .bar-top
+      transform-origin: right
+    .bar-bottom
+      transform-origin: right
+    .flip-ham-menu
+      transform: rotateX(180deg)
+
+  #ham-menu:hover .bar
+    background: white
+    border-radius: none
+
+  // #ham-menu:hover .bar-middle
+  //   width: 45px
+  //
+  // #ham-menu:hover .bar-top
+  //   -webkit-transform: rotateZ(-45deg) translate(-10px,-20px)
+  //   -moz-transform: rotateZ(-45deg) translate(-10px,-20px)
+  //   -ms-transform: rotateZ(-45deg) translate(-10px,-20px)
+  //   -o-transform: rotateZ(-45deg) translate(-10px,-20px)
+  //   transform: rotateZ(-45deg) translate(-10px,-20px)
+  //   width: 25px
+  //
+  //
+  // #ham-menu:hover .bar-bottom
+  //   -webkit-transform: rotateZ(45deg) translate(-10px,20px)
+  //   -moz-transform: rotateZ(45deg) translate(-10px,20px)
+  //   -ms-transform: rotateZ(45deg) translate(-10px,20px)
+  //   -o-transform: rotateZ(45deg) translate(-10px,20px)
+  //   transform: rotateZ(45deg) translate(-10px,20px)
+  //   width: 25px
+
+@media (max-width: 600px)
+  #weather-app-section
+    #site-title
+      font-size: 48px
+
+    .data-header
+      margin-top: 15px
+      padding: 10px
+      font-size: 20px
+      flex-direction: column
+      align-items: flex-end
+      *
+        margin: 5px
+
+@media (max-height: 450px)
+  #weather-app-section
+    #side-nav
+      height: auto
+      overflow: scroll
+
+
+
+.hidden
+  display: none !important

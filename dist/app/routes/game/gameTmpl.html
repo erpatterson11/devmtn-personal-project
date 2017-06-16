@@ -1,116 +1,122 @@
-<section id="game-container">
+<section id='game-section'>
 
-  <div class="canvas-container">
+    <div id="game-container">
 
-    <canvas id="bgCanvas"></canvas>
-    <canvas id="gameCanvas"></canvas>
-    <canvas id='explosionCanvas'></canvas>
+        <canvas id="bgCanvas"></canvas>
+        <canvas id="gameCanvas"></canvas>
+        <canvas id='explosionCanvas'></canvas>
 
-    <div id='stats-bar'>
+        <div id='stats-bar'>
 
-      <div id='stats-top'>
-          <div id='health-text'></div>
-          <div id='health-bar'>
-            <div id='health-bar-fill'></div>
-          </div>
-          <div id='score' ></div>
-      </div>
+            <div id='stats-top'>
+                <div id='health-text'></div>
+                <div id='health-bar'>
+                    <div id='health-bar-fill'></div>
+                </div>
+                <div id='score'></div>
+            </div>
 
-      <div id='stats-bottom'>
-        <button id='pause-button' type="button" name="button">
-          <i id='play-pause-icon' class="fa fa-play" aria-hidden="true"></i>
-        </button>
-        <button id='mute-button' type="button" name="button">
-          <i id='speaker-icon' class="fa fa-volume-up" aria-hidden="true"></i>
-        </button>
-        <button class='restart-button' type="button" name="button">Restart</button>
-        <button id='game-controller-icon' type="button" name="button">
-          <i class="fa fa-gamepad" aria-hidden="true"></i>
-        </button>
-      </div>
+            <div id='stats-bottom'>
+              <button id='pause-button' type="button" name="button">
+                <i id='play-pause-icon' class="fa fa-play" aria-hidden="true"></i>
+              </button>
+              <button id='mute-button' type="button" name="button">
+                <i id='speaker-icon' class="fa fa-volume-up" aria-hidden="true"></i>
+              </button>
+              <button class='restart-button' type="button" name="button">Restart</button>
+              <button id='game-controller-icon' type="button" name="button">
+                <i class="fa fa-gamepad" aria-hidden="true"></i>
+              </button>
+            </div>
+        </div>
+
+        <div id='controls-tooltip' class='game-overlay hidden'>
+            <ul>
+                <li>Move: Arrow Keys</li>
+                <li>Shoot: Space</li>
+                <li>Pause: P</li>
+                <li>Mute: M</li>
+            </ul>
+        </div>
     </div>
 
-    <div id='controls-tooltip' class='game-overlay hidden'>
-      <ul>
-        <li>Move: Arrow Keys</li>
-        <li>Shoot: Space</li>
-        <li>Pause: P</li>
-        <li>Mute: M</li>
-      </ul>
-    </div>
-
-    <div id='start-screen' class='game-overlay '>
-      <h1 class='title'>Galaxy Strike</h1>
-      <p class='link-text'>Start Game</p>
-      <svg id='start-button' class="svg-button" viewBox="0 0 267.7143 124.85715">
-        <g transform="translate(-129 -411.36)">
-          <path class="button-ol-1" style="opacity:0.374;stroke-linejoin:round;stroke:#b3b3b3;stroke-miterlimit:9.4545;stroke-width:2;fill:none" d="m130 428.08h265.71v88.571h-265.71z"/>
-          <path class="button-ol-2" style="opacity:0.374;stroke-linejoin:round;stroke:#b3b3b3;stroke-miterlimit:9.4545;stroke-width:2.2089;fill:none" d="m145.82 412.47h234.08v122.65h-234.08z"/>
-        </g>
-      </svg>
-      <h3>Controls</h3>
-      <hr>
-      <ul>
-        <li>Move: Arrow Keys</li>
-        <li>Shoot: Space</li>
-        <li>Pause: P</li>
-        <li>Mute: M</li>
-      </ul>
+    <div id='start-screen'>
+        <h1 class='title'>Galaxy Strike</h1>
+        <div class="svg-button-container">
+          <p class='link-text'>Start</p>
+          <svg id='start-button' class="svg-button" viewBox="0 0 267.7143 124.85715">
+            <g transform="translate(-129 -411.36)">
+              <path class="button-ol-1" style="opacity:0.374;stroke-linejoin:round;stroke-miterlimit:9.4545" d="m130 428.08h265.71v88.571h-265.71z"/>
+              <path class="button-ol-2" style="opacity:0.374;stroke-linejoin:round;stroke-miterlimit:9.4545" d="m145.82 412.47h234.08v122.65h-234.08z"/>
+            </g>
+          </svg>
+        </div>
+      <div class="controlls-container">
+        <h3>Controls</h3>
+        <hr>
+        <ul>
+            <li>Move: Arrow Keys</li>
+            <li>Shoot: Space</li>
+            <li>Pause: P</li>
+            <li>Mute: M</li>
+        </ul>
+      </div>
     </div>
 
     <div id='game-over-screen' class='game-overlay hidden'>
-      Game Over!
-      <button class='restart-button' type="button" name="button">Restart</button>
-      <button id='submit-score' ng-click='showScoreSubmission()' type="button" name="button">Submit Score</button>
-    </div>
-
-  </div>
-
-  <div id='score-submission-box' ng-show='isShownSubmissionForm'>
-    <div id="content-box">
-
-      <div class="close submission-box-section" ng-click="showScoreSubmission()">
-        <i id='content-close-icon' class="fa fa-window-close" aria-hidden="true"></i>
-        X
-      </div>
-
-      <div id='player-score' class='submission-box-section'>
-        <p>Final Score</p>
-        <hr>
-        <p id='final-score-text'>{{finalScore}}</p>
-      </div>
-
-      <div class="login-buttons submission-box-section">
-        <a href="/login"><button type="button" name="button" >Login</button></a>
-        <button id='guest-login-button' type="button" name="button" ng-click="showGuestNicknameEntry()">Guest</button>
-      </div>
-
-      <div id='custom-login' class='submission-box-section' ng-show='isShownNicknameInput'>
-        <input type="text" name="Nickname" placeholder='nickname' ng-model='nickname'>
-        <button type="submit" name='Submit' ng-click='submitFinalScore(nickname)'>Submit</button>
-      </div>
-
-      <button class='restart-button' type="button" name="button" ng-click="">Restart</button>
-
-      <div id='gameover-high-scores' class='submission-box-section'>
-        <h3>High Scores</h3>
-        <hr>
-        <div id="highscores">
-          <ul id='highscore-number'>
-            <li ng-repeat='player in scores'>{{$index}}</li>
-          </ul>
-          <ul id='highscore-players'>
-            <li ng-repeat='player in scores'>{{player.nickname}}</li>
-          </ul>
-          <ul id='highscore-scores'>
-            <li ng-repeat='player in scores'>{{player.score}}</li>
-          </ul>
+        <div id='game-over-content'>
+            <h3>Game Over!</h3>
+            <button class='restart-button' type="button" name="button">Restart</button>
+            <button id='submit-score' ng-click='showScoreSubmission()' type="button" name="button">Submit Score</button>
         </div>
-      </div>
-
     </div>
-  </div>
 
+
+
+    <div id='score-submission-box' ng-show='isShownSubmissionForm'>
+        <div id="content-box">
+
+            <div class="close submission-box-section" ng-click="showScoreSubmission()">
+                <i id='content-close-icon' class="fa fa-window-close" aria-hidden="true"></i> X
+            </div>
+
+            <div id='player-score' class='submission-box-section'>
+                <p>Final Score</p>
+                <hr>
+                <p id='final-score-text'>{{finalScore}}</p>
+            </div>
+
+            <div class="login-buttons submission-box-section">
+                <a href="/login"><button type="button" name="button" >Login</button></a>
+                <button id='guest-login-button' type="button" name="button" ng-click="showGuestNicknameEntry()">Guest</button>
+            </div>
+
+            <div id='custom-login' class='submission-box-section' ng-show='isShownNicknameInput'>
+                <input type="text" name="Nickname" placeholder='nickname' ng-model='nickname'>
+                <button type="submit" name='Submit' ng-click='submitFinalScore(nickname)'>Submit</button>
+            </div>
+
+            <div id='gameover-high-scores' class='submission-box-section'>
+                <h3>High Scores</h3>
+                <hr>
+                <div id="highscores">
+                    <ul id='highscore-number'>
+                        <li ng-repeat='player in scores'>{{$index}}</li>
+                    </ul>
+                    <ul id='highscore-players'>
+                        <li ng-repeat='player in scores'>{{player.nickname}}</li>
+                    </ul>
+                    <ul id='highscore-scores'>
+                        <li ng-repeat='player in scores'>{{player.score}}</li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <button class='restart-button' type="button" name="button" ng-click='showScoreSubmission()'>Restart</button>
+
+        </div>
+    </div>
 
 
 </section>
