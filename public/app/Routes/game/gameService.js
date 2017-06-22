@@ -346,24 +346,7 @@ angular.module("portfolioApp").service("gameService", function(reusableFuncsServ
       return player
     }
 
-    let movePlayer = () => {
-        if (KeyStatus.left) {
-            player.x -= player.speed
-            player.x <= 0 ? player.x = 0 : null
-        }
-        if (KeyStatus.right) {
-            player.x += player.speed
-            player.x >= (cW - player.img.width) ? player.x = cW - player.img.width : null
-        }
-        if (KeyStatus.up) {
-            player.y -= player.speed
-            player.y <= 0 ? player.y = 0 : null
-        }
-        if (KeyStatus.down) {
-            player.y += player.speed
-            player.y >= (cH - player.img.height) ? player.y = cH - player.img.height : null
-        }
-    }
+
 
     const drawPlayer = () => {
       DrawObject(player,movePlayer)
