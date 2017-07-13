@@ -12,17 +12,21 @@
   </head>
   <body ng-controller='mainCtrl'>
 
-    <ui-view id='ui-view'></ui-view>
 
-    <nav id='main-nav' class='nav-link-hover'>
+
+    <div id='ui-view-container'>
+      <ui-view ng-class="{animateFromHome: current, animateToHome: !current }"></ui-view>    
+    </div>
+
+    <nav id='main-nav'>
       <div id='navlogo' ui-sref='home' class='nav-link-hover'>Eric Patterson</div>
       <ul id='main-links'>
         <li ui-sref='home' class='nav-link-hover'>Portfolio</li>
-        <li class='nav-link-hover'>About</li>
-        <li class='nav-link-hover'>Contact</li>
+        <li ui-sref='about' class='nav-link-hover'>About</li>
       </ul>
     </nav>
 
+    
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.2/angular-ui-router.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.1/TweenMax.min.js"></script>

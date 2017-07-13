@@ -54,9 +54,44 @@ body::-webkit-scrollbar {
   display: none;
   width: 0 !important; }
 
-#ui-view {
+#ui-view-container {
+  position: relative; }
+
+ui-view {
+  position: absolute;
+  display: block;
   width: 100vw;
   height: auto; }
+
+.animateFromHome {
+  transition: 0.2s; }
+  .animateFromHome.ng-enter {
+    opacity: 0;
+    left: -100vw; }
+  .animateFromHome.ng-enter-active {
+    opacity: 1;
+    left: 0; }
+  .animateFromHome.ng-leave {
+    opacity: 1;
+    right: 0; }
+  .animateFromHome.ng-leave-active {
+    opacity: 0;
+    right: 100vh; }
+
+.animateToHome {
+  transition: 0.2s; }
+  .animateToHome.ng-enter {
+    opacity: 0;
+    right: -100vw; }
+  .animateToHome.ng-enter-active {
+    opacity: 1;
+    right: 0; }
+  .animateToHome.ng-leave {
+    opacity: 1;
+    left: 0; }
+  .animateToHome.ng-leave-active {
+    opacity: 0;
+    left: 100vh; }
 
 #main-nav {
   position: fixed;
@@ -76,8 +111,12 @@ body::-webkit-scrollbar {
     display: flex;
     width: 300px;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center; }
+    #main-nav #main-links > * {
+      margin-right: 25px; }
+    #main-nav #main-links li:last-child {
+      margin-right: 0px; }
   #main-nav .nav-link-hover {
     text-align: center;
     cursor: pointer;
@@ -85,12 +124,6 @@ body::-webkit-scrollbar {
   #main-nav .nav-link-hover:hover {
     color: #c8c8c8;
     font-size: 17px; }
-  @media (max-width: 500px) {
-    #main-nav #main-nav {
-      justify-content: center; }
-    #main-nav #navlogo {
-      content: 'EP';
-      display: none; } }
 
 :root {
   --gr-bg-color: #4ABDAC;
@@ -330,6 +363,17 @@ body::-webkit-scrollbar {
     }
   }
 
+
+#about-section {
+  width: 100vw;
+  height: 100vh;
+  background: black;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 1s; }
+
 #game-section {
   position: absolute;
   width: 100vw;
@@ -410,10 +454,10 @@ body::-webkit-scrollbar {
           background: rgba(0, 0, 0, 0.2);
           color: rgba(255, 255, 255, 0.2);
           transition: 0.1s; }
-        #game-section #game-container #stats-bar #stats-bottom button:hover {
+        #game-section #game-container #stats-bar #stats-bottom:hover {
           cursor: pointer;
           color: rgba(255, 255, 255, 0.6); }
-        #game-section #game-container #stats-bar #stats-bottom button:focus {
+        #game-section #game-container #stats-bar #stats-bottom:focus {
           outline: none; }
   #game-section #start-screen {
     position: absolute;
@@ -606,6 +650,17 @@ body::-webkit-scrollbar {
 
 .hidden {
   display: none !important; }
+
+#loading-screen {
+  position: fixed;
+  z-index: 10000;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #000;
+  transition: 0.3s; }
 
 @media (max-width: 450px) {
   #game-section #content-box {

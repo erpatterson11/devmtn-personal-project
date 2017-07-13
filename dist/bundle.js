@@ -1,6 +1,8 @@
 // CONFIG
   // ============================================================
-  angular.module("portfolioApp",['ui.router', 'ngAnimate']).config(["$stateProvider", "$urlRouterProvider", function($stateProvider, $urlRouterProvider) {
+  angular.module("portfolioApp",['ui.router', 'ngAnimate'])
+  
+  .config(["$stateProvider", "$urlRouterProvider", function($stateProvider, $urlRouterProvider) {
     // INITILIZE STATES
     // ============================================================
     $stateProvider
@@ -8,7 +10,8 @@
       .state('home', {
         url: '/',
         templateUrl: 'app/routes/home/homeTmpl.html',
-        controller: 'homeCtrl'
+        controller: 'homeCtrl',
+        cache: false
       })
       .state('golden-ratio', {
         url: '/golden-ratio',
@@ -25,6 +28,11 @@
         templateUrl: 'app/routes/weather-app/weatherTmpl.html',
         controller: 'weatherCtrl'
       })
+      .state('about', {
+        url: '/state',
+        templateUrl: 'app/routes/about/aboutTmpl.html',
+        controller: 'aboutCtrl'
+      })
 
     // ASSIGN OTHERWISE
     // ============================================================
@@ -33,11 +41,16 @@
 
 // INITILIZE CONTROLLER
 // ============================================================
-angular.module("portfolioApp").controller("mainCtrl", ["$scope", "mainService", "reusableFuncsService", function($scope, mainService, reusableFuncsService) {
 
+angular.module("portfolioApp").controller("mainCtrl", ["$scope", "mainService", "reusableFuncsService", "$stateParams", "$state", function($scope, mainService, reusableFuncsService, $stateParams, $state) {
 
+$scope.current = $state.current === 'home' ? false : true
 
-}]);
+$scope.$on('$stateChangeStart', function(evt, toState, toParams, fromState, fromParams) {
+        $scope.current = fromState.name === 'home' ? false : true
+    })
+
+}])
 
 // INITILIZE SERVICE
 // ============================================================
@@ -91,6 +104,7 @@ angular.module("portfolioApp").service("reusableFuncsService", ["$http", functio
       let timeout
       let wait = 10
       let immediate = true
+
       return function() {
         let context = this, args = arguments
         let later = function() {
@@ -107,6 +121,35 @@ angular.module("portfolioApp").service("reusableFuncsService", ["$http", functio
     }
 
 }]);
+
+// angular.module('module').directive('directive', directive);
+
+//     directive.$inject = ['$window'];
+
+//     function directive($window) {
+//         // Usage:
+//         //     <directive></directive>
+//         // Creates:
+//         //
+//         var directive = {
+//             link: link,
+//             restrict: 'EA'
+//         };
+//         return directive;
+
+//         function link(scope, element, attrs) {
+//         }
+//     }
+
+// }
+angular.module('portfolioApp').controller('aboutCtrl', function() {
+
+
+    
+})
+
+
+
 
 angular.module("portfolioApp").controller("gameCtrl", ["$scope", "$timeout", "scoreService", "gameService", function($scope, $timeout, scoreService, gameService) {
 
@@ -267,15 +310,31 @@ angular.module("portfolioApp").service("gameService", ["reusableFuncsService", f
       this.powerup2.src = 'app/routes/game/media/img/powerup2.png'
       this.powerup3.src = 'app/routes/game/media/img/powerup3.png'
 
+      let allImages = Object.keys(this).filter(x =>  this[x] instanceof Image)
+
       this.scaleImages = function(scaleX, scaleY) {
-        let keys = Object.keys(this)
-        keys.map(img => {
-          if (typeof images[img] === 'object') {
-            images[img].width = images[img].naturalWidth * scaleX
-            images[img].height = images[img].naturalHeight * scaleY
+        allImages.map(img => {
+            this[img].width = this[img].naturalWidth * scaleX
+            this[img].height = this[img].naturalHeight * scaleY
+        })
+      }
+
+      let total = allImages.length
+      let loaded = 0
+
+      this.monitorLoading = function() {
+        allImages.map(img => {
+          this[img].onload = function() {
+            loaded ++
+            console.log(loaded)
+            if (loaded === total) {
+              return true
+            }
           }
         })
       }
+
+
   }
 
   //========================== Spritesheet Repo ================================
@@ -296,6 +355,30 @@ angular.module("portfolioApp").service("gameService", ["reusableFuncsService", f
         }
       })
     }
+
+      let allSprites = Object.keys(this).filter(x =>  this[x] instanceof Image)
+    
+      let total = allSprites.length
+      let loaded = 0
+
+      let promiseArray = []
+
+      this.monitorLoading = function() {
+
+        allSprites.map(img => {
+
+          let p = new Promise( function(resolve, reject) {
+            this[img].onload = function() {
+              resolve('image loaded')
+            }
+          })
+
+          promiseArray.push(p)
+        })
+
+        return Promise.all(promiseArray)
+      }
+
   }
 
   //========================== Audio Repo ================================
@@ -314,6 +397,24 @@ angular.module("portfolioApp").service("gameService", ["reusableFuncsService", f
     this.laser1.volume = 0.75
     this.laser2.volume = 0.5
     this.laser3.volume = 0.5
+
+      let allAudio = Object.keys(this).filter(x =>  this[x] instanceof Audio)
+    
+      let total = allAudio.length
+      let loaded = 0
+
+      this.monitorLoading = function() {
+        allAudio.map(audio => {
+          this[audio].onload = function() {
+            loaded ++
+            console.log(loaded)
+            if (loaded === total) {
+              console.log('loaded')
+            }
+          }
+        })
+      }
+    
   }
 
 
@@ -321,13 +422,20 @@ angular.module("portfolioApp").service("gameService", ["reusableFuncsService", f
 
   let ctx = gameCanvas.getContext('2d')
 
+  ctx.imageSmoothingEnabled = false
+  ctx.imageSmoothingQuality = 'high'
+
   //========================== Background Canvas Setup ================================
 
   let bgCtx = bgCanvas.getContext('2d')
 
+  bgCtx.imageSmoothingEnabled = false
+
   //========================== Explosion Canvas Setup ================================
 
   let explCtx = explosionCanvas.getContext('2d')
+
+  explCtx.imageSmoothingEnabled = false
 
   //========================== Canvas Sizing ================================
     let gameW = 1200
@@ -1134,6 +1242,27 @@ angular.module("portfolioApp").service("gameService", ["reusableFuncsService", f
 
   //========================== DOM Manipulation ================================
 
+
+  function kickoffLoad() {
+
+    let spritePromise = spriteRepo.monitorLoading()
+    console.log(spritePromise)
+
+    // let mediaPromise = new Promise( (resolve, reject) => {
+    //     let img = images.monitorLoading()
+    //     audio.monitorLoading()
+    //     let sprt =  spriteRepo.monitorLoading()
+
+    //     resolve(img)
+    // })
+
+    // mediaPromise.then( (result) => {
+    //   console.log('promise catched', result)
+    // })
+    }
+
+    kickoffLoad()
+
   startButton.addEventListener('click', () => {
     startScreen.classList.add('hidden')
     Game.init()
@@ -1648,11 +1777,15 @@ angular.module("portfolioApp").controller("homeCtrl", ["$scope", "reusableFuncsS
     } else {
       nav.style.top = `0`
     }
+
+
     lastScrollTop = distFromTop
   }
 
-  window.addEventListener('scroll', reusableFuncsService.debounce(navbarControl));
 
+  window.addEventListener('scroll', reusableFuncsService.debounce(navbarControl))
+
+  
 
 }]);
 

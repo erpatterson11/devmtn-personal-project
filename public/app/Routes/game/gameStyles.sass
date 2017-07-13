@@ -1,5 +1,3 @@
-// variables
-
 $textColor: #ddd
 $charcoal: rgb(20,20,20)
 $julius: 'Julius Sans One', sans-serif
@@ -97,11 +95,11 @@ $game: 'Press Start 2P', cursive
           color: rgba(255,255,255,0.2)
           transition: 0.1s
 
-        button:hover
+        &:hover
           cursor: pointer
           color: rgba(255,255,255,0.6)
 
-        button:focus
+        &:focus
           outline: none
 
   #start-screen
@@ -332,6 +330,19 @@ $game: 'Press Start 2P', cursive
 
 .hidden
   display: none !important
+
+#loading-screen
+  position: fixed
+  z-index: 10000
+  width: 100vw
+  height: 100vh
+  display: flex
+  justify-content: center
+  align-items: center
+  background: #000
+  transition: 0.3s
+
+  
 
 
 @media (max-width: 450px)

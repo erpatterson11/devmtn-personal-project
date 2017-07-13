@@ -77,15 +77,31 @@ angular.module("portfolioApp").service("gameService", function(reusableFuncsServ
       this.powerup2.src = 'app/routes/game/media/img/powerup2.png'
       this.powerup3.src = 'app/routes/game/media/img/powerup3.png'
 
+      let allImages = Object.keys(this).filter(x =>  this[x] instanceof Image)
+
       this.scaleImages = function(scaleX, scaleY) {
-        let keys = Object.keys(this)
-        keys.map(img => {
-          if (typeof images[img] === 'object') {
-            images[img].width = images[img].naturalWidth * scaleX
-            images[img].height = images[img].naturalHeight * scaleY
+        allImages.map(img => {
+            this[img].width = this[img].naturalWidth * scaleX
+            this[img].height = this[img].naturalHeight * scaleY
+        })
+      }
+
+      let total = allImages.length
+      let loaded = 0
+
+      this.monitorLoading = function() {
+        allImages.map(img => {
+          this[img].onload = function() {
+            loaded ++
+            console.log(loaded)
+            if (loaded === total) {
+              return true
+            }
           }
         })
       }
+
+
   }
 
   //========================== Spritesheet Repo ================================
@@ -106,6 +122,30 @@ angular.module("portfolioApp").service("gameService", function(reusableFuncsServ
         }
       })
     }
+
+      let allSprites = Object.keys(this).filter(x =>  this[x] instanceof Image)
+    
+      let total = allSprites.length
+      let loaded = 0
+
+      let promiseArray = []
+
+      this.monitorLoading = function() {
+
+        allSprites.map(img => {
+
+          let p = new Promise( function(resolve, reject) {
+            this[img].onload = function() {
+              resolve('image loaded')
+            }
+          })
+
+          promiseArray.push(p)
+        })
+
+        return Promise.all(promiseArray)
+      }
+
   }
 
   //========================== Audio Repo ================================
@@ -124,6 +164,24 @@ angular.module("portfolioApp").service("gameService", function(reusableFuncsServ
     this.laser1.volume = 0.75
     this.laser2.volume = 0.5
     this.laser3.volume = 0.5
+
+      let allAudio = Object.keys(this).filter(x =>  this[x] instanceof Audio)
+    
+      let total = allAudio.length
+      let loaded = 0
+
+      this.monitorLoading = function() {
+        allAudio.map(audio => {
+          this[audio].onload = function() {
+            loaded ++
+            console.log(loaded)
+            if (loaded === total) {
+              console.log('loaded')
+            }
+          }
+        })
+      }
+    
   }
 
 
@@ -131,13 +189,20 @@ angular.module("portfolioApp").service("gameService", function(reusableFuncsServ
 
   let ctx = gameCanvas.getContext('2d')
 
+  ctx.imageSmoothingEnabled = false
+  ctx.imageSmoothingQuality = 'high'
+
   //========================== Background Canvas Setup ================================
 
   let bgCtx = bgCanvas.getContext('2d')
 
+  bgCtx.imageSmoothingEnabled = false
+
   //========================== Explosion Canvas Setup ================================
 
   let explCtx = explosionCanvas.getContext('2d')
+
+  explCtx.imageSmoothingEnabled = false
 
   //========================== Canvas Sizing ================================
     let gameW = 1200
@@ -346,7 +411,24 @@ angular.module("portfolioApp").service("gameService", function(reusableFuncsServ
       return player
     }
 
-
+    let movePlayer = () => {
+        if (KeyStatus.left) {
+            player.x -= player.speed
+            player.x <= 0 ? player.x = 0 : null
+        }
+        if (KeyStatus.right) {
+            player.x += player.speed
+            player.x >= (cW - player.img.width) ? player.x = cW - player.img.width : null
+        }
+        if (KeyStatus.up) {
+            player.y -= player.speed
+            player.y <= 0 ? player.y = 0 : null
+        }
+        if (KeyStatus.down) {
+            player.y += player.speed
+            player.y >= (cH - player.img.height) ? player.y = cH - player.img.height : null
+        }
+    }
 
     const drawPlayer = () => {
       DrawObject(player,movePlayer)
@@ -926,6 +1008,27 @@ angular.module("portfolioApp").service("gameService", function(reusableFuncsServ
   Game = GameFactory()
 
   //========================== DOM Manipulation ================================
+
+
+  function kickoffLoad() {
+
+    let spritePromise = spriteRepo.monitorLoading()
+    console.log(spritePromise)
+
+    // let mediaPromise = new Promise( (resolve, reject) => {
+    //     let img = images.monitorLoading()
+    //     audio.monitorLoading()
+    //     let sprt =  spriteRepo.monitorLoading()
+
+    //     resolve(img)
+    // })
+
+    // mediaPromise.then( (result) => {
+    //   console.log('promise catched', result)
+    // })
+    }
+
+    kickoffLoad()
 
   startButton.addEventListener('click', () => {
     startScreen.classList.add('hidden')

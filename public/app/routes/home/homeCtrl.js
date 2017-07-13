@@ -20,10 +20,14 @@ angular.module("portfolioApp").controller("homeCtrl", function($scope, reusableF
     } else {
       nav.style.top = `0`
     }
+
+
     lastScrollTop = distFromTop
   }
 
-  window.addEventListener('scroll', reusableFuncsService.debounce(navbarControl));
 
+  window.addEventListener('scroll', reusableFuncsService.debounce(navbarControl))
+
+  
 
 });

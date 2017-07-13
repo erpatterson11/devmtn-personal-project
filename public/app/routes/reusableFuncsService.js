@@ -6,6 +6,7 @@ angular.module("portfolioApp").service("reusableFuncsService", function($http) {
       let timeout
       let wait = 10
       let immediate = true
+
       return function() {
         let context = this, args = arguments
         let later = function() {

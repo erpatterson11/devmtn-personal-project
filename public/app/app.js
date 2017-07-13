@@ -1,6 +1,8 @@
 // CONFIG
   // ============================================================
-  angular.module("portfolioApp",['ui.router', 'ngAnimate']).config(function($stateProvider, $urlRouterProvider) {
+  angular.module("portfolioApp",['ui.router', 'ngAnimate'])
+  
+  .config(function($stateProvider, $urlRouterProvider) {
     // INITILIZE STATES
     // ============================================================
     $stateProvider
@@ -8,7 +10,8 @@
       .state('home', {
         url: '/',
         templateUrl: 'app/routes/home/homeTmpl.html',
-        controller: 'homeCtrl'
+        controller: 'homeCtrl',
+        cache: false
       })
       .state('golden-ratio', {
         url: '/golden-ratio',
@@ -24,6 +27,11 @@
         url: '/weather',
         templateUrl: 'app/routes/weather-app/weatherTmpl.html',
         controller: 'weatherCtrl'
+      })
+      .state('about', {
+        url: '/state',
+        templateUrl: 'app/routes/about/aboutTmpl.html',
+        controller: 'aboutCtrl'
       })
 
     // ASSIGN OTHERWISE

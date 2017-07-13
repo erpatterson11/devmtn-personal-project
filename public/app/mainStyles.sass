@@ -56,10 +56,56 @@ body::-webkit-scrollbar
   display: none
   width: 0 !important
 
+#ui-view-container
+  position: relative
 
-#ui-view
+
+ui-view
+  position: absolute
+  display: block
   width: 100vw
   height: auto
+
+
+.animateFromHome
+  transition: 0.2s
+
+  &.ng-enter
+    opacity: 0
+    left: -100vw
+
+  &.ng-enter-active
+    opacity: 1
+    left: 0
+
+  &.ng-leave
+    opacity: 1
+    right: 0
+
+  &.ng-leave-active
+    opacity: 0
+    right: 100vh
+
+
+.animateToHome
+  transition: 0.2s
+
+  &.ng-enter
+    opacity: 0
+    right: -100vw
+
+  &.ng-enter-active
+    opacity: 1
+    right: 0
+
+  &.ng-leave
+    opacity: 1
+    left: 0
+
+  &.ng-leave-active
+    opacity: 0
+    left: 100vh
+
 
 #main-nav
   position: fixed
@@ -80,8 +126,14 @@ body::-webkit-scrollbar
     display: flex
     width: 300px
     flex-direction: row
-    justify-content: space-between
+    justify-content: flex-end
     align-items: center
+
+    & > *
+      margin-right: 25px
+
+    li:last-child 
+      margin-right: 0px;
 
   .nav-link-hover
     text-align: center
@@ -92,9 +144,3 @@ body::-webkit-scrollbar
     color: rgba(200,200,200,1)
     font-size: 17px
 
-  @media (max-width: 500px)
-    #main-nav
-      justify-content: center
-    #navlogo
-      content: 'EP'
-      display: none
