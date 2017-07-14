@@ -331,7 +331,7 @@ $game: 'Press Start 2P', cursive
 .hidden
   display: none !important
 
-#loading-screen
+#game-loading-screen
   position: fixed
   z-index: 10000
   width: 100vw
@@ -343,6 +343,17 @@ $game: 'Press Start 2P', cursive
   transition: 0.3s
 
   
+.media-loaded
+  animation: slide-up 1s forwards
+
+
+  @keyframes slide-up
+    20%
+      transform: translateY(5%)
+    100%
+      transform: translateY(-100%)
+      display: none
+
 
 
 @media (max-width: 450px)

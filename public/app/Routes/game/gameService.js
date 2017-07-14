@@ -26,6 +26,7 @@ angular.module("portfolioApp").service("gameService", function(reusableFuncsServ
   const gameContainer = document.querySelector('#game-container')
   const statsBar = document.querySelector('#stats-bar')
 
+  const loadingScreen = document.querySelector('#game-loading-screen')
   const startScreen = document.querySelector('#start-screen')
   const gameOverScreen = document.querySelector('#game-over-screen')
   const healthBarFill = document.querySelector('#health-bar-fill')
@@ -89,16 +90,18 @@ angular.module("portfolioApp").service("gameService", function(reusableFuncsServ
       let total = allImages.length
       let loaded = 0
 
+      let promiseArray = []
+
       this.monitorLoading = function() {
         allImages.map(img => {
-          this[img].onload = function() {
-            loaded ++
-            console.log(loaded)
-            if (loaded === total) {
-              return true
+          let p = new Promise( (resolve, reject) => {
+            this[img].onload = () => {
+              resolve(this[img])
             }
-          }
+          })
+          promiseArray.push(p)
         })
+        return Promise.all(promiseArray)
       }
 
 
@@ -131,18 +134,14 @@ angular.module("portfolioApp").service("gameService", function(reusableFuncsServ
       let promiseArray = []
 
       this.monitorLoading = function() {
-
         allSprites.map(img => {
-
-          let p = new Promise( function(resolve, reject) {
-            this[img].onload = function() {
-              resolve('image loaded')
+          let p = new Promise( (resolve, reject) => {
+            this[img].onload = () => {
+              resolve(this[img])
             }
           })
-
           promiseArray.push(p)
         })
-
         return Promise.all(promiseArray)
       }
 
@@ -170,16 +169,18 @@ angular.module("portfolioApp").service("gameService", function(reusableFuncsServ
       let total = allAudio.length
       let loaded = 0
 
+      let promiseArray = []
+
       this.monitorLoading = function() {
         allAudio.map(audio => {
-          this[audio].onload = function() {
-            loaded ++
-            console.log(loaded)
-            if (loaded === total) {
-              console.log('loaded')
+          let p = new Promise( (resolve, reject) => {
+            this[audio].onloadeddata  = () => {
+              resolve(this[audio])
             }
-          }
+          })
+          promiseArray.push(p)
         })
+        return Promise.all(promiseArray)
       }
     
   }
@@ -1010,25 +1011,15 @@ angular.module("portfolioApp").service("gameService", function(reusableFuncsServ
   //========================== DOM Manipulation ================================
 
 
-  function kickoffLoad() {
 
-    let spritePromise = spriteRepo.monitorLoading()
-    console.log(spritePromise)
+  Promise
+      .all([audio.monitorLoading(), images.monitorLoading(), spriteRepo.monitorLoading()])
+      .then( results => {
+        loadingScreen.classList.add('media-loaded')
+        console.log(results)
+      } )
+      .catch( error => console.log( "failure", error) )
 
-    // let mediaPromise = new Promise( (resolve, reject) => {
-    //     let img = images.monitorLoading()
-    //     audio.monitorLoading()
-    //     let sprt =  spriteRepo.monitorLoading()
-
-    //     resolve(img)
-    // })
-
-    // mediaPromise.then( (result) => {
-    //   console.log('promise catched', result)
-    // })
-    }
-
-    kickoffLoad()
 
   startButton.addEventListener('click', () => {
     startScreen.classList.add('hidden')

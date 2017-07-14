@@ -651,7 +651,7 @@ ui-view {
 .hidden {
   display: none !important; }
 
-#loading-screen {
+#game-loading-screen {
   position: fixed;
   z-index: 10000;
   width: 100vw;
@@ -662,11 +662,54 @@ ui-view {
   background: #000;
   transition: 0.3s; }
 
+.media-loaded {
+  animation: slide-up 1s forwards; }
+
+@keyframes slide-up {
+  20% {
+    transform: translateY(5%); }
+  100% {
+    transform: translateY(-100%);
+    display: none; } }
+
 @media (max-width: 450px) {
   #game-section #content-box {
     width: 80%; }
     #game-section #content-box .submission-box-section {
       width: 80%; } }
+
+#magnifying-glass-container {
+  margin: 0;
+  color: white;
+  width: 100vw;
+  height: auto; }
+  #magnifying-glass-container button {
+    cursor: pointer; }
+  #magnifying-glass-container #magnifying-glass, #magnifying-glass-container #magnifying-glass-art {
+    position: fixed;
+    z-index: 99;
+    display: none;
+    pointer-events: none; }
+  #magnifying-glass-container .container1 {
+    position: absolute;
+    background: #323232; }
+  #magnifying-glass-container .zoomed {
+    position: absolute;
+    overflow: hidden; }
+  #magnifying-glass-container .content {
+    width: 90%;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+    background: transparent; }
+  #magnifying-glass-container .separator {
+    width: 100vw;
+    height: 50px;
+    background: #0a0a0a;
+    transform: rotate(1deg) skew(1deg); }
 
 #home-container {
   color: #969696;
@@ -764,39 +807,6 @@ ui-view {
   @media (max-width: 400px) {
     #home-container .headline {
       font-size: 48px; } }
-
-#magnifying-glass-container {
-  margin: 0;
-  color: white;
-  width: 100vw;
-  height: auto; }
-  #magnifying-glass-container button {
-    cursor: pointer; }
-  #magnifying-glass-container #magnifying-glass, #magnifying-glass-container #magnifying-glass-art {
-    position: fixed;
-    z-index: 99;
-    display: none;
-    pointer-events: none; }
-  #magnifying-glass-container .container1 {
-    position: absolute;
-    background: #323232; }
-  #magnifying-glass-container .zoomed {
-    position: absolute;
-    overflow: hidden; }
-  #magnifying-glass-container .content {
-    width: 90%;
-    min-height: 300px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 50px;
-    background: transparent; }
-  #magnifying-glass-container .separator {
-    width: 100vw;
-    height: 50px;
-    background: #0a0a0a;
-    transform: rotate(1deg) skew(1deg); }
 
 #weather-app-section .flex-center {
   display: flex;
