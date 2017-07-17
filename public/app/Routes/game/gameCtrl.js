@@ -9,6 +9,14 @@ angular.module("portfolioApp").controller("gameCtrl", function($scope, $timeout,
   $scope.isShownSubmissionForm = false
   $scope.isShownNicknameInput = false
 
+  //========================== Game Functions ================================
+
+
+// ensures game is stopped before user navigates to other route
+  $scope.$on('$stateChangeStart', (e) => {
+    gameService.stopGame()
+  })
+
   //========================== DOM Manipulation Functions ================================
 
   $scope.showScoreSubmission = function() {
@@ -67,13 +75,6 @@ angular.module("portfolioApp").controller("gameCtrl", function($scope, $timeout,
     })
     }
   }
-
-
-// ensures game is stopped before user navigates to other route
-  $scope.$on('$locationChangeStart', (e) => {
-    gameService.stopGame()
-  })
-
 
 
 });

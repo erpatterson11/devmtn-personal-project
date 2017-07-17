@@ -162,6 +162,14 @@ angular.module("portfolioApp").controller("gameCtrl", ["$scope", "$timeout", "sc
   $scope.isShownSubmissionForm = false
   $scope.isShownNicknameInput = false
 
+  //========================== Game Functions ================================
+
+
+// ensures game is stopped before user navigates to other route
+  $scope.$on('$stateChangeStart', (e) => {
+    gameService.stopGame()
+  })
+
   //========================== DOM Manipulation Functions ================================
 
   $scope.showScoreSubmission = function() {
@@ -220,13 +228,6 @@ angular.module("portfolioApp").controller("gameCtrl", ["$scope", "$timeout", "sc
     })
     }
   }
-
-
-// ensures game is stopped before user navigates to other route
-  $scope.$on('$locationChangeStart', (e) => {
-    gameService.stopGame()
-  })
-
 
 
 }]);
@@ -407,7 +408,7 @@ angular.module("portfolioApp").service("gameService", ["reusableFuncsService", f
       this.monitorLoading = function() {
         allAudio.map(audio => {
           let p = new Promise( (resolve, reject) => {
-            this[audio].onloadeddata  = () => {
+            this[audio].oncanplaythrough  = () => {
               resolve(this[audio])
             }
           })
@@ -1248,6 +1249,7 @@ angular.module("portfolioApp").service("gameService", ["reusableFuncsService", f
   Promise
       .all([audio.monitorLoading(), images.monitorLoading(), spriteRepo.monitorLoading()])
       .then( results => {
+        Game.init()
         loadingScreen.classList.add('media-loaded')
         console.log(results)
       } )
@@ -1256,7 +1258,6 @@ angular.module("portfolioApp").service("gameService", ["reusableFuncsService", f
 
   startButton.addEventListener('click', () => {
     startScreen.classList.add('hidden')
-    Game.init()
     Game.loop()
 
     window.addEventListener('keydown', (e) => {

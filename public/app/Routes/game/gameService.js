@@ -174,7 +174,7 @@ angular.module("portfolioApp").service("gameService", function(reusableFuncsServ
       this.monitorLoading = function() {
         allAudio.map(audio => {
           let p = new Promise( (resolve, reject) => {
-            this[audio].onloadeddata  = () => {
+            this[audio].oncanplaythrough  = () => {
               resolve(this[audio])
             }
           })
@@ -1015,6 +1015,7 @@ angular.module("portfolioApp").service("gameService", function(reusableFuncsServ
   Promise
       .all([audio.monitorLoading(), images.monitorLoading(), spriteRepo.monitorLoading()])
       .then( results => {
+        Game.init()
         loadingScreen.classList.add('media-loaded')
         console.log(results)
       } )
@@ -1023,7 +1024,6 @@ angular.module("portfolioApp").service("gameService", function(reusableFuncsServ
 
   startButton.addEventListener('click', () => {
     startScreen.classList.add('hidden')
-    Game.init()
     Game.loop()
 
     window.addEventListener('keydown', (e) => {
