@@ -29,7 +29,7 @@
         controller: 'weatherCtrl'
       })
       .state('about', {
-        url: '/state',
+        url: '/about',
         templateUrl: 'app/routes/about/aboutTmpl.html',
         controller: 'aboutCtrl'
       })
@@ -44,11 +44,16 @@
 
 angular.module("portfolioApp").controller("mainCtrl", ["$scope", "mainService", "reusableFuncsService", "$stateParams", "$state", function($scope, mainService, reusableFuncsService, $stateParams, $state) {
 
-$scope.current = $state.current === 'home' ? false : true
+let allowedRoutes = ['home', 'about']
 
-$scope.$on('$stateChangeStart', function(evt, toState, toParams, fromState, fromParams) {
-        $scope.current = fromState.name === 'home' ? false : true
+$scope.hideNav = allowedRoutes.includes($state.name)
+
+$scope.$on('$stateChangeSuccess', function(evt, toState, toParams, fromState, fromParams) {
+        $scope.viewTransition = fromState.name !== 'home'
+        $scope.hideNav = !allowedRoutes.includes(toState.name)
     })
+
+
 
 }])
 
@@ -142,20 +147,45 @@ angular.module("portfolioApp").service("reusableFuncsService", ["$http", functio
 //     }
 
 // }
-angular.module('portfolioApp').controller('aboutCtrl', function() {
+angular.module('portfolioApp').controller('aboutCtrl', ["$scope", function($scope) {
 
+    function Images() {
+        this.js = new Image()
+        this.react = new Image()
+        this.angular = new Image()
+        this.node = new Image()
+        this.postgresql = new Image()
+        this.html = new Image()
+        this.css = new Image()
+        this.sass = new Image()
+        this.jquery = new Image()
+        this.gulp = new Image()
+        this.git = new Image()
+        this.github = new Image()
 
+        this.js.src = './app/routes/about/images/js.svg'
+        this.react.src = './app/routes/about/images/react.svg'
+        this.angular.src = './app/routes/about/images/angular.svg'
+        this.node.src = './app/routes/about/images/node.svg'
+        this.postgresql.src = './app/routes/about/images/postgresql.svg'
+        this.html.src = './app/routes/about/images/html.svg'
+        this.css.src = './app/routes/about/images/css.svg'
+        this.sass.src = './app/routes/about/images/sass.svg'
+        this.jquery.src = './app/routes/about/images/jquery.svg'
+        this.gulp.src = './app/routes/about/images/gulp.svg'
+        this.git.src = './app/routes/about/images/git.svg'
+        this.github.src = './app/routes/about/images/github_logo.svg'
+    }
+
+    $scope.images = new Images()
     
-})
+}])
 
 
 
 
 angular.module("portfolioApp").controller("gameCtrl", ["$scope", "$timeout", "scoreService", "gameService", function($scope, $timeout, scoreService, gameService) {
 
-
-
-  document.querySelector('#main-nav').style.display = 'none'
 
   //========================== Variables ================================
 
@@ -1351,8 +1381,6 @@ angular.module("portfolioApp").controller("goldenRatioCtrl", ["$scope", "goldenR
 
   goldenRatioService.generateContent()
 
-  document.querySelector('nav').style.display = 'none'
-
 }]);
 
 // INITILIZE SERVICE
@@ -1749,40 +1777,6 @@ angular.module("portfolioApp").service("goldenRatioService", function() {
 
 // INITILIZE CONTROLLER
 // ============================================================
-angular.module("portfolioApp").controller("homeCtrl", ["$scope", "reusableFuncsService", function($scope, reusableFuncsService) {
-
-  const nav = document.querySelector('#main-nav')
-
-  // re-enable nav-bar if it was disabled in a route
-  nav.style.display = 'flex'
-
-  let lastScrollTop = 0
-  let navHeight = parseInt(getComputedStyle(nav).height)
-
-  let navbarControl = () => {
-    let distFromTop = window.scrollY
-    let deltaScrollY = lastScrollTop - distFromTop
-    if (deltaScrollY < 0) {
-      if (distFromTop > navHeight) {
-        nav.style.top = `-100%`
-      }
-    } else {
-      nav.style.top = `0`
-    }
-
-
-    lastScrollTop = distFromTop
-  }
-
-
-  window.addEventListener('scroll', reusableFuncsService.debounce(navbarControl))
-
-  
-
-}]);
-
-// INITILIZE CONTROLLER
-// ============================================================
 angular.module("portfolioApp").controller("magnifyCtrl", ["$scope", "reusableFuncsService", function($scope, reusableFuncsService) {
 
   $scope.textInput
@@ -1948,6 +1942,40 @@ angular.module("portfolioApp").controller("magnifyCtrl", ["$scope", "reusableFun
 
 }]);
 
+
+// INITILIZE CONTROLLER
+// ============================================================
+angular.module("portfolioApp").controller("homeCtrl", ["$scope", "reusableFuncsService", function($scope, reusableFuncsService) {
+
+  const nav = document.querySelector('#main-nav')
+
+  // re-enable nav-bar if it was disabled in a route
+  nav.style.display = 'flex'
+
+  let lastScrollTop = 0
+  let navHeight = parseInt(getComputedStyle(nav).height)
+
+  let navbarControl = () => {
+    let distFromTop = window.scrollY
+    let deltaScrollY = lastScrollTop - distFromTop
+    if (deltaScrollY < 0) {
+      if (distFromTop > navHeight) {
+        nav.style.top = `-100%`
+      }
+    } else {
+      nav.style.top = `0`
+    }
+
+
+    lastScrollTop = distFromTop
+  }
+
+
+  window.addEventListener('scroll', reusableFuncsService.debounce(navbarControl))
+
+  
+
+}]);
 
 angular.module('portfolioApp').service('weatherApiService', ["$http", "$q", function($http, $q){
 
@@ -2389,10 +2417,6 @@ $(document).mouseup(function(e) {
 //-------------------------------------------------------------------
 //            Other Functions
 //--------------------------------------------------------------------
-
-
-let nav = document.querySelector('#main-nav')
-nav.style.display = 'none'
 
 
 }])//---------------------------------------------------------------------------------

@@ -4,6 +4,4 @@ angular.module("portfolioApp").controller("goldenRatioCtrl", function($scope, go
 
   goldenRatioService.generateContent()
 
-  document.querySelector('nav').style.display = 'none'
-
 });

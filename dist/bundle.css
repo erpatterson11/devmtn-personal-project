@@ -61,37 +61,35 @@ ui-view {
   position: absolute;
   display: block;
   width: 100vw;
-  height: auto; }
+  height: auto;
+  transition: 0.35s; }
 
-.animateFromHome {
-  transition: 0.2s; }
-  .animateFromHome.ng-enter {
-    opacity: 0;
-    left: -100vw; }
-  .animateFromHome.ng-enter-active {
-    opacity: 1;
-    left: 0; }
-  .animateFromHome.ng-leave {
-    opacity: 1;
-    right: 0; }
-  .animateFromHome.ng-leave-active {
-    opacity: 0;
-    right: 100vh; }
+.ng-hide.ng-hide-animate {
+  display: none !important; }
 
-.animateToHome {
-  transition: 0.2s; }
-  .animateToHome.ng-enter {
-    opacity: 0;
-    right: -100vw; }
-  .animateToHome.ng-enter-active {
-    opacity: 1;
-    right: 0; }
-  .animateToHome.ng-leave {
-    opacity: 1;
-    left: 0; }
-  .animateToHome.ng-leave-active {
-    opacity: 0;
-    left: 100vh; }
+.animateFromHome.ng-enter {
+  right: 100vw; }
+
+.animateFromHome.ng-enter-active {
+  right: 0; }
+
+.animateFromHome.ng-leave {
+  left: 0; }
+
+.animateFromHome.ng-leave-active {
+  left: -100vw; }
+
+.animateToHome.ng-enter {
+  left: 100vw; }
+
+.animateToHome.ng-enter-active {
+  left: 0; }
+
+.animateToHome.ng-leave {
+  right: 0; }
+
+.animateToHome.ng-leave-active {
+  right: -100vw; }
 
 #main-nav {
   position: fixed;
@@ -374,8 +372,51 @@ ui-view {
   justify-content: center;
   align-items: center;
   transition: 1s; }
-  #about-section #headshot {
-    border-radius: 50%; }
+  #about-section .content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center; }
+  #about-section #about-text {
+    max-width: 800px; }
+  #about-section .skills-list-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; }
+  #about-section .skills-list {
+    display: flex;
+    justify-content: center;
+    align-items: space-around; }
+  #about-section .repeat-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.4;
+    transition: 0.2s; }
+    #about-section .repeat-container:hover {
+      opacity: 0.8; }
+  #about-section .tech-logo {
+    width: 50px;
+    height: 50px;
+    margin: 10px;
+    flex: 1; }
+  #about-section .social-logo {
+    width: 32px;
+    height: 32px;
+    margin: 0 10px;
+    opacity: 0.2;
+    transition: 0.2s; }
+    #about-section .social-logo:hover {
+      opacity: 0.8;
+      transform: scale(1.1); }
+  #about-section .footer {
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center; }
 
 #game-section {
   position: absolute;
@@ -681,6 +722,39 @@ ui-view {
     #game-section #content-box .submission-box-section {
       width: 80%; } }
 
+#magnifying-glass-container {
+  margin: 0;
+  color: white;
+  width: 100vw;
+  height: auto; }
+  #magnifying-glass-container button {
+    cursor: pointer; }
+  #magnifying-glass-container #magnifying-glass, #magnifying-glass-container #magnifying-glass-art {
+    position: fixed;
+    z-index: 99;
+    display: none;
+    pointer-events: none; }
+  #magnifying-glass-container .container1 {
+    position: absolute;
+    background: #323232; }
+  #magnifying-glass-container .zoomed {
+    position: absolute;
+    overflow: hidden; }
+  #magnifying-glass-container .content {
+    width: 90%;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+    background: transparent; }
+  #magnifying-glass-container .separator {
+    width: 100vw;
+    height: 50px;
+    background: #0a0a0a;
+    transform: rotate(1deg) skew(1deg); }
+
 #home-container {
   color: #969696;
   font-family: "Julius Sans One", sans-serif;
@@ -777,39 +851,6 @@ ui-view {
   @media (max-width: 400px) {
     #home-container .headline {
       font-size: 48px; } }
-
-#magnifying-glass-container {
-  margin: 0;
-  color: white;
-  width: 100vw;
-  height: auto; }
-  #magnifying-glass-container button {
-    cursor: pointer; }
-  #magnifying-glass-container #magnifying-glass, #magnifying-glass-container #magnifying-glass-art {
-    position: fixed;
-    z-index: 99;
-    display: none;
-    pointer-events: none; }
-  #magnifying-glass-container .container1 {
-    position: absolute;
-    background: #323232; }
-  #magnifying-glass-container .zoomed {
-    position: absolute;
-    overflow: hidden; }
-  #magnifying-glass-container .content {
-    width: 90%;
-    min-height: 300px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 50px;
-    background: transparent; }
-  #magnifying-glass-container .separator {
-    width: 100vw;
-    height: 50px;
-    background: #0a0a0a;
-    transform: rotate(1deg) skew(1deg); }
 
 #weather-app-section .flex-center {
   display: flex;

@@ -1,11 +1,32 @@
 <section id='about-section'>
     
+    <div class='content'>
+        <div id='about-text'>
+            I'm Eric and I am a web developer.
+            I love making dynamic and interactive content.
+            I graduated with a B.S. in Chemistry from Westmont College and then worked as a Manufacturing Engineer for a medical device manufacturer. 
+            When i'm not finding unique solutions to problems you can find me travelling, cooking, and/or biking.
+        </div>
+        <div class='skills-list-container'>
+        <h3>Skillz:</h3>
+        <ul class='skills-list'>
+            <div class='repeat-container' ng-repeat='(key, value) in images' >
+                <img ng-src='{{value.src}}' class='tech-logo'></li>
+                <p>{{key}}</p>
+            </div>
+        </ul>
+        </div>
 
-    <div id='about-text'>
-        I love finding unique solutions to problems, making dynamic and interactive content. 
     </div>
 
 
-    <div></div>
+    <div class='footer'>
+        <a href="https://github.com/erpatterson11">
+            <img class='social-logo' src="./app/routes/about/images/github_logo.svg" alt="github" />
+        </a>
+        <a href="https://www.linkedin.com/in/eric-patterson/">
+            <img class='social-logo' src="./app/routes/about/images/linkedin_logo.svg" alt="github" />
+        </a>
+    </div>
 
 </section>

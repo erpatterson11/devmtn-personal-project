@@ -29,7 +29,7 @@
         controller: 'weatherCtrl'
       })
       .state('about', {
-        url: '/state',
+        url: '/about',
         templateUrl: 'app/routes/about/aboutTmpl.html',
         controller: 'aboutCtrl'
       })

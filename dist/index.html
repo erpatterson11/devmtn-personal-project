@@ -15,10 +15,10 @@
 
 
     <div id='ui-view-container'>
-      <ui-view ng-class="{animateFromHome: current, animateToHome: !current }"></ui-view>    
+      <ui-view ng-class="{animateFromHome: viewTransition, animateToHome: !viewTransition }"></ui-view>    
     </div>
 
-    <nav id='main-nav'>
+    <nav id='main-nav' ng-hide="hideNav">
       <div id='navlogo' ui-sref='home' class='nav-link-hover'>Eric Patterson</div>
       <ul id='main-links'>
         <li ui-sref='home' class='nav-link-hover'>Portfolio</li>

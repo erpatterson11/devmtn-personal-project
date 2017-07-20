@@ -3,10 +3,15 @@
 
 angular.module("portfolioApp").controller("mainCtrl", function($scope, mainService, reusableFuncsService, $stateParams, $state) {
 
-$scope.current = $state.current === 'home' ? false : true
+let allowedRoutes = ['home', 'about']
 
-$scope.$on('$stateChangeStart', function(evt, toState, toParams, fromState, fromParams) {
-        $scope.current = fromState.name === 'home' ? false : true
+$scope.hideNav = allowedRoutes.includes($state.name)
+
+$scope.$on('$stateChangeSuccess', function(evt, toState, toParams, fromState, fromParams) {
+        $scope.viewTransition = fromState.name !== 'home'
+        $scope.hideNav = !allowedRoutes.includes(toState.name)
     })
+
+
 
 })

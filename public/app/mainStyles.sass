@@ -65,46 +65,59 @@ ui-view
   display: block
   width: 100vw
   height: auto
+  transition: 0.35s
+
+.ng-hide.ng-hide-animate
+     display: none !important
 
 
 .animateFromHome
-  transition: 0.2s
 
   &.ng-enter
-    opacity: 0
-    left: -100vw
+    // opacity: 0
+    right: 100vw
+    // transform: translateX(-100%)
 
   &.ng-enter-active
-    opacity: 1
-    left: 0
+    // opacity: 1
+    right: 0
+    // transform: translateX(0)
+
 
   &.ng-leave
-    opacity: 1
-    right: 0
+    // opacity: 1
+    left: 0
+    // transform: translateX(0)
+
 
   &.ng-leave-active
-    opacity: 0
-    right: 100vh
+    // opacity: 0
+    left: -100vw
+    // transform: translateX(-100%)
 
 
 .animateToHome
-  transition: 0.2s
 
   &.ng-enter
-    opacity: 0
-    right: -100vw
+    // opacity: 0
+    left: 100vw
+    // transform: translateX(100%)
 
   &.ng-enter-active
-    opacity: 1
-    right: 0
+    // opacity: 1
+    left: 0
+    // transform: translateX(0)
 
   &.ng-leave
-    opacity: 1
-    left: 0
+    // opacity: 1
+    right: 0
+    // transform: translateX(0)
 
   &.ng-leave-active
-    opacity: 0
-    left: 100vh
+    // opacity: 0
+    right: -100vw
+    // transform: translateX(100%)
+
 
 
 #main-nav

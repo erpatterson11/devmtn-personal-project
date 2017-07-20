@@ -1,9 +1,6 @@
 angular.module("portfolioApp").controller("gameCtrl", function($scope, $timeout, scoreService, gameService) {
 
 
-
-  document.querySelector('#main-nav').style.display = 'none'
-
   //========================== Variables ================================
 
   $scope.isShownSubmissionForm = false
