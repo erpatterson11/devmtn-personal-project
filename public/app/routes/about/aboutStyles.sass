@@ -1,48 +1,139 @@
+@font-face 
+    font-family: Neon80
+    src: url("./app/routes/about/fonts/Neon.ttf") format('truetype')
+
+@font-face
+    font-family: wages
+    src: url("./app/routes/about/fonts/lostWages.woff") format('truetype')
+
+@font-face
+    font-family: DymaxionScript
+    src: url("./app/routes/about/fonts/DymaxionScript.ttf") 
+
+$white: #fff
+$blue: #ff9933
+
+
+= flex-col
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center  
+
+
 #about-section
     width: 100vw
     height: 100vh
     background: black
-    color: white
-    display: flex 
-    flex-direction: column
-    justify-content: center
-    align-items: center
+    color: rgba(220,220,200, 0.8) 
+    margin-top: 70px 
     transition: 1s
 
     .content
         flex-grow: 1
-        display: flex
-        flex-direction: column
+        +flex-col
+
+    .landing
+        +flex-col
         justify-content: space-around
-        align-items: center
+   
+
+    #neon-sign
+        +flex-col
+        text-align: center
+        font-family: DymaxionScript, wages, Neon80
+        font-size: 56px
+        font-weight: 100
+        width: 100vw
+        height: calc(100vh - 70px)        
+        color: rgba(255,255,255,0.8)
+        // text-shadow: 2px 2px 25px hsl(239,100%,77%)
+        background: url(./app/routes/about/images/neon-1.jpg)
+        background-size: cover
+
+        #neon-flicker
+            display: inline
+            animation: flicker 2s ease-in-out infinite alternate
+
+        .neon-animation
+            display: inline
+            animation: neon2 3s ease-in-out infinite alternate
+
+        @keyframes flicker 
+            0%
+                color: rgba(255,255,255,0.8)
+                text-shadow: 0 0 10px $white, 0 0 20px $white, 0 0 30px $white, 0 0 40px $blue, 0 0 70px $blue, 0 0 80px $blue, 0 0 100px $blue, 0 0 150px $blue
+            2%
+                color: rgba(255,255,255,0)
+                text-shadow: 2px 2px 25px hsl(239,100%,0%)
+            4%
+                color: rgba(255,255,255,0.8)
+                text-shadow: 0 0 10px $white, 0 0 20px $white, 0 0 30px $white, 0 0 40px $blue, 0 0 70px $blue, 0 0 80px $blue, 0 0 100px $blue, 0 0 150px $blue
+            20%
+                color: rgba(255,255,255,1)
+                text-shadow: 0 0 5px $white, 0 0 10px $white, 0 0 15px $white, 0 0 20px $blue, 0 0 35px $blue, 0 0 40px $blue, 0 0 50px $blue, 0 0 75px $blue
+            25%
+                color: rgba(255,255,255,0)
+                text-shadow: 2px 2px 25px hsl(239,100%,0%)
+            28%
+                color: rgba(255,255,255,0.8)
+                text-shadow: 0 0 5px $white, 0 0 10px $white, 0 0 15px $white, 0 0 20px $blue, 0 0 35px $blue, 0 0 40px $blue, 0 0 50px $blue, 0 0 75px $blue
+            30%
+                color: rgba(255,255,255,0)
+                text-shadow: 2px 2px 25px hsl(239,100%,0%)
+            31%
+                color: rgba(255,255,255,0.7)
+                text-shadow: 0 0 5px $white, 0 0 10px $white, 0 0 15px $white, 0 0 20px $blue, 0 0 35px $blue, 0 0 40px $blue, 0 0 50px $blue, 0 0 75px $blue
+
+            // 90%
+            //     color: rgba(255,255,255,1)
+            //     text-shadow: 0 0 5px $white, 0 0 10px $white, 0 0 15px $white, 0 0 20px $blue, 0 0 35px $blue, 0 0 40px $blue, 0 0 50px $blue, 0 0 75px $blue
+
+            100%
+                color: rgba(255,255,255,0.8)
+                text-shadow: 0 0 5px $white, 0 0 10px $white, 0 0 15px $white, 0 0 20px $blue, 0 0 35px $blue, 0 0 40px $blue, 0 0 50px $blue, 0 0 75px $blue
+            
+
+        @keyframes neon2 
+            0%, 100% 
+                text-shadow: 0 0 10px $white, 0 0 20px $white, 0 0 30px $white, 0 0 40px $blue, 0 0 70px $blue, 0 0 80px $blue, 0 0 100px $blue, 0 0 150px $blue
+            
+            50% 
+                text-shadow: 0 0 5px $white, 0 0 10px $white, 0 0 15px $white, 0 0 20px $blue, 0 0 35px $blue, 0 0 40px $blue, 0 0 50px $blue, 0 0 75px $blue
+            
+
+    
 
     #about-text
         max-width: 800px
+        height: 25vh
+        padding: 20px
+        text-align: justify
 
 
-
-    .skills-list-container
-        display: flex
-        flex-direction: column
-        justify-content: center
-        align-items: center 
 
     .skills-list
-        display: flex
-        justify-content: center
+        +flex-col
+        flex-direction: row
         align-items: space-around
+        flex-wrap: wrap
 
-    .repeat-container
-        display: flex
-        flex-direction: column
-        justify-content: center
-        align-items: center  
+    .dev-logo-repeat-container
+        +flex-col
+        margin-top: 10px
         opacity: 0.4
         transition: 0.2s
 
+        .dev-logo-text
+            opacity: 0
+            font-size: 13px
+
         &:hover
             opacity: 0.8
+            transform: scale(1.1)
 
+            .dev-logo-text
+                opacity: 0.8
 
     .tech-logo
         width: 50px
@@ -63,7 +154,8 @@
 
 
     .footer
+        postition: fixed
+        bottom: 0
         height: 70px
-        display: flex
-        justify-content: center
-        align-items: center
+        +flex-col
+        flex-direction: row

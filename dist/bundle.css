@@ -102,6 +102,7 @@ ui-view {
   align-items: center;
   background: black;
   color: rgba(200, 200, 200, 0.75);
+  font-size: 20px;
   box-shadow: 0 10px 10px 0px rgba(20, 20, 20, 0.5);
   transition: top 0.5s;
   z-index: 10000; }
@@ -119,9 +120,9 @@ ui-view {
     text-align: center;
     cursor: pointer;
     transition: 0.25s; }
-  #main-nav .nav-link-hover:hover {
-    color: #c8c8c8;
-    font-size: 17px; }
+    #main-nav .nav-link-hover:hover {
+      color: #c8c8c8;
+      font-size: 22px; }
 
 :root {
   --gr-bg-color: #4ABDAC;
@@ -362,42 +363,121 @@ ui-view {
   }
 
 
+@font-face {
+  font-family: Neon80;
+  src: url("./app/routes/about/fonts/Neon.ttf") format("truetype"); }
+
+@font-face {
+  font-family: wages;
+  src: url("./app/routes/about/fonts/lostWages.woff") format("truetype"); }
+
+@font-face {
+  font-family: DymaxionScript;
+  src: url("./app/routes/about/fonts/DymaxionScript.ttf"); }
+
 #about-section {
   width: 100vw;
   height: 100vh;
   background: black;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  color: rgba(220, 220, 200, 0.8);
+  margin-top: 70px;
   transition: 1s; }
   #about-section .content {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
-    align-items: center; }
-  #about-section #about-text {
-    max-width: 800px; }
-  #about-section .skills-list-container {
-    display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center; }
-  #about-section .skills-list {
-    display: flex;
-    justify-content: center;
-    align-items: space-around; }
-  #about-section .repeat-container {
+  #about-section .landing {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    justify-content: space-around; }
+  #about-section #neon-sign {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family: DymaxionScript, wages, Neon80;
+    font-size: 56px;
+    font-weight: 100;
+    width: 100vw;
+    height: calc(100vh - 70px);
+    color: rgba(255, 255, 255, 0.8);
+    background: url(./app/routes/about/images/neon-1.jpg);
+    background-size: cover; }
+    #about-section #neon-sign #neon-flicker {
+      display: inline;
+      animation: flicker 2s ease-in-out infinite alternate; }
+    #about-section #neon-sign .neon-animation {
+      display: inline;
+      animation: neon2 3s ease-in-out infinite alternate; }
+
+@keyframes flicker {
+  0% {
+    color: rgba(255, 255, 255, 0.8);
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #ff9933, 0 0 70px #ff9933, 0 0 80px #ff9933, 0 0 100px #ff9933, 0 0 150px #ff9933; }
+  2% {
+    color: rgba(255, 255, 255, 0);
+    text-shadow: 2px 2px 25px black; }
+  4% {
+    color: rgba(255, 255, 255, 0.8);
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #ff9933, 0 0 70px #ff9933, 0 0 80px #ff9933, 0 0 100px #ff9933, 0 0 150px #ff9933; }
+  20% {
+    color: white;
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #ff9933, 0 0 35px #ff9933, 0 0 40px #ff9933, 0 0 50px #ff9933, 0 0 75px #ff9933; }
+  25% {
+    color: rgba(255, 255, 255, 0);
+    text-shadow: 2px 2px 25px black; }
+  28% {
+    color: rgba(255, 255, 255, 0.8);
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #ff9933, 0 0 35px #ff9933, 0 0 40px #ff9933, 0 0 50px #ff9933, 0 0 75px #ff9933; }
+  30% {
+    color: rgba(255, 255, 255, 0);
+    text-shadow: 2px 2px 25px black; }
+  31% {
+    color: rgba(255, 255, 255, 0.7);
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #ff9933, 0 0 35px #ff9933, 0 0 40px #ff9933, 0 0 50px #ff9933, 0 0 75px #ff9933; }
+  100% {
+    color: rgba(255, 255, 255, 0.8);
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #ff9933, 0 0 35px #ff9933, 0 0 40px #ff9933, 0 0 50px #ff9933, 0 0 75px #ff9933; } }
+
+@keyframes neon2 {
+  0%, 100% {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #ff9933, 0 0 70px #ff9933, 0 0 80px #ff9933, 0 0 100px #ff9933, 0 0 150px #ff9933; }
+  50% {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #ff9933, 0 0 35px #ff9933, 0 0 40px #ff9933, 0 0 50px #ff9933, 0 0 75px #ff9933; } }
+  #about-section #about-text {
+    max-width: 800px;
+    height: 25vh;
+    padding: 20px;
+    text-align: justify; }
+  #about-section .skills-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    align-items: space-around;
+    flex-wrap: wrap; }
+  #about-section .dev-logo-repeat-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
     opacity: 0.4;
     transition: 0.2s; }
-    #about-section .repeat-container:hover {
-      opacity: 0.8; }
+    #about-section .dev-logo-repeat-container .dev-logo-text {
+      opacity: 0;
+      font-size: 13px; }
+    #about-section .dev-logo-repeat-container:hover {
+      opacity: 0.8;
+      transform: scale(1.1); }
+      #about-section .dev-logo-repeat-container:hover .dev-logo-text {
+        opacity: 0.8; }
   #about-section .tech-logo {
     width: 50px;
     height: 50px;
@@ -413,10 +493,14 @@ ui-view {
       opacity: 0.8;
       transform: scale(1.1); }
   #about-section .footer {
+    postition: fixed;
+    bottom: 0;
     height: 70px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: center; }
+    align-items: center;
+    flex-direction: row; }
 
 #game-section {
   position: absolute;
@@ -722,39 +806,6 @@ ui-view {
     #game-section #content-box .submission-box-section {
       width: 80%; } }
 
-#magnifying-glass-container {
-  margin: 0;
-  color: white;
-  width: 100vw;
-  height: auto; }
-  #magnifying-glass-container button {
-    cursor: pointer; }
-  #magnifying-glass-container #magnifying-glass, #magnifying-glass-container #magnifying-glass-art {
-    position: fixed;
-    z-index: 99;
-    display: none;
-    pointer-events: none; }
-  #magnifying-glass-container .container1 {
-    position: absolute;
-    background: #323232; }
-  #magnifying-glass-container .zoomed {
-    position: absolute;
-    overflow: hidden; }
-  #magnifying-glass-container .content {
-    width: 90%;
-    min-height: 300px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 50px;
-    background: transparent; }
-  #magnifying-glass-container .separator {
-    width: 100vw;
-    height: 50px;
-    background: #0a0a0a;
-    transform: rotate(1deg) skew(1deg); }
-
 #home-container {
   color: #969696;
   font-family: "Julius Sans One", sans-serif;
@@ -851,6 +902,39 @@ ui-view {
   @media (max-width: 400px) {
     #home-container .headline {
       font-size: 48px; } }
+
+#magnifying-glass-container {
+  margin: 0;
+  color: white;
+  width: 100vw;
+  height: auto; }
+  #magnifying-glass-container button {
+    cursor: pointer; }
+  #magnifying-glass-container #magnifying-glass, #magnifying-glass-container #magnifying-glass-art {
+    position: fixed;
+    z-index: 99;
+    display: none;
+    pointer-events: none; }
+  #magnifying-glass-container .container1 {
+    position: absolute;
+    background: #323232; }
+  #magnifying-glass-container .zoomed {
+    position: absolute;
+    overflow: hidden; }
+  #magnifying-glass-container .content {
+    width: 90%;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+    background: transparent; }
+  #magnifying-glass-container .separator {
+    width: 100vw;
+    height: 50px;
+    background: #0a0a0a;
+    transform: rotate(1deg) skew(1deg); }
 
 #weather-app-section .flex-center {
   display: flex;

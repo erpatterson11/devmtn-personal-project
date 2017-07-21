@@ -21,7 +21,8 @@ let paths = {
   sassSource: ['./public/app/**/*.sass'],
   indexSource: ['./public/index.html'],
   htmlSource: ['./public/app/**/*.html'],
-  mediaSource: ['./public/app/**/*.svg', './public/app/**/*.png', './public/app/**/*.wav', './public/app/**/*.jpg']
+  mediaSource: ['./public/app/**/*.svg', './public/app/**/*.png', './public/app/**/*.wav', './public/app/**/*.jpg'],
+  fontSource: ['./public/app/**/*.ttf', './public/app/**/*.woff']
 };
 // DEFINE TASKS
 // ============================================================
@@ -63,6 +64,10 @@ gulp.task('media', function() {
   .pipe(gulp.dest('./dist/app'))
 })
 
+gulp.task('font', function() {
+  return gulp.src(paths.fontSource)
+  .pipe(gulp.dest('./dist/app'))
+})
 
 // WATCH TASK
 // ============================================================
@@ -73,7 +78,8 @@ gulp.task('watch', function() {
   gulp.watch(paths.indexSource, ['index']);
   gulp.watch(paths.htmlSource, ['html']);
   gulp.watch(paths.mediaSource, ['media'])
+  gulp.watch(paths.fontSource, ['font'])
 });
 // DEFAULT TASK - first thing to run when gulp is called
 // ============================================================
-gulp.task('default', ['watch', 'js', 'css/sass', 'index', 'html', 'media']);
+gulp.task('default', ['watch', 'js', 'css/sass', 'index', 'html', 'media', 'font']);
