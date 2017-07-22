@@ -8,7 +8,7 @@ $syncopate: 'Syncopate', sans-serif
 #home-container
   color: rgb(150,150,150)
   font-family: $julius
-  margin-top: 70px
+  // margin-top: 70px
 
   p
     padding: 40px
@@ -48,15 +48,16 @@ $syncopate: 'Syncopate', sans-serif
       z-index: 1
 
   #golden-ratio-div #gr-svg-bg
-    stroke: #111
+    stroke: #333
+    opacity: 0.6
     position: absolute
     width: inherit
     max-width: 100%
     height: inherit
-    transition: stroke 1s
+    transition: opacity 1s
 
   #golden-ratio-div:hover #gr-svg-bg
-    stroke: #333
+    opacity: 1
 
   $baloo: 'Baloo Bhaina', cursive
 

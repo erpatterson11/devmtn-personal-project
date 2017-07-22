@@ -1,17 +1,7 @@
-@font-face 
-    font-family: Neon80
-    src: url("./app/routes/about/fonts/Neon.ttf") format('truetype')
-
-@font-face
-    font-family: wages
-    src: url("./app/routes/about/fonts/lostWages.woff") format('truetype')
-
-@font-face
-    font-family: DymaxionScript
-    src: url("./app/routes/about/fonts/DymaxionScript.ttf") 
+@import "../../fonts"
 
 $white: #fff
-$blue: #ff9933
+$orange: #ff9933
 
 
 = flex-col
@@ -19,6 +9,8 @@ $blue: #ff9933
     flex-direction: column
     justify-content: center
     align-items: center  
+= pointer
+    cursor: pointer
 
 
 #about-section
@@ -26,8 +18,8 @@ $blue: #ff9933
     height: 100vh
     background: black
     color: rgba(220,220,200, 0.8) 
-    margin-top: 70px 
-    transition: 1s
+    // margin-top: 70px 
+    // transition: 0.1s
 
     .content
         flex-grow: 1
@@ -40,122 +32,175 @@ $blue: #ff9933
 
     #neon-sign
         +flex-col
-        text-align: center
-        font-family: DymaxionScript, wages, Neon80
-        font-size: 56px
+        font-family: Codystar ,wages, Neon80
+        font-size: 78px
         font-weight: 100
         width: 100vw
-        height: calc(100vh - 70px)        
-        color: rgba(255,255,255,0.8)
-        // text-shadow: 2px 2px 25px hsl(239,100%,77%)
+        height: 100vh       
+        color: rgb(255,255,255)
+        opacity: 1
+        text-shadow: 0 0 5px $white, 0 0 10px $white, 0 0 15px $white, 0 0 20px $orange, 0 0 35px $orange, 0 0 40px $orange, 0 0 50px $orange, 0 0 75px $orange
         background: url(./app/routes/about/images/neon-1.jpg)
         background-size: cover
 
+        #neon-text
+            padding-left: 20px
+            text-align: center
+            width: 100vw
+
         #neon-flicker
             display: inline
-            animation: flicker 2s ease-in-out infinite alternate
+            transform: translateZ(0)
+            animation: flicker 1s ease-in-out infinite alternate
 
         .neon-animation
             display: inline
-            animation: neon2 3s ease-in-out infinite alternate
+            animation: neon2 10s ease-in-out infinite alternate
 
         @keyframes flicker 
             0%
                 color: rgba(255,255,255,0.8)
-                text-shadow: 0 0 10px $white, 0 0 20px $white, 0 0 30px $white, 0 0 40px $blue, 0 0 70px $blue, 0 0 80px $blue, 0 0 100px $blue, 0 0 150px $blue
+                text-shadow: 0 0 10px $white, 0 0 20px $white, 0 0 30px $white, 0 0 40px $orange, 0 0 70px $orange, 0 0 80px $orange, 0 0 100px $orange, 0 0 150px $orange
             2%
-                color: rgba(255,255,255,0)
+                color: rgba(255,255,255,0.2)
                 text-shadow: 2px 2px 25px hsl(239,100%,0%)
             4%
                 color: rgba(255,255,255,0.8)
-                text-shadow: 0 0 10px $white, 0 0 20px $white, 0 0 30px $white, 0 0 40px $blue, 0 0 70px $blue, 0 0 80px $blue, 0 0 100px $blue, 0 0 150px $blue
+                text-shadow: 0 0 10px $white, 0 0 20px $white, 0 0 30px $white, 0 0 40px $orange, 0 0 70px $orange, 0 0 80px $orange, 0 0 100px $orange, 0 0 150px $orange
             20%
                 color: rgba(255,255,255,1)
-                text-shadow: 0 0 5px $white, 0 0 10px $white, 0 0 15px $white, 0 0 20px $blue, 0 0 35px $blue, 0 0 40px $blue, 0 0 50px $blue, 0 0 75px $blue
+                text-shadow: 0 0 5px $white, 0 0 10px $white, 0 0 15px $white, 0 0 20px $orange, 0 0 35px $orange, 0 0 40px $orange, 0 0 50px $orange, 0 0 75px $orange
             25%
-                color: rgba(255,255,255,0)
+                color: rgba(255,255,255,0.2)
                 text-shadow: 2px 2px 25px hsl(239,100%,0%)
             28%
                 color: rgba(255,255,255,0.8)
-                text-shadow: 0 0 5px $white, 0 0 10px $white, 0 0 15px $white, 0 0 20px $blue, 0 0 35px $blue, 0 0 40px $blue, 0 0 50px $blue, 0 0 75px $blue
+                text-shadow: 0 0 5px $white, 0 0 10px $white, 0 0 15px $white, 0 0 20px $orange, 0 0 35px $orange, 0 0 40px $orange, 0 0 50px $orange, 0 0 75px $orange
             30%
-                color: rgba(255,255,255,0)
+                color: rgba(255,255,255,0.2)
                 text-shadow: 2px 2px 25px hsl(239,100%,0%)
             31%
                 color: rgba(255,255,255,0.7)
-                text-shadow: 0 0 5px $white, 0 0 10px $white, 0 0 15px $white, 0 0 20px $blue, 0 0 35px $blue, 0 0 40px $blue, 0 0 50px $blue, 0 0 75px $blue
+                text-shadow: 0 0 5px $white, 0 0 10px $white, 0 0 15px $white, 0 0 20px $orange, 0 0 35px $orange, 0 0 40px $orange, 0 0 50px $orange, 0 0 75px $orange
 
             // 90%
             //     color: rgba(255,255,255,1)
-            //     text-shadow: 0 0 5px $white, 0 0 10px $white, 0 0 15px $white, 0 0 20px $blue, 0 0 35px $blue, 0 0 40px $blue, 0 0 50px $blue, 0 0 75px $blue
+            //     text-shadow: 0 0 5px $white, 0 0 10px $white, 0 0 15px $white, 0 0 20px $orange, 0 0 35px $orange, 0 0 40px $orange, 0 0 50px $orange, 0 0 75px $orange
 
             100%
                 color: rgba(255,255,255,0.8)
-                text-shadow: 0 0 5px $white, 0 0 10px $white, 0 0 15px $white, 0 0 20px $blue, 0 0 35px $blue, 0 0 40px $blue, 0 0 50px $blue, 0 0 75px $blue
+                text-shadow: 0 0 5px $white, 0 0 10px $white, 0 0 15px $white, 0 0 20px $orange, 0 0 35px $orange, 0 0 40px $orange, 0 0 50px $orange, 0 0 75px $orange
             
 
         @keyframes neon2 
             0%, 100% 
-                text-shadow: 0 0 10px $white, 0 0 20px $white, 0 0 30px $white, 0 0 40px $blue, 0 0 70px $blue, 0 0 80px $blue, 0 0 100px $blue, 0 0 150px $blue
-            
-            50% 
-                text-shadow: 0 0 5px $white, 0 0 10px $white, 0 0 15px $white, 0 0 20px $blue, 0 0 35px $blue, 0 0 40px $blue, 0 0 50px $blue, 0 0 75px $blue
-            
+                color: rgba(255,255,255,0.7)
+                text-shadow: 0 0 10px $white, 0 0 20px $white, 0 0 30px $white, 0 0 40px $orange, 0 0 70px $orange, 0 0 80px $orange, 0 0 100px $orange, 0 0 150px $orange
+            20% 
+                color: rgba(255,255,255,0.8)
+                text-shadow: 0 0 5px $white, 0 0 10px $white, 0 0 15px $white, 0 0 20px $orange, 0 0 35px $orange, 0 0 40px $orange, 0 0 50px $orange, 0 0 75px $orange
+            60%
+                color: rgba(255,255,255,0.7)
+                text-shadow: 0 0 10px $white, 0 0 20px $white, 0 0 30px $white, 0 0 40px $orange, 0 0 70px $orange, 0 0 80px $orange, 0 0 100px $orange, 0 0 150px $orange
+            70% 
+                color: rgba(255,255,255,0.8)
+                text-shadow: 0 0 5px $white, 0 0 10px $white, 0 0 15px $white, 0 0 20px $orange, 0 0 35px $orange, 0 0 40px $orange, 0 0 50px $orange, 0 0 75px $orange
+
 
     
 
     #about-text
-        max-width: 800px
-        height: 25vh
-        padding: 20px
+        margin: 100px 0
+        font-size: 24px
+        max-width: 900px
+        min-height: 30vh
         text-align: justify
+        font-family: 'Raleway', cursive
 
-
+        p 
+            margin: 50px 0
 
     .skills-list
         +flex-col
         flex-direction: row
         align-items: space-around
         flex-wrap: wrap
+        margin: 100px 0
 
     .dev-logo-repeat-container
         +flex-col
-        margin-top: 10px
         opacity: 0.4
+        margin: 10px 0
         transition: 0.2s
 
         .dev-logo-text
             opacity: 0
             font-size: 13px
 
+        .dev-logo
+            width: 50px
+            height: 50px
+            margin: 10px
+            flex: 1
+
         &:hover
             opacity: 0.8
-            transform: scale(1.1)
+            transform: translate3d(0,0,2)
 
             .dev-logo-text
                 opacity: 0.8
 
-    .tech-logo
-        width: 50px
-        height: 50px
-        margin: 10px
-        flex: 1
-
-    .social-logo
-        width: 32px
-        height: 32px
-        margin: 0 10px
-        opacity: 0.2
-        transition: 0.2s
-
-        &:hover
-            opacity: 0.8
-            transform: scale(1.1)
-
-
-    .footer
-        postition: fixed
-        bottom: 0
-        height: 70px
+     
+    .contact
         +flex-col
         flex-direction: row
+        width: 100vw
+        position: fixed
+        top: -100px
+        z-index: 100000
+
+
+        & > *
+            margin: 20px 0
+
+        .contact-text
+
+
+        a:nth-child(1) 
+            animation: hint 2s 1s forwards
+
+        a:nth-child(2) 
+            animation: hint 2s 1.1s forwards
+
+        a:nth-child(3) 
+            animation: hint 2s 1.2s forwards
+
+        .social-logo
+            width: 32px
+            margin: 0 10px
+            opacity: 0.2
+            transition: 0.1s
+
+            &:hover
+                opacity: 0.8
+                transform: scale(1.1)
+
+
+    @keyframes hint 
+        30%, 50%, 70%, 100%
+            opacity: 0.8
+            transform: translateY(100px)
+        60%
+            transform: translateY(110px)
+
+
+
+
+
+
+    @media (max-width: 525px) 
+        #neon-sign
+            font-size: 48px
+        #about-text
+            font-size: 24px
+            width: 90%

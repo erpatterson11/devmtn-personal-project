@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Baloo+Bhaina|Fredoka+One|Lemon|Modak|Sniglet:800" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Cinzel|Faster+One|Julius+Sans+One|Playfair+Display|Syncopate" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">   
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="./bundle.css">
   </head>
@@ -18,11 +19,11 @@
       <ui-view ng-class="{animateFromHome: viewTransition, animateToHome: !viewTransition }"></ui-view>    
     </div>
 
-    <nav id='main-nav' ng-hide="hideNav">
+    <nav id='main-nav' >
       <div id='navlogo' ui-sref='home' class='nav-link-hover'>Eric Patterson</div>
       <ul id='main-links'>
-        <li ui-sref='home' class='nav-link-hover'>Portfolio</li>
-        <li ui-sref='about' class='nav-link-hover'>About</li>
+        <li ui-sref='home' class='nav-link-hover' ng-hide="hideNav">Portfolio</li>
+        <li ui-sref='about' class='nav-link-hover' ng-hide="hideNav">About</li>
       </ul>
     </nav>
 

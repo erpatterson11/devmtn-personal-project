@@ -5,31 +5,38 @@
         <!--<div class='landing'>-->
   
             <div id='neon-sign'>
-                <p>
-                   <span class='neon-animation'> i am a <span id='neon-flicker'>w</span>eb developer.</span>
+                <p id='neon-text'>
+                   <span class='neon-animation'> i am a </span> <br><span id='neon-flicker'>w</span><span class='neon-animation'>eb developer</span>
                 </p>
                 </div>
 
             <div id='about-text'>
-                 I love making dynamic and interactive content. I'm always looking for new ways to solve a problem or innovate. 
-                I graduated with a B.S. in Chemistry from Westmont College and then worked as a Manufacturing Engineer for a medical device manufacturer. 
+                <p>
+                I love making dynamic and interactive content. I'm always looking for new ways to solve a problem or innovate. 
+                </p>
+                <p>
+                Before making awesome web applications I graduated from Westmont College with a B.S. in Chemistry and then worked as a Manufacturing Engineer for a medical device manufacturer. 
                 When i'm not finding unique solutions to problems you can find me travelling, cooking, and/or biking.
+                </p>
             </div>
     
         <!--</div>--> 
 
-        <h3 class=''>Skillz:</h3>
+        <!--<h3 class=''>Skillz:</h3>-->
         <ul class='skills-list'>
-            <div class='dev-logo-repeat-container' ng-repeat='(key, value) in images' >
-                <img ng-src='{{value.src}}' class='tech-logo'></li>
-                <p class='dev-logo-text'>{{key.toUpperCase()}}</p>
+            <div class='dev-logo-repeat-container' ng-repeat='(key, value) in images' ng-mouseenter="toggleBoxShadow(this,true)" ng-mouseleave="toggleBoxShadow(this,false)" >
+                <img ng-src='{{value.src}}' ng-style='iconColors.{{key}}.dropShadow' class='dev-logo'></li>
+                <p class='dev-logo-text' ng-style='iconColors.{{key}}.textShadow' style='color:{{value.color}};'>{{key.toUpperCase()}}</p>
             </div>
         </ul>
    
     </div>
 
 
-    <div class='footer'>
+    <div class='contact'>
+        <a href="https://github.com/erpatterson11">
+            <img class='social-logo' src="./app/routes/about/images/email.svg" alt="email" />
+        </a>
         <a href="https://github.com/erpatterson11">
             <img class='social-logo' src="./app/routes/about/images/github_logo.svg" alt="github" />
         </a>
