@@ -36,7 +36,7 @@
 
     // ASSIGN OTHERWISE
     // ============================================================
-    $urlRouterProvider.otherwise('/')
+    $urlRouterProvider.otherwise('/about')
   }]);
 
 // INITILIZE CONTROLLER
@@ -243,12 +243,15 @@ angular.module('portfolioApp').service('aboutService', function() {
             "opacity" : 0.7
         })
 
-        tl.play()
+        // tl.play()
         
     }
 
 
 })
+
+
+
 angular.module("portfolioApp").controller("gameCtrl", ["$scope", "$timeout", "scoreService", "gameService", function($scope, $timeout, scoreService, gameService) {
 
 
@@ -1440,8 +1443,39 @@ angular.module("portfolioApp").service("scoreService", ["$http", function($http)
 
 }]);
 
+// INITILIZE CONTROLLER
+// ============================================================
+angular.module("portfolioApp").controller("homeCtrl", ["$scope", "reusableFuncsService", function($scope, reusableFuncsService) {
+
+  const nav = document.querySelector('#main-nav')
+
+  // re-enable nav-bar if it was disabled in a route
+  nav.style.display = 'flex'
+
+  let lastScrollTop = 0
+  let navHeight = parseInt(getComputedStyle(nav).height)
+
+  let navbarControl = () => {
+    let distFromTop = window.scrollY
+    let deltaScrollY = lastScrollTop - distFromTop
+    if (deltaScrollY < 0) {
+      if (distFromTop > navHeight) {
+        nav.style.top = `-100%`
+      }
+    } else {
+      nav.style.top = `0`
+    }
 
 
+    lastScrollTop = distFromTop
+  }
+
+
+  window.addEventListener('scroll', reusableFuncsService.debounce(navbarControl))
+
+  
+
+}]);
 
 // INITILIZE CONTROLLER
 // ============================================================
@@ -1842,40 +1876,6 @@ angular.module("portfolioApp").service("goldenRatioService", function() {
   }
 
 });
-
-// INITILIZE CONTROLLER
-// ============================================================
-angular.module("portfolioApp").controller("homeCtrl", ["$scope", "reusableFuncsService", function($scope, reusableFuncsService) {
-
-  const nav = document.querySelector('#main-nav')
-
-  // re-enable nav-bar if it was disabled in a route
-  nav.style.display = 'flex'
-
-  let lastScrollTop = 0
-  let navHeight = parseInt(getComputedStyle(nav).height)
-
-  let navbarControl = () => {
-    let distFromTop = window.scrollY
-    let deltaScrollY = lastScrollTop - distFromTop
-    if (deltaScrollY < 0) {
-      if (distFromTop > navHeight) {
-        nav.style.top = `-100%`
-      }
-    } else {
-      nav.style.top = `0`
-    }
-
-
-    lastScrollTop = distFromTop
-  }
-
-
-  window.addEventListener('scroll', reusableFuncsService.debounce(navbarControl))
-
-  
-
-}]);
 
 // INITILIZE CONTROLLER
 // ============================================================

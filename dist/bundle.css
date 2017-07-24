@@ -103,11 +103,11 @@ ui-view {
   position: fixed;
   top: 0%;
   width: 100vw;
-  height: 70px;
-  padding: 0px 50px;
+  height: 110px;
+  padding: 35px 50px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  background: linear-gradient(black 40%, transparent 100%);
   color: rgba(200, 200, 200, 0.75);
   font-size: 20px;
   transition: top 0.5s;
@@ -116,8 +116,7 @@ ui-view {
     display: flex;
     width: 300px;
     flex-direction: row;
-    justify-content: flex-end;
-    align-items: center; }
+    justify-content: flex-end; }
     #main-nav #main-links > * {
       margin-right: 25px; }
     #main-nav #main-links li:last-child {
@@ -461,7 +460,7 @@ button:focus {
     height: 100vh;
     color: white;
     opacity: 1;
-    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #ff9933, 0 0 35px #ff9933, 0 0 40px #ff9933, 0 0 50px #ff9933, 0 0 75px #ff9933;
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #f47200, 0 0 35px #f47200, 0 0 40px #f47200, 0 0 50px #f47200, 0 0 75px #f47200;
     background: url(./app/routes/about/images/neon-1.jpg);
     background-size: cover; }
     #about-section #neon-sign #neon-text {
@@ -473,51 +472,50 @@ button:focus {
       transform: translateZ(0);
       animation: flicker 1s ease-in-out infinite alternate; }
     #about-section #neon-sign .neon-animation {
-      display: inline;
-      animation: neon2 10s ease-in-out infinite alternate; }
+      display: inline; }
 
 @keyframes flicker {
   0% {
     color: rgba(255, 255, 255, 0.8);
-    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #ff9933, 0 0 70px #ff9933, 0 0 80px #ff9933, 0 0 100px #ff9933, 0 0 150px #ff9933; }
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #f47200, 0 0 70px #f47200, 0 0 80px #f47200, 0 0 100px #f47200, 0 0 150px #f47200; }
   2% {
     color: rgba(255, 255, 255, 0.2);
     text-shadow: 2px 2px 25px black; }
   4% {
     color: rgba(255, 255, 255, 0.8);
-    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #ff9933, 0 0 70px #ff9933, 0 0 80px #ff9933, 0 0 100px #ff9933, 0 0 150px #ff9933; }
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #f47200, 0 0 70px #f47200, 0 0 80px #f47200, 0 0 100px #f47200, 0 0 150px #f47200; }
   20% {
     color: white;
-    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #ff9933, 0 0 35px #ff9933, 0 0 40px #ff9933, 0 0 50px #ff9933, 0 0 75px #ff9933; }
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #f47200, 0 0 35px #f47200, 0 0 40px #f47200, 0 0 50px #f47200, 0 0 75px #f47200; }
   25% {
     color: rgba(255, 255, 255, 0.2);
     text-shadow: 2px 2px 25px black; }
   28% {
     color: rgba(255, 255, 255, 0.8);
-    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #ff9933, 0 0 35px #ff9933, 0 0 40px #ff9933, 0 0 50px #ff9933, 0 0 75px #ff9933; }
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #f47200, 0 0 35px #f47200, 0 0 40px #f47200, 0 0 50px #f47200, 0 0 75px #f47200; }
   30% {
     color: rgba(255, 255, 255, 0.2);
     text-shadow: 2px 2px 25px black; }
   31% {
     color: rgba(255, 255, 255, 0.7);
-    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #ff9933, 0 0 35px #ff9933, 0 0 40px #ff9933, 0 0 50px #ff9933, 0 0 75px #ff9933; }
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #f47200, 0 0 35px #f47200, 0 0 40px #f47200, 0 0 50px #f47200, 0 0 75px #f47200; }
   100% {
     color: rgba(255, 255, 255, 0.8);
-    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #ff9933, 0 0 35px #ff9933, 0 0 40px #ff9933, 0 0 50px #ff9933, 0 0 75px #ff9933; } }
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #f47200, 0 0 35px #f47200, 0 0 40px #f47200, 0 0 50px #f47200, 0 0 75px #f47200; } }
 
 @keyframes neon2 {
   0%, 100% {
     color: rgba(255, 255, 255, 0.7);
-    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #ff9933, 0 0 70px #ff9933, 0 0 80px #ff9933, 0 0 100px #ff9933, 0 0 150px #ff9933; }
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #f47200, 0 0 70px #f47200, 0 0 80px #f47200, 0 0 100px #f47200, 0 0 150px #f47200; }
   20% {
     color: rgba(255, 255, 255, 0.8);
-    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #ff9933, 0 0 35px #ff9933, 0 0 40px #ff9933, 0 0 50px #ff9933, 0 0 75px #ff9933; }
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #f47200, 0 0 35px #f47200, 0 0 40px #f47200, 0 0 50px #f47200, 0 0 75px #f47200; }
   60% {
     color: rgba(255, 255, 255, 0.7);
-    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #ff9933, 0 0 70px #ff9933, 0 0 80px #ff9933, 0 0 100px #ff9933, 0 0 150px #ff9933; }
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #f47200, 0 0 70px #f47200, 0 0 80px #f47200, 0 0 100px #f47200, 0 0 150px #f47200; }
   70% {
     color: rgba(255, 255, 255, 0.8);
-    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #ff9933, 0 0 35px #ff9933, 0 0 40px #ff9933, 0 0 50px #ff9933, 0 0 75px #ff9933; } }
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #f47200, 0 0 35px #f47200, 0 0 40px #f47200, 0 0 50px #f47200, 0 0 75px #f47200; } }
   #about-section #about-text {
     margin: 100px 0;
     font-size: 24px;
@@ -936,7 +934,7 @@ button:focus {
     z-index: 1; }
   #home-container #golden-ratio-div #gr-svg-bg {
     stroke: #333;
-    opacity: 0.6;
+    opacity: 0.3;
     position: absolute;
     width: inherit;
     max-width: 100%;

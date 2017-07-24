@@ -75,7 +75,7 @@ angular.module('portfolioApp').service('aboutService', function() {
             "opacity" : 0.7
         })
 
-        tl.play()
+        // tl.play()
         
     }
 

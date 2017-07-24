@@ -36,5 +36,5 @@
 
     // ASSIGN OTHERWISE
     // ============================================================
-    $urlRouterProvider.otherwise('/')
+    $urlRouterProvider.otherwise('/about')
   });
