@@ -1,236 +1,3 @@
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  font: inherit;
-  vertical-align: baseline;
-  box-sizing: border-box;
-  text-decoration: none; }
-
-/* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section {
-  display: block; }
-
-body {
-  line-height: 1; }
-
-ol, ul {
-  list-style: none; }
-
-blockquote, q {
-  quotes: none; }
-
-blockquote:before, blockquote:after,
-q:before, q:after {
-  content: '';
-  content: none; }
-
-table {
-  border-collapse: collapse;
-  border-spacing: 0; }
-
-button:focus {
-  outline: none; }
-
-@font-face {
-  font-family: Neon80;
-  src: url("./app/routes/about/fonts/Neon.ttf") format("truetype"); }
-
-@font-face {
-  font-family: wages;
-  src: url("./app/routes/about/fonts/lostWages.woff") format("truetype"); }
-
-body {
-  background: #000;
-  width: 100vw;
-  height: 100vh; }
-  body::-webkit-scrollbar {
-    display: none;
-    width: 0; }
-
-#ui-view-container {
-  position: relative;
-  transition: 0.2s;
-  width: 100%;
-  height: 100%; }
-
-ui-view {
-  position: absolute;
-  display: block;
-  width: 100vw;
-  height: auto;
-  transition: 0.3s; }
-  ui-view::-webkit-scrollbar {
-    display: none;
-    width: 0; }
-
-.ng-hide.ng-hide-animate {
-  display: none; }
-
-.showNav {
-  transform: translate(100px, 100px);
-  filter: grayscale(100%); }
-
-.animateFromHome.ng-enter {
-  transform: translateX(-1300px); }
-
-.animateFromHome.ng-enter-active {
-  transform: translateX(0); }
-
-.animateFromHome.ng-leave {
-  transform: translateX(0); }
-
-.animateFromHome.ng-leave-active {
-  transform: translateX(-1300px); }
-
-.animateToHome.ng-enter {
-  transform: translateX(1300px); }
-
-.animateToHome.ng-enter-active {
-  transform: translateX(0); }
-
-.animateToHome.ng-leave {
-  transform: translateX(0); }
-
-.animateToHome.ng-leave-active {
-  transform: translateX(1300px); }
-
-.activeNav {
-  transform: translateY(0px) !important; }
-
-#main-nav {
-  position: fixed;
-  top: 0;
-  width: 100vw;
-  height: 100px;
-  color: rgba(200, 200, 200, 0.75);
-  font-size: 20px;
-  font-family: Codystar;
-  z-index: 10000000; }
-  #main-nav #main-links {
-    background: #000000;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    height: 100px;
-    width: 100vw;
-    transition: 0.3s; }
-  #main-nav .nav-link {
-    font-family: Neon80;
-    text-align: center;
-    cursor: pointer;
-    margin-right: 30px;
-    transition: all 0.5s;
-    text-shadow: 0 0 15px white; }
-    #main-nav .nav-link:hover {
-      color: #FF9900;
-      animation: neon 1.5s ease-in-out infinite alternate; }
-  #main-nav .contact {
-    background: #000000;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: fixed;
-    width: 100px;
-    height: 100vh;
-    top: 0;
-    left: 0;
-    padding-top: 100px;
-    z-index: 100000;
-    transition: 0.3s; }
-    #main-nav .contact > * {
-      margin: 20px 0; }
-    #main-nav .contact .relative {
-      position: relative; }
-    #main-nav .contact .email-compose {
-      position: absolute;
-      background: #000000;
-      width: 320px;
-      height: 60px;
-      transition: 0.3s;
-      opacity: 0;
-      transform: translate(-100%, -20px);
-      display: flex;
-      justify-content: center;
-      align-items: center; }
-    #main-nav .contact .emailExpanded {
-      transform: translate(50px, -20px);
-      opacity: 1; }
-    #main-nav .contact .social-logo {
-      width: 32px;
-      margin: 0 10px;
-      opacity: 0.75;
-      transition: 0.1s; }
-      #main-nav .contact .social-logo:hover {
-        opacity: 1;
-        transform: scale(1.1); }
-
-@keyframes neon {
-  from {
-    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #FF9900, 0 0 35px #FF9900, 0 0 40px #FF9900, 0 0 50px #FF9900, 0 0 75px #FF9900; }
-  to {
-    text-shadow: 0 0 2px #fff, 0 0 4px #fff, 0 0 8px #fff, 0 0 14px #FF9900, 0 0 18px #FF9900, 0 0 24px #FF9900, 0 0 30px #FF9900, 0 0 35px #FF9900; } }
-
-#ham-menu {
-  position: fixed;
-  top: 30px;
-  left: 30px;
-  width: 50px;
-  height: 30px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  cursor: pointer;
-  z-index: 10000000; }
-  #ham-menu .bar {
-    background: #7d7d7d;
-    opacity: 0.3;
-    width: 40px;
-    height: 5px;
-    border-radius: 2.5px;
-    transition: 0.33s; }
-  #ham-menu .bar:nth-child(2) {
-    width: 30px; }
-  #ham-menu:hover .bar {
-    opacity: 1; }
-  #ham-menu:hover .bar-middle {
-    transform: translateX(-5px); }
-
-.xHam .bar {
-  opacity: 1 !important;
-  border-radius: none; }
-
-.xHam .bar-top {
-  transform: translateY(10px) rotate(45deg); }
-
-.xHam .bar-middle {
-  transform: translateX(100px);
-  opacity: 0 !important; }
-
-.xHam .bar-bottom {
-  transform: translateY(-10px) rotate(-45deg); }
-
-.hideLinks {
-  transform: translateY(-100px); }
-
-.hideContact {
-  transform: translateX(-100px); }
-
 :root {
   --gr-bg-color: #4ABDAC;
   --gr-accent-1-color: #FC4A1A;
@@ -525,11 +292,245 @@ button:focus {
   font-family: wages;
   src: url("./app/routes/about/fonts/lostWages.woff") format("truetype"); }
 
+body {
+  background: #000;
+  width: 100vw;
+  height: 100vh; }
+  body::-webkit-scrollbar {
+    display: none;
+    width: 0; }
+
+#ui-view-container {
+  position: relative;
+  transition: 0.2s;
+  width: 100%;
+  height: 100%; }
+
+ui-view {
+  position: absolute;
+  display: block;
+  width: 100vw;
+  height: auto;
+  transition: 0.3s; }
+  ui-view::-webkit-scrollbar {
+    display: none;
+    width: 0; }
+
+.ng-hide.ng-hide-animate {
+  display: none; }
+
+.showNav {
+  transform: translate(100px, 100px);
+  filter: grayscale(100%); }
+
+.animateFromHome.ng-enter {
+  transform: translateX(-1300px); }
+
+.animateFromHome.ng-enter-active {
+  transform: translateX(0); }
+
+.animateFromHome.ng-leave {
+  transform: translateX(0); }
+
+.animateFromHome.ng-leave-active {
+  transform: translateX(-1300px); }
+
+.animateToHome.ng-enter {
+  transform: translateX(1300px); }
+
+.animateToHome.ng-enter-active {
+  transform: translateX(0); }
+
+.animateToHome.ng-leave {
+  transform: translateX(0); }
+
+.animateToHome.ng-leave-active {
+  transform: translateX(1300px); }
+
+.activeNav {
+  transform: translateY(0px) !important; }
+
+#main-nav {
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 100px;
+  color: rgba(200, 200, 200, 0.75);
+  font-size: 20px;
+  font-family: Codystar;
+  z-index: 10000000; }
+  #main-nav #main-links {
+    background: #000000;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 100px;
+    width: 100vw;
+    transition: 0.3s; }
+  #main-nav .nav-link {
+    font-family: Neon80;
+    text-align: center;
+    cursor: pointer;
+    margin-right: 30px;
+    transition: all 0.5s;
+    text-shadow: 0 0 15px white; }
+    #main-nav .nav-link:hover {
+      color: #FF9900;
+      animation: neon 1.5s ease-in-out infinite alternate; }
+  #main-nav .contact {
+    background: #000000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    width: 100px;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    padding-top: 100px;
+    z-index: 100000;
+    transition: 0.3s; }
+    #main-nav .contact > * {
+      margin: 20px 0; }
+    #main-nav .contact .relative {
+      position: relative; }
+    #main-nav .contact .email-compose {
+      position: absolute;
+      background: #000000;
+      width: 320px;
+      height: 60px;
+      transition: 0.3s;
+      opacity: 0;
+      transform: translate(-100%, -20px);
+      display: flex;
+      justify-content: center;
+      align-items: center; }
+    #main-nav .contact .emailExpanded {
+      transform: translate(50px, -20px);
+      opacity: 1; }
+    #main-nav .contact .social-logo {
+      width: 32px;
+      margin: 0 10px;
+      opacity: 0.75;
+      transition: 0.1s; }
+      #main-nav .contact .social-logo:hover {
+        opacity: 1;
+        transform: scale(1.1); }
+
+@keyframes neon {
+  from {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #FF9900, 0 0 35px #FF9900, 0 0 40px #FF9900, 0 0 50px #FF9900, 0 0 75px #FF9900; }
+  to {
+    text-shadow: 0 0 2px #fff, 0 0 4px #fff, 0 0 8px #fff, 0 0 14px #FF9900, 0 0 18px #FF9900, 0 0 24px #FF9900, 0 0 30px #FF9900, 0 0 35px #FF9900; } }
+
+#ham-menu {
+  position: fixed;
+  top: 30px;
+  left: 30px;
+  width: 50px;
+  height: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  cursor: pointer;
+  z-index: 10000000; }
+  #ham-menu .bar {
+    background: #7d7d7d;
+    opacity: 0.3;
+    width: 40px;
+    height: 5px;
+    border-radius: 2.5px;
+    transition: 0.33s; }
+  #ham-menu .bar:nth-child(2) {
+    width: 30px; }
+  #ham-menu:hover .bar {
+    opacity: 1; }
+  #ham-menu:hover .bar-middle {
+    transform: translateX(-5px); }
+
+.xHam .bar {
+  opacity: 1 !important;
+  border-radius: none; }
+
+.xHam .bar-top {
+  transform: translateY(10px) rotate(45deg); }
+
+.xHam .bar-middle {
+  transform: translateX(100px);
+  opacity: 0 !important; }
+
+.xHam .bar-bottom {
+  transform: translateY(-10px) rotate(-45deg); }
+
+.hideLinks {
+  transform: translateY(-100px); }
+
+.hideContact {
+  transform: translateX(-100px); }
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  box-sizing: border-box;
+  text-decoration: none; }
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+button:focus {
+  outline: none; }
+
+@font-face {
+  font-family: Neon80;
+  src: url("./app/routes/about/fonts/Neon.ttf") format("truetype"); }
+
+@font-face {
+  font-family: wages;
+  src: url("./app/routes/about/fonts/lostWages.woff") format("truetype"); }
+
 #about-section {
   width: 100vw;
   height: 100vh;
   background: black;
-  color: rgba(220, 220, 200, 0.8); }
+  color: rgba(220, 220, 200, 0.8);
+  font-family: 'Raleway', cursive; }
   #about-section .content {
     flex-grow: 1;
     display: flex;
@@ -610,11 +611,14 @@ button:focus {
     font-size: 24px;
     max-width: 900px;
     min-height: 30vh;
-    text-align: justify;
-    font-family: 'Raleway', cursive; }
+    text-align: justify; }
     #about-section #about-text p {
       margin: 50px 0;
       padding: 0 50px; }
+  #about-section .skills-list-header {
+    font-size: 28px;
+    padding: 20px 0;
+    border-bottom: rgba(200, 200, 200, 0.8) 1px solid; }
   #about-section .skills-list {
     display: flex;
     flex-direction: column;
@@ -623,7 +627,7 @@ button:focus {
     flex-direction: row;
     align-items: space-around;
     flex-wrap: wrap;
-    margin: 100px 0; }
+    margin: 10px 0; }
   #about-section .dev-logo-repeat-container {
     display: flex;
     flex-direction: column;
@@ -645,6 +649,34 @@ button:focus {
       transform: translate3d(0, 0, 2); }
       #about-section .dev-logo-repeat-container:hover .dev-logo-text {
         opacity: 0.8; }
+  #about-section .tilted-divider {
+    width: 100vw;
+    height: 100px;
+    background: linear-gradient(transparent, rgba(200, 200, 200, 0.1) 50%, transparent); }
+  #about-section .portfolio-link {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+    font-size: 36px; }
+    #about-section .portfolio-link button {
+      opacity: 0.75;
+      margin-top: 25px;
+      font-size: 18px;
+      width: 100px;
+      height: 50px;
+      background: none;
+      border: #c8c8c8 1px solid;
+      border-radius: 10px;
+      color: #c8c8c8;
+      cursor: pointer;
+      transition: 0.2s; }
+      #about-section .portfolio-link button:hover {
+        background: #c8c8c8;
+        border: black 1px solid;
+        color: black;
+        box-shadow: 0 0 50px rgba(200, 200, 200, 0.7); }
   @media (max-width: 525px) {
     #about-section #neon-sign {
       font-size: 48px; }
@@ -1107,7 +1139,8 @@ button:focus {
     margin: 10px;
     border-radius: 10px;
     box-shadow: inset 0px 0px 10px 0px rgba(255, 255, 255, 0.15);
-    color: white; }
+    color: white;
+    transition: 0.3s; }
   #weather-app-section .controlls input:focus {
     outline: none; }
 
@@ -1423,7 +1456,7 @@ button:focus {
   transition: 0.25s; }
 
 #weather-app-section #side-nav {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: -300px;
   width: 300px;
@@ -1448,34 +1481,6 @@ button:focus {
   #weather-app-section #side-nav a {
     text-decoration: none;
     color: #ccc; }
-
-#weather-app-section #ham-menu {
-  position: fixed;
-  top: 50px;
-  left: 40px;
-  width: 50px;
-  height: 30px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  cursor: pointer; }
-  #weather-app-section #ham-menu .bar {
-    background: rgba(255, 255, 255, 0.5);
-    width: 40px;
-    height: 5px;
-    border-radius: 2.5px;
-    transition: 0.33s; }
-  #weather-app-section #ham-menu .bar-top {
-    transform-origin: right; }
-  #weather-app-section #ham-menu .bar-bottom {
-    transform-origin: right; }
-  #weather-app-section #ham-menu .flip-ham-menu {
-    transform: rotateX(180deg); }
-
-#weather-app-section #ham-menu:hover .bar {
-  background: white;
-  border-radius: none; }
 
 @media (max-width: 600px) {
   #weather-app-section #site-title {

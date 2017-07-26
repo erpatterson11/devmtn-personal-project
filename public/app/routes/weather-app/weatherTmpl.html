@@ -108,12 +108,6 @@
       <p>Data provided by <a href="https://darksky.net/">DarkSky</a></p>
     </div>
 
-    <div id="ham-menu" ng-click="toggleNav()">
-        <div class="bar bar-top"></div>
-        <div class="bar bar-middle"></div>
-        <div class="bar bar-bottom"></div>
-    </div>
-
     <div class="data-header">
         <div class="location flex-center">{{currentCity}}, {{currentState}}</div>
         <div class="selected-temp flex-center">{{hourly[selectedTime].temperature | number: 0 }}&degF</div>
@@ -132,7 +126,7 @@
           <iframe id='bg-video' src="https://www.youtube.com/embed/Xc7d7F5T6rI?controls=0&showinfo=0&rel=0&autoplay=1&loop=1&start=300&disablekb=1&iv_load_policy=3&?enablejsapi=1" frameborder="0" allowfullscreen></iframe>
         </div>
       </div>
-        <div id='site-title' class='flex-center'>Reactive Weather Forecast</div>
+        <div id='site-title' class='flex-center'>Visual Weather</div>
         <div class="landing-lower-content flex-center">
             <button type="button" name="myLocation" ng-click="getWeatherDataFromBrowserLocation()">See weather forecast for my location</button>
             <div class="search-input-container flex-center">

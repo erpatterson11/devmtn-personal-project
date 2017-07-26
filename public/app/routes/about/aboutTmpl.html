@@ -5,15 +5,15 @@
         <!--<div class='landing'>-->
   
             <div id='neon-sign'>
-                   <p class='neon-animation'>i am a</p> <br><p class='neon-animation'>web develope<span id='neon-flicker'>r</span></p>
+                   <p class='neon-animation'>eric patterson</p> <br><p class='neon-animation'><span id='neon-flicker'>w</span>eb developer</p>
                 </div>
 
             <div id='about-text'>
                 <p>
-                I love making dynamic and interactive content. I'm always looking for new ways to solve a problem or innovate. 
+                I love making dynamic and interactive content for the web. I'm always looking for new ways to solve a problem or innovate. 
                 </p>
                 <p>
-                Before making awesome web applications I graduated from Westmont College with a B.S. in Chemistry and then worked as a Manufacturing Engineer for a medical device manufacturer. 
+                Before making awesome web applications I graduated from Westmont College with a B.S. in Chemistry and then worked as a Manufacturing Engineer for a medical device manufacturer.  
                 </p>
                 <p>
                 When i'm not finding unique solutions to problems you can find me travelling, cooking, and/or biking.
@@ -22,13 +22,22 @@
     
         <!--</div>--> 
 
-        <!--<h3 class=''>Skillz:</h3>-->
+        <h3 class='skills-list-header'>These are the tools I use to build cool things</h3>
         <ul class='skills-list'>
             <div class='dev-logo-repeat-container' ng-repeat='(key, value) in images' ng-mouseenter="toggleBoxShadow(this,true)" ng-mouseleave="toggleBoxShadow(this,false)" >
                 <img ng-src='{{value.src}}' ng-style='iconColors.{{key}}.dropShadow' class='dev-logo'></li>
                 <p class='dev-logo-text' ng-style='iconColors.{{key}}.textShadow' style='color:{{value.color}};'>{{key.toUpperCase()}}</p>
             </div>
         </ul>
+
+        <!--<div class='tilted-divider'></div>-->
+
+        <div class='portfolio-link'>
+            <p>See what I've created so far</p> 
+
+            <button ui-sref='portfolio'>Portfolio</button>
+
+        </div>
    
     </div>
 

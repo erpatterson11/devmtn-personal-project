@@ -7,6 +7,7 @@ angular.module("portfolioApp").controller("mainCtrl", function($scope, $window, 
     $scope.$on('$stateChangeSuccess', function(evt, toState, toParams, fromState, fromParams) {
             $scope.viewTransition = fromState.name !== 'home'
             $scope.hideNav = !allowedRoutes.includes(toState.name)
+            document.body.scrollTop = document.documentElement.scrollTop = 0
         })
 
     $scope.myEmail = 'ecpatterson11@gmail.com'

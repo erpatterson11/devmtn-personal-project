@@ -22,6 +22,7 @@
       border-radius: 10px
       box-shadow: inset 0px 0px 10px 0px rgba(255,255,255,0.15)
       color: white
+      transition: 0.3s
     input:focus
       outline: none
 
@@ -378,7 +379,7 @@
 
 
   #side-nav
-    position: fixed
+    position: absolute
     top: 0
     left: -300px
     width: 300px
@@ -403,55 +404,6 @@
     a
       text-decoration: none
       color: #ccc
-
-
-  #ham-menu
-    position: fixed
-    top: 50px
-    left: 40px
-    width: 50px
-    height: 30px
-    display: flex
-    flex-direction: column
-    justify-content: space-around
-    align-items: center
-    cursor: pointer
-    .bar
-      background: rgba(255, 255, 255, 0.5)
-      width: 40px
-      height: 5px
-      border-radius: 2.5px
-      transition: 0.33s
-    .bar-top
-      transform-origin: right
-    .bar-bottom
-      transform-origin: right
-    .flip-ham-menu
-      transform: rotateX(180deg)
-
-  #ham-menu:hover .bar
-    background: white
-    border-radius: none
-
-  // #ham-menu:hover .bar-middle
-  //   width: 45px
-  //
-  // #ham-menu:hover .bar-top
-  //   -webkit-transform: rotateZ(-45deg) translate(-10px,-20px)
-  //   -moz-transform: rotateZ(-45deg) translate(-10px,-20px)
-  //   -ms-transform: rotateZ(-45deg) translate(-10px,-20px)
-  //   -o-transform: rotateZ(-45deg) translate(-10px,-20px)
-  //   transform: rotateZ(-45deg) translate(-10px,-20px)
-  //   width: 25px
-  //
-  //
-  // #ham-menu:hover .bar-bottom
-  //   -webkit-transform: rotateZ(45deg) translate(-10px,20px)
-  //   -moz-transform: rotateZ(45deg) translate(-10px,20px)
-  //   -ms-transform: rotateZ(45deg) translate(-10px,20px)
-  //   -o-transform: rotateZ(45deg) translate(-10px,20px)
-  //   transform: rotateZ(45deg) translate(-10px,20px)
-  //   width: 25px
 
 @media (max-width: 600px)
   #weather-app-section

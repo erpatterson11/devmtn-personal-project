@@ -7,7 +7,7 @@
     // ============================================================
     $stateProvider
       // HOME STATE
-      .state('home', {
+      .state('portfolio', {
         url: '/',
         templateUrl: 'app/routes/home/homeTmpl.html',
         controller: 'homeCtrl',

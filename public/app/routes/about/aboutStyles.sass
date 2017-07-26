@@ -17,6 +17,7 @@ $orange: #f47200
     height: 100vh
     background: black
     color: rgba(220,220,200, 0.8) 
+    font-family: 'Raleway', cursive
 
     .content
         flex-grow: 1
@@ -106,18 +107,22 @@ $orange: #f47200
         max-width: 900px
         min-height: 30vh
         text-align: justify
-        font-family: 'Raleway', cursive
 
         p 
             margin: 50px 0
             padding: 0 50px
+
+    .skills-list-header
+        font-size: 28px
+        padding: 20px 0
+        border-bottom: rgba(200,200,200,0.8) 1px solid
 
     .skills-list
         +flex-col
         flex-direction: row
         align-items: space-around
         flex-wrap: wrap
-        margin: 100px 0
+        margin: 10px 0 
 
     .dev-logo-repeat-container
         +flex-col
@@ -142,7 +147,34 @@ $orange: #f47200
             .dev-logo-text
                 opacity: 0.8
 
-     
+    .tilted-divider
+        width: 100vw
+        height: 100px
+        background: linear-gradient(transparent, rgba(200,200,200,0.1) 50%, transparent) 
+
+    .portfolio-link
+        +flex-col
+        height: 400px
+        font-size: 36px
+
+        button
+            opacity: 0.75
+            margin-top: 25px
+            font-size: 18px
+            width: 100px
+            height: 50px
+            background: none
+            border: rgb(200,200,200) 1px solid
+            border-radius: 10px
+            color: rgb(200,200,200)
+            cursor: pointer
+            transition: 0.2s
+
+            &:hover
+                background: rgb(200,200,200)
+                border: rgb(0,0,0) 1px solid
+                color: rgb(0,0,0)
+                box-shadow: 0 0 50px rgba(200,200,200,0.7)
 
 
     @media (max-width: 525px) 
