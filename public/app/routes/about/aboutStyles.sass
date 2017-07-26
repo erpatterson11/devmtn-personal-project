@@ -27,7 +27,6 @@ $orange: #f47200
         +flex-col
         justify-content: space-around
 
-
     #neon-sign
         +flex-col
         font-family: Codystar ,wages, Neon80
@@ -41,12 +40,15 @@ $orange: #f47200
         background: url(./app/routes/about/images/neon-1.jpg)
         background-size: cover
 
+        .small-neon-text
+            font-size: 56px
 
         #neon-flicker
             animation: flicker 1s ease-in-out infinite alternate
 
         .neon-animation
             text-align: center
+            overflow-wrap: break-word
             animation: neon2 10s ease-in-out infinite alternate
 
         @keyframes flicker 
@@ -113,9 +115,12 @@ $orange: #f47200
             padding: 0 50px
 
     .skills-list-header
+        +flex-col
         font-size: 28px
         padding: 20px 0
-        border-bottom: rgba(200,200,200,0.8) 1px solid
+        text-align: center
+        overflow-wrap: break-word
+        // border-bottom: rgba(200,200,200,0.8) 1px solid
 
     .skills-list
         +flex-col
@@ -180,6 +185,14 @@ $orange: #f47200
     @media (max-width: 525px) 
         #neon-sign
             font-size: 48px
+            .small-neon-text
+                font-size: 40px
         #about-text
             font-size: 24px
             width: 90%
+        .skills-list-header
+            font-size: 24px
+        .portfolio-link
+            font-size: 24px
+            button
+                height: 35px

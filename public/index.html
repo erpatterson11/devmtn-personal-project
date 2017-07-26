@@ -11,11 +11,6 @@
   </head>
   <body ng-controller='mainCtrl'>
 
-    <div id='ui-view-container' ng-class="{showNav: showNav}">
-      <ui-view ng-class="{animateFromHome: viewTransition, animateToHome: !viewTransition}"></ui-view>    
-    </div>
-
-
    <nav id='main-nav'>
       <ul id='main-links' ng-class="{hideLinks: !showNav}">
         <li ui-sref='portfolio' class='nav-link' ng-click='showNav = !showNav' >portfolio</li>
@@ -37,10 +32,13 @@
           <a href="https://www.linkedin.com/in/eric-patterson/">
               <img class='social-logo' src="./app/routes/about/images/linkedin_logo.svg" alt="github" />
           </a>
-
       </div>
 
     </nav>
+
+    <div id='ui-view-container' ng-class="{showNav: showNav}">
+      <ui-view ng-class="{animateFromHome: viewTransition, animateToHome: !viewTransition}"></ui-view>    
+    </div>
 
     <div id="ham-menu" ng-click='showNav = !showNav' ng-class='{xHam: showNav}'>
         <div class="bar bar-top"></div>

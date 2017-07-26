@@ -17,7 +17,6 @@ angular.module('portfolioApp').service('weatherCanvasService', function() {
   ctx.lineCap = 'round'
 
 
-
 //  SERVICE FUNCTIONS
 /////////////////////
 
@@ -122,6 +121,8 @@ angular.module('portfolioApp').service('weatherCanvasService', function() {
     let particles = []
     let maxParts = rainIntensity * w
     let shouldAnimate = true
+    
+    ctx.lineWidth = 2
 
     function addParticle() {
       particles.push({

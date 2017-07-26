@@ -1,3 +1,267 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  box-sizing: border-box;
+  text-decoration: none; }
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+button:focus {
+  outline: none; }
+
+@font-face {
+  font-family: Neon80;
+  src: url("./app/routes/about/fonts/Neon.ttf") format("truetype"); }
+
+@font-face {
+  font-family: wages;
+  src: url("./app/routes/about/fonts/lostWages.woff") format("truetype"); }
+
+body {
+  background: #000;
+  width: 100vw;
+  height: 100vh; }
+  body::-webkit-scrollbar {
+    display: none;
+    width: 0; }
+
+#ui-view-container {
+  position: relative;
+  transition: 0.2s;
+  width: 100%;
+  height: 100%; }
+
+ui-view {
+  position: absolute;
+  display: block;
+  width: 100vw;
+  height: auto;
+  transition: 0.3s; }
+  ui-view::-webkit-scrollbar {
+    display: none;
+    width: 0; }
+
+.ng-hide.ng-hide-animate {
+  display: none; }
+
+.showNav {
+  transform: translate(100px, 100px);
+  filter: grayscale(100%); }
+
+.animateFromHome.ng-enter {
+  transform: translateX(-1300px); }
+
+.animateFromHome.ng-enter-active {
+  transform: translateX(0); }
+
+.animateFromHome.ng-leave {
+  transform: translateX(0); }
+
+.animateFromHome.ng-leave-active {
+  transform: translateX(-1300px); }
+
+.animateToHome.ng-enter {
+  transform: translateX(1300px); }
+
+.animateToHome.ng-enter-active {
+  transform: translateX(0); }
+
+.animateToHome.ng-leave {
+  transform: translateX(0); }
+
+.animateToHome.ng-leave-active {
+  transform: translateX(1300px); }
+
+.activeNav {
+  transform: translateY(0px) !important; }
+
+#main-nav {
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 100px;
+  color: rgba(200, 200, 200, 0.75);
+  font-size: 20px;
+  font-family: Codystar;
+  z-index: 10000000; }
+  #main-nav #main-links {
+    background: #000000;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100px;
+    width: 100vw;
+    padding-left: 130px;
+    transition: 0.3s; }
+  #main-nav .nav-link {
+    font-family: Neon80;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.5s;
+    margin-right: 20px;
+    text-shadow: 0 0 15px white; }
+    #main-nav .nav-link:hover {
+      color: #FF9900;
+      animation: neon 1.5s ease-in-out infinite alternate; }
+  #main-nav .contact {
+    background: #000000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    width: 100px;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    padding-top: 100px;
+    z-index: 100000;
+    transition: 0.3s; }
+    #main-nav .contact > * {
+      margin: 20px 0; }
+    #main-nav .contact .relative {
+      position: relative; }
+    #main-nav .contact .email-compose {
+      position: absolute;
+      background: #000000;
+      width: 320px;
+      height: 60px;
+      transition: 0.3s;
+      opacity: 0;
+      transform: translate(-100%, -20px);
+      display: flex;
+      justify-content: center;
+      align-items: center; }
+    #main-nav .contact .emailExpanded {
+      transform: translate(50px, -20px);
+      opacity: 1; }
+    #main-nav .contact .social-logo {
+      width: 32px;
+      margin: 0 10px;
+      opacity: 0.75;
+      transition: 0.1s; }
+      #main-nav .contact .social-logo:hover {
+        opacity: 1;
+        transform: scale(1.1); }
+
+@keyframes neon {
+  from {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #FF9900, 0 0 35px #FF9900, 0 0 40px #FF9900, 0 0 50px #FF9900, 0 0 75px #FF9900; }
+  to {
+    text-shadow: 0 0 2px #fff, 0 0 4px #fff, 0 0 8px #fff, 0 0 14px #FF9900, 0 0 18px #FF9900, 0 0 24px #FF9900, 0 0 30px #FF9900, 0 0 35px #FF9900; } }
+
+#ham-menu {
+  position: fixed;
+  top: 30px;
+  left: 30px;
+  width: 50px;
+  height: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  cursor: pointer;
+  z-index: 10000000; }
+  #ham-menu .bar {
+    background: #7d7d7d;
+    opacity: 0.3;
+    width: 40px;
+    height: 5px;
+    border-radius: 2.5px;
+    transition: 0.33s; }
+  #ham-menu .bar:nth-child(2) {
+    width: 30px; }
+  #ham-menu:hover .bar {
+    opacity: 1; }
+  #ham-menu:hover .bar-middle {
+    transform: translateX(-5px); }
+
+.xHam .bar {
+  opacity: 1 !important;
+  border-radius: none; }
+
+.xHam .bar-top {
+  transform: translateY(10px) rotate(45deg); }
+
+.xHam .bar-middle {
+  transform: translateX(100px);
+  opacity: 0 !important; }
+
+.xHam .bar-bottom {
+  transform: translateY(-10px) rotate(-45deg); }
+
+.hideLinks {
+  transform: translateY(-100px); }
+
+.hideContact {
+  transform: translateX(-100px); }
+
+@media (max-width: 525px) {
+  .showNav {
+    transform: translate(-100px, -100px); }
+  #main-nav {
+    top: auto;
+    bottom: 0; }
+    #main-nav #main-links {
+      justify-content: flex-end;
+      padding-right: 130px; }
+    #main-nav .nav-link {
+      margin-left: 20px; }
+    #main-nav .contact {
+      left: auto;
+      justify-content: flex-end;
+      right: 0;
+      padding-bottom: 100px; }
+      #main-nav .contact .email-compose {
+        transform: translate(0, -20px); }
+      #main-nav .contact .emailExpanded {
+        transform: translate(-300px, -20px); }
+  #ham-menu {
+    top: auto;
+    left: auto;
+    bottom: 30px;
+    right: 30px; }
+  .hideLinks {
+    transform: translateY(100px); }
+  .hideContact {
+    transform: translateX(100px); } }
+
 :root {
   --gr-bg-color: #4ABDAC;
   --gr-accent-1-color: #FC4A1A;
@@ -292,239 +556,6 @@ button:focus {
   font-family: wages;
   src: url("./app/routes/about/fonts/lostWages.woff") format("truetype"); }
 
-body {
-  background: #000;
-  width: 100vw;
-  height: 100vh; }
-  body::-webkit-scrollbar {
-    display: none;
-    width: 0; }
-
-#ui-view-container {
-  position: relative;
-  transition: 0.2s;
-  width: 100%;
-  height: 100%; }
-
-ui-view {
-  position: absolute;
-  display: block;
-  width: 100vw;
-  height: auto;
-  transition: 0.3s; }
-  ui-view::-webkit-scrollbar {
-    display: none;
-    width: 0; }
-
-.ng-hide.ng-hide-animate {
-  display: none; }
-
-.showNav {
-  transform: translate(100px, 100px);
-  filter: grayscale(100%); }
-
-.animateFromHome.ng-enter {
-  transform: translateX(-1300px); }
-
-.animateFromHome.ng-enter-active {
-  transform: translateX(0); }
-
-.animateFromHome.ng-leave {
-  transform: translateX(0); }
-
-.animateFromHome.ng-leave-active {
-  transform: translateX(-1300px); }
-
-.animateToHome.ng-enter {
-  transform: translateX(1300px); }
-
-.animateToHome.ng-enter-active {
-  transform: translateX(0); }
-
-.animateToHome.ng-leave {
-  transform: translateX(0); }
-
-.animateToHome.ng-leave-active {
-  transform: translateX(1300px); }
-
-.activeNav {
-  transform: translateY(0px) !important; }
-
-#main-nav {
-  position: fixed;
-  top: 0;
-  width: 100vw;
-  height: 100px;
-  color: rgba(200, 200, 200, 0.75);
-  font-size: 20px;
-  font-family: Codystar;
-  z-index: 10000000; }
-  #main-nav #main-links {
-    background: #000000;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    height: 100px;
-    width: 100vw;
-    transition: 0.3s; }
-  #main-nav .nav-link {
-    font-family: Neon80;
-    text-align: center;
-    cursor: pointer;
-    margin-right: 30px;
-    transition: all 0.5s;
-    text-shadow: 0 0 15px white; }
-    #main-nav .nav-link:hover {
-      color: #FF9900;
-      animation: neon 1.5s ease-in-out infinite alternate; }
-  #main-nav .contact {
-    background: #000000;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: fixed;
-    width: 100px;
-    height: 100vh;
-    top: 0;
-    left: 0;
-    padding-top: 100px;
-    z-index: 100000;
-    transition: 0.3s; }
-    #main-nav .contact > * {
-      margin: 20px 0; }
-    #main-nav .contact .relative {
-      position: relative; }
-    #main-nav .contact .email-compose {
-      position: absolute;
-      background: #000000;
-      width: 320px;
-      height: 60px;
-      transition: 0.3s;
-      opacity: 0;
-      transform: translate(-100%, -20px);
-      display: flex;
-      justify-content: center;
-      align-items: center; }
-    #main-nav .contact .emailExpanded {
-      transform: translate(50px, -20px);
-      opacity: 1; }
-    #main-nav .contact .social-logo {
-      width: 32px;
-      margin: 0 10px;
-      opacity: 0.75;
-      transition: 0.1s; }
-      #main-nav .contact .social-logo:hover {
-        opacity: 1;
-        transform: scale(1.1); }
-
-@keyframes neon {
-  from {
-    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #FF9900, 0 0 35px #FF9900, 0 0 40px #FF9900, 0 0 50px #FF9900, 0 0 75px #FF9900; }
-  to {
-    text-shadow: 0 0 2px #fff, 0 0 4px #fff, 0 0 8px #fff, 0 0 14px #FF9900, 0 0 18px #FF9900, 0 0 24px #FF9900, 0 0 30px #FF9900, 0 0 35px #FF9900; } }
-
-#ham-menu {
-  position: fixed;
-  top: 30px;
-  left: 30px;
-  width: 50px;
-  height: 30px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  cursor: pointer;
-  z-index: 10000000; }
-  #ham-menu .bar {
-    background: #7d7d7d;
-    opacity: 0.3;
-    width: 40px;
-    height: 5px;
-    border-radius: 2.5px;
-    transition: 0.33s; }
-  #ham-menu .bar:nth-child(2) {
-    width: 30px; }
-  #ham-menu:hover .bar {
-    opacity: 1; }
-  #ham-menu:hover .bar-middle {
-    transform: translateX(-5px); }
-
-.xHam .bar {
-  opacity: 1 !important;
-  border-radius: none; }
-
-.xHam .bar-top {
-  transform: translateY(10px) rotate(45deg); }
-
-.xHam .bar-middle {
-  transform: translateX(100px);
-  opacity: 0 !important; }
-
-.xHam .bar-bottom {
-  transform: translateY(-10px) rotate(-45deg); }
-
-.hideLinks {
-  transform: translateY(-100px); }
-
-.hideContact {
-  transform: translateX(-100px); }
-
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  font: inherit;
-  vertical-align: baseline;
-  box-sizing: border-box;
-  text-decoration: none; }
-
-/* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section {
-  display: block; }
-
-body {
-  line-height: 1; }
-
-ol, ul {
-  list-style: none; }
-
-blockquote, q {
-  quotes: none; }
-
-blockquote:before, blockquote:after,
-q:before, q:after {
-  content: '';
-  content: none; }
-
-table {
-  border-collapse: collapse;
-  border-spacing: 0; }
-
-button:focus {
-  outline: none; }
-
-@font-face {
-  font-family: Neon80;
-  src: url("./app/routes/about/fonts/Neon.ttf") format("truetype"); }
-
-@font-face {
-  font-family: wages;
-  src: url("./app/routes/about/fonts/lostWages.woff") format("truetype"); }
-
 #about-section {
   width: 100vw;
   height: 100vh;
@@ -558,10 +589,13 @@ button:focus {
     text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #f47200, 0 0 35px #f47200, 0 0 40px #f47200, 0 0 50px #f47200, 0 0 75px #f47200;
     background: url(./app/routes/about/images/neon-1.jpg);
     background-size: cover; }
+    #about-section #neon-sign .small-neon-text {
+      font-size: 56px; }
     #about-section #neon-sign #neon-flicker {
       animation: flicker 1s ease-in-out infinite alternate; }
     #about-section #neon-sign .neon-animation {
       text-align: center;
+      overflow-wrap: break-word;
       animation: neon2 10s ease-in-out infinite alternate; }
 
 @keyframes flicker {
@@ -616,9 +650,14 @@ button:focus {
       margin: 50px 0;
       padding: 0 50px; }
   #about-section .skills-list-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     font-size: 28px;
     padding: 20px 0;
-    border-bottom: rgba(200, 200, 200, 0.8) 1px solid; }
+    text-align: center;
+    overflow-wrap: break-word; }
   #about-section .skills-list {
     display: flex;
     flex-direction: column;
@@ -680,9 +719,17 @@ button:focus {
   @media (max-width: 525px) {
     #about-section #neon-sign {
       font-size: 48px; }
+      #about-section #neon-sign .small-neon-text {
+        font-size: 40px; }
     #about-section #about-text {
       font-size: 24px;
-      width: 90%; } }
+      width: 90%; }
+    #about-section .skills-list-header {
+      font-size: 24px; }
+    #about-section .portfolio-link {
+      font-size: 24px; }
+      #about-section .portfolio-link button {
+        height: 35px; } }
 
 #game-section {
   position: absolute;
@@ -1118,74 +1165,41 @@ button:focus {
     background: #0a0a0a;
     transform: rotate(1deg) skew(1deg); }
 
-#weather-app-section .flex-center {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center; }
-
-#weather-app-section .flex-wrap {
-  flex-wrap: wrap; }
-
-#weather-app-section .controlls {
-  position: fixed;
-  bottom: 0;
-  width: 100vw;
-  padding-bottom: 50px;
-  color: white;
-  transition: 0.5s; }
-  #weather-app-section .controlls input {
-    background: rgba(255, 255, 255, 0.05);
-    margin: 10px;
-    border-radius: 10px;
-    box-shadow: inset 0px 0px 10px 0px rgba(255, 255, 255, 0.15);
-    color: white;
-    transition: 0.3s; }
-  #weather-app-section .controlls input:focus {
-    outline: none; }
-
-#weather-app-section #landing-page-background {
-  z-index: 10000;
-  color: #cccccc;
-  width: 100vw;
-  height: 100vh;
-  position: fixed; }
-  #weather-app-section #landing-page-background .video-background {
-    background: #000;
+#weather-app-section {
+  font-family: 'Julius Sans One', sans-serif; }
+  #weather-app-section .flex-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; }
+  #weather-app-section .flex-wrap {
+    flex-wrap: wrap; }
+  #weather-app-section .controlls {
     position: fixed;
-    top: 0;
-    right: 0;
     bottom: 0;
-    left: 0;
-    z-index: -99; }
-  #weather-app-section #landing-page-background .video-foreground,
-  #weather-app-section #landing-page-background .video-background iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none; }
-  @media (min-aspect-ratio: 16 / 9) {
-    #weather-app-section #landing-page-background .video-foreground {
-      height: 300%;
-      top: -100%; } }
-  @media (max-aspect-ratio: 16 / 9) {
-    #weather-app-section #landing-page-background .video-foreground {
-      width: 300%;
-      left: -100%; } }
-  @media all and (max-width: 600px) {
-    #weather-app-section #landing-page-background .vid-info {
-      width: 50%;
-      padding: .5rem; }
-    #weather-app-section #landing-page-background .vid-info h1 {
-      margin-bottom: .2rem; } }
-  @media all and (max-width: 500px) {
-    #weather-app-section #landing-page-background .vid-info .acronym {
-      display: none; } }
-
-#weather-app-section .slide-up-animation {
-  animation: slide-up 1s forwards; }
+    width: 100vw;
+    padding-bottom: 50px;
+    color: white;
+    transition: 0.5s; }
+    #weather-app-section .controlls input {
+      background: rgba(255, 255, 255, 0.05);
+      margin: 10px;
+      border-radius: 10px;
+      box-shadow: inset 0px 0px 10px 0px rgba(255, 255, 255, 0.15);
+      color: white;
+      transition: 0.3s; }
+    #weather-app-section .controlls input:focus {
+      outline: none; }
+  #weather-app-section #landing-page-background {
+    z-index: 10000;
+    color: #cccccc;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    background: url(./app/routes/weather-app/images/bg.jpg);
+    background-size: cover; }
+  #weather-app-section .slide-up-animation {
+    animation: slide-up 1s forwards; }
 
 @keyframes slide-up {
   20% {
@@ -1193,294 +1207,254 @@ button:focus {
   100% {
     transform: translateY(-100%);
     display: none; } }
-
-#weather-app-section .landing-page-background * {
-  padding-top: 1em; }
-
-#weather-app-section .landing-lower-content {
-  width: 100vw;
-  height: 50vh; }
-  #weather-app-section .landing-lower-content * {
-    margin: 1em;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center; }
-
-#weather-app-section #site-title {
-  width: 100vw;
-  height: 50vh;
-  font-size: 96px;
-  text-align: center; }
-
-#weather-app-section button {
-  padding: 10px 15px;
-  background: none;
-  color: rgba(200, 200, 200, 0.75);
-  border: 0.5px solid rgba(200, 200, 200, 0.75);
-  border-radius: 20px;
-  transition: 0.15s; }
-
-#weather-app-section button:hover {
-  cursor: pointer;
-  color: #c8c8c8;
-  border: 0.5px solid #c8c8c8;
-  box-shadow: 0px 2px 10px 0px rgba(255, 255, 255, 0.15);
-  transform: translate(0px, -1px); }
-
-#weather-app-section button:focus {
-  outline: none; }
-
-#weather-app-section button:active {
-  outline: none;
-  transform: translate(0px, 3px);
-  box-shadow: 0px 1px 5px 0px rgba(255, 255, 255, 0.15); }
-
-#weather-app-section .search-input-container input {
-  background: none; }
-
-#weather-app-section .search-input {
-  border: none;
-  background: transparent;
-  padding: 10px;
-  margin-bottom: 0px;
-  border-radius: 20px;
-  box-shadow: inset 0px 0px 10px 0px rgba(255, 255, 255, 0.15);
-  text-align: center;
-  color: #cccccc;
-  transition: 0.5s; }
-
-#weather-app-section .search-input::placeholder {
-  color: rgba(255, 255, 255, 0.25);
-  text-align: center; }
-
-#weather-app-section .search-input:focus {
-  background: rgba(255, 255, 255, 0.05);
-  box-shadow: inset 0px 0px 20px 0px rgba(255, 255, 255, 0.15);
-  outline: none;
-  width: 250px; }
-
-#weather-app-section .data-header {
-  position: fixed;
-  width: 80%;
-  top: 0;
-  right: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 10000;
-  color: rgba(250, 250, 250, 0.8);
-  font-size: 36px;
-  transition: 0.5s; }
-
-#weather-app-section .data-header {
-  padding: 50px;
-    padding-margin: 10px;
-  flex: 1; }
-
-#weather-app-section .background {
-  width: 100vw;
-  height: 100vh;
-  position: absolute;
-  top: 0;
-  left: 0; }
-
-#weather-app-section #gray-sky {
-  opacity: 0;
-  position: fixed;
-  width: 100vw;
-  height: 100vh;
-  background-image: linear-gradient(0, #ccc, #aaa); }
-
-#weather-app-section #mountainSVG {
-  position: fixed;
-  max-height: 65vh;
-  bottom: 0;
-  left: 0; }
-
-#weather-app-section .cloud {
-  position: fixed; }
-
-#weather-app-section .cloud1 {
-  top: 50;
-  left: 50;
-  height: 30vh; }
-
-#weather-app-section #precip-cloud-right-large {
-  height: 50vh;
-  top: 5vh;
-  right: -5vw;
-  opacity: 0; }
-  #weather-app-section #precip-cloud-right-large path {
-    fill: rgba(255, 255, 255, 0.5); }
-
-#weather-app-section #precip-cloud-right-small {
-  height: 30vh;
-  right: -5vw;
-  top: 30vh;
-  opacity: 0; }
-  #weather-app-section #precip-cloud-right-small path {
-    fill: rgba(255, 255, 255, 0.5); }
-
-#weather-app-section #precip-cloud-left-large {
-  height: 55vh;
-  top: 10vh;
-  left: -10vw;
-  opacity: 0; }
-  #weather-app-section #precip-cloud-left-large path {
-    fill: rgba(255, 255, 255, 0.5); }
-
-#weather-app-section #precip-cloud-left-small {
-  height: 30vh;
-  top: 20vh;
-  left: -10vw;
-  opacity: 0; }
-  #weather-app-section #precip-cloud-left-small path {
-    fill: rgba(255, 255, 255, 0.5); }
-
-#weather-app-section #precip-cloud-top {
-  height: 20vh;
-  left: 0;
-  top: 0;
-  filter: drop-shadow(2px 2px 5px #888); }
-
-#weather-app-section .windPath {
-  position: fixed;
-  stroke: #ffffff;
-  padding-top: 15px;
-  width: 150vw; }
-
-#weather-app-section #windPath1 {
-  top: 30vh;
-  stroke-width: 0; }
-
-#weather-app-section #windPath2 {
-  top: 60vh;
-  stroke-width: 0; }
-
-#weather-app-section #windPath3 {
-  top: 45vh;
-  left: -15vw;
-  stroke-width: 0; }
-
-#weather-app-section #windPath4 {
-  top: 15vh;
-  left: -27vw;
-  stroke-width: 0; }
+  #weather-app-section .landing-page-background * {
+    padding-top: 1em; }
+  #weather-app-section .landing-lower-content {
+    width: 100vw;
+    height: 50vh; }
+    #weather-app-section .landing-lower-content * {
+      margin: 1em;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center; }
+  #weather-app-section #site-title {
+    width: 100vw;
+    height: 50vh;
+    font-family: 'Baloo Bhaina', cursive;
+    color: #684155;
+    font-size: 96px;
+    text-align: center; }
+  #weather-app-section button {
+    padding: 10px 15px;
+    background: none;
+    color: rgba(200, 200, 200, 0.75);
+    border: 0.5px solid rgba(200, 200, 200, 0.75);
+    border-radius: 20px;
+    transition: 0.15s; }
+  #weather-app-section button:hover {
+    cursor: pointer;
+    color: #c8c8c8;
+    border: 0.5px solid #c8c8c8;
+    box-shadow: 0px 2px 10px 0px rgba(255, 255, 255, 0.15);
+    transform: translate(0px, -1px); }
+  #weather-app-section button:focus {
+    outline: none; }
+  #weather-app-section button:active {
+    outline: none;
+    transform: translate(0px, 3px);
+    box-shadow: 0px 1px 5px 0px rgba(255, 255, 255, 0.15); }
+  #weather-app-section .search-input-container input {
+    background: none; }
+  #weather-app-section .search-input {
+    border: none;
+    background: transparent;
+    padding: 10px;
+    margin-bottom: 0px;
+    border-radius: 20px;
+    box-shadow: inset 0px 0px 10px 0px rgba(255, 255, 255, 0.15);
+    text-align: center;
+    color: #cccccc;
+    transition: 0.5s; }
+  #weather-app-section .search-input::placeholder {
+    color: rgba(255, 255, 255, 0.25);
+    text-align: center; }
+  #weather-app-section .search-input:focus {
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: inset 0px 0px 20px 0px rgba(255, 255, 255, 0.15);
+    outline: none;
+    width: 250px; }
+  #weather-app-section .data-header {
+    position: fixed;
+    width: 80%;
+    top: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10000;
+    color: rgba(250, 250, 250, 0.8);
+    font-size: 36px;
+    transition: 0.5s; }
+  #weather-app-section .data-header {
+    padding: 50px;
+      padding-margin: 10px;
+    flex: 1; }
+  #weather-app-section .background {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0; }
+  #weather-app-section #gray-sky {
+    opacity: 0;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-image: linear-gradient(0, #ccc, #aaa); }
+  #weather-app-section #mountainSVG {
+    position: fixed;
+    max-height: 65vh;
+    bottom: 0;
+    left: 0; }
+  #weather-app-section .cloud {
+    position: fixed; }
+  #weather-app-section .cloud1 {
+    top: 50;
+    left: 50;
+    height: 30vh; }
+  #weather-app-section #precip-cloud-right-large {
+    height: 50vh;
+    top: 5vh;
+    right: -5vw;
+    opacity: 0; }
+    #weather-app-section #precip-cloud-right-large path {
+      fill: rgba(255, 255, 255, 0.5); }
+  #weather-app-section #precip-cloud-right-small {
+    height: 30vh;
+    right: -5vw;
+    top: 30vh;
+    opacity: 0; }
+    #weather-app-section #precip-cloud-right-small path {
+      fill: rgba(255, 255, 255, 0.5); }
+  #weather-app-section #precip-cloud-left-large {
+    height: 55vh;
+    top: 10vh;
+    left: -10vw;
+    opacity: 0; }
+    #weather-app-section #precip-cloud-left-large path {
+      fill: rgba(255, 255, 255, 0.5); }
+  #weather-app-section #precip-cloud-left-small {
+    height: 30vh;
+    top: 20vh;
+    left: -10vw;
+    opacity: 0; }
+    #weather-app-section #precip-cloud-left-small path {
+      fill: rgba(255, 255, 255, 0.5); }
+  #weather-app-section #precip-cloud-top {
+    height: 20vh;
+    left: 0;
+    top: 0;
+    filter: drop-shadow(2px 2px 5px #888); }
+  #weather-app-section .windPath {
+    position: fixed;
+    stroke: #ffffff;
+    padding-top: 15px;
+    width: 150vw; }
+  #weather-app-section #windPath1 {
+    top: 30vh;
+    stroke-width: 0; }
+  #weather-app-section #windPath2 {
+    top: 60vh;
+    stroke-width: 0; }
+  #weather-app-section #windPath3 {
+    top: 45vh;
+    left: -15vw;
+    stroke-width: 0; }
+  #weather-app-section #windPath4 {
+    top: 15vh;
+    left: -27vw;
+    stroke-width: 0; }
 
 @keyframes wind {
   to {
     stroke-dashoffset: 0; } }
-
-#weather-app-section canvas {
-  position: fixed;
-  background: transparent;
-  transition: 0.5s; }
-
-#weather-app-section #precipCanvas {
-  top: 15vh;
-  left: -15vw; }
-
-#weather-app-section #starsCanvas {
-  width: 100vw;
-  height: 100vh;
-  top: 0;
-  left: 0;
-  opacity: 0; }
-
-#weather-app-section #timeSlider {
-  -webkit-appearance: none;
-  margin: 10px 0;
-  width: 70%;
-  background: none;
-  transition: 0.25s; }
-
-#weather-app-section #timeSlider:focus {
-  outline: none;
-  transition: 0.25s; }
-
-#weather-app-section #timeSlider::-webkit-slider-runnable-track {
-  width: 100%;
-  height: 30px;
-  cursor: pointer;
-  border-radius: 15px;
-  transition: 0.25s; }
-
-#weather-app-section #timeSlider::-webkit-slider-thumb {
-  background: rgba(255, 255, 255, 0.5);
-  height: 30px;
-  width: 45px;
-  border-radius: 50px;
-  cursor: pointer;
-  -webkit-appearance: none;
-  transition: 0.25s; }
-
-#weather-app-section #timeSlider::-moz-range-track {
-  width: 100%;
-  height: 30px;
-  cursor: pointer;
-  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5);
-  border-radius: 15px;
-  transition: 0.25s; }
-
-#weather-app-section #timeSlider::-moz-range-thumb {
-  background: rgba(0, 0, 0, 0.5);
-  height: 30px;
-  width: 30px;
-  border-radius: 50px;
-  cursor: pointer;
-  transition: 0.25s; }
-
-#weather-app-section #timeSlider::-ms-track {
-  width: 100%;
-  height: 10px;
-  cursor: pointer;
-  background: transparent;
-  border-color: transparent;
-  color: transparent;
-  transition: 0.25s; }
-
-#weather-app-section #timeSlider::-ms-fill-lower {
-  border-radius: 10px;
-  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5); }
-
-#weather-app-section #timeSlider::-ms-fill-upper {
-  border-radius: 10px;
-  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5); }
-
-#weather-app-section #timeSlider::-ms-thumb {
-  background: rgba(0, 0, 0, 0.5);
-  height: 30px;
-  width: 30px;
-  border-radius: 50px;
-  cursor: pointer;
-  transition: 0.25s; }
-
-#weather-app-section #side-nav {
-  position: absolute;
-  top: 0;
-  left: -300px;
-  width: 300px;
-  height: 90vh;
-  margin-top: 30px;
-  padding-top: 75px;
-  background: linear-gradient(#2F80ED 0%, #56CCF2 100%);
-  border-radius: 10px;
-  overflow-x: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transition: 1s;
-  color: white;
-  box-shadow: 0 0 20px 2px rgba(100, 100, 100, 0.3); }
-  #weather-app-section #side-nav * {
-    margin: 5px 0px; }
-  #weather-app-section #side-nav h3 {
-    font-size: 24px;
-    font-weight: bold;
-    margin-top: 10px; }
-  #weather-app-section #side-nav a {
-    text-decoration: none;
-    color: #ccc; }
+  #weather-app-section canvas {
+    position: fixed;
+    background: transparent;
+    transition: 0.5s; }
+  #weather-app-section #precipCanvas {
+    top: 15vh;
+    left: -15vw; }
+  #weather-app-section #starsCanvas {
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    opacity: 0; }
+  #weather-app-section #timeSlider {
+    -webkit-appearance: none;
+    margin: 10px 0;
+    width: 70%;
+    background: none;
+    transition: 0.25s; }
+  #weather-app-section #timeSlider:focus {
+    outline: none;
+    transition: 0.25s; }
+  #weather-app-section #timeSlider::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 30px;
+    cursor: pointer;
+    border-radius: 15px;
+    transition: 0.25s; }
+  #weather-app-section #timeSlider::-webkit-slider-thumb {
+    background: rgba(255, 255, 255, 0.5);
+    height: 30px;
+    width: 45px;
+    border-radius: 50px;
+    cursor: pointer;
+    -webkit-appearance: none;
+    transition: 0.25s; }
+  #weather-app-section #timeSlider::-moz-range-track {
+    width: 100%;
+    height: 30px;
+    cursor: pointer;
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+    transition: 0.25s; }
+  #weather-app-section #timeSlider::-moz-range-thumb {
+    background: rgba(0, 0, 0, 0.5);
+    height: 30px;
+    width: 30px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: 0.25s; }
+  #weather-app-section #timeSlider::-ms-track {
+    width: 100%;
+    height: 10px;
+    cursor: pointer;
+    background: transparent;
+    border-color: transparent;
+    color: transparent;
+    transition: 0.25s; }
+  #weather-app-section #timeSlider::-ms-fill-lower {
+    border-radius: 10px;
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5); }
+  #weather-app-section #timeSlider::-ms-fill-upper {
+    border-radius: 10px;
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5); }
+  #weather-app-section #timeSlider::-ms-thumb {
+    background: rgba(0, 0, 0, 0.5);
+    height: 30px;
+    width: 30px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: 0.25s; }
+  #weather-app-section #side-nav {
+    position: absolute;
+    top: 0;
+    left: -300px;
+    width: 300px;
+    height: 90vh;
+    margin-top: 30px;
+    padding-top: 75px;
+    background: linear-gradient(#2F80ED 0%, #56CCF2 100%);
+    border-radius: 10px;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: 1s;
+    color: white;
+    box-shadow: 0 0 20px 2px rgba(100, 100, 100, 0.3); }
+    #weather-app-section #side-nav * {
+      margin: 5px 0px; }
+    #weather-app-section #side-nav h3 {
+      font-size: 24px;
+      font-weight: bold;
+      margin-top: 10px; }
+    #weather-app-section #side-nav a {
+      text-decoration: none;
+      color: #ccc; }
 
 @media (max-width: 600px) {
   #weather-app-section #site-title {
@@ -1492,7 +1466,9 @@ button:focus {
     flex-direction: column;
     align-items: flex-end; }
     #weather-app-section .data-header * {
-      margin: 5px; } }
+      margin: 5px; }
+  #weather-app-section .controlls {
+    bottom: 50px; } }
 
 @media (max-height: 450px) {
   #weather-app-section #side-nav {
