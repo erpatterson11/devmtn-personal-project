@@ -1,120 +1,197 @@
 @import 'reset'
 @import 'fonts'
 
-
 body
-  -ms-overflow-style: none
-  background: black
+  background: #000
+  width: 100vw
+  height: 100vh
 
-body::-webkit-scrollbar
-  display: none
-  width: 0 !important
+  &::-webkit-scrollbar
+    display: none
+    width: 0
 
 #ui-view-container
   position: relative
-
+  transition: 0.2s
+  width: 100%
+  height: 100%
 
 ui-view
   position: absolute
   display: block
   width: 100vw
   height: auto
-  transition: 0.35s
+  transition: 0.3s
+
+  &::-webkit-scrollbar
+    display: none
+    width: 0
 
 
 .ng-hide.ng-hide-animate
-     display: none !important
+  display: none
 
+.showNav
+  transform: translate(100px, 100px) 
+  filter: grayscale(100%)
 
 .animateFromHome
-
   &.ng-enter
-    // opacity: 0
-    // right: 100vw
     transform: translateX(-1300px)
-
   &.ng-enter-active
-    // opacity: 1
-    // right: 0
     transform: translateX(0)
-
-
   &.ng-leave
-    // opacity: 1
-    // left: 0
     transform: translateX(0)
-
-
   &.ng-leave-active
-    // opacity: 0
-    // left: -100vw
     transform: translateX(-1300px)
 
 
 .animateToHome
-
   &.ng-enter
     transform: translateX(1300px)
-
   &.ng-enter-active
     transform: translateX(0)
-
   &.ng-leave
     transform: translateX(0)
-
   &.ng-leave-active
     transform: translateX(1300px)
 
-
+.activeNav
+  transform: translateY(0px) !important
 
 #main-nav
   position: fixed
-  top: 0%
+  top: 0
   width: 100vw
-  height: 110px
-  padding: 35px 50px
-  display: flex
-  justify-content: space-between
-  background: linear-gradient(black 40%, transparent 100%)
+  height: 100px
   color: rgba(200,200,200,0.75)
   font-size: 20px
-  font-family: 
-  // box-shadow: 0 10px 10px 0px rgba(20,20,20,0.5)
-  transition: top 0.5s
-  z-index: 10000
+  font-family: Codystar
+  z-index: 10000000
 
   #main-links
+    background: #000000
     display: flex
-    width: 300px
-    flex-direction: row
     justify-content: flex-end
+    align-items: center
+    height: 100px
+    width: 100vw
+    transition: 0.3s
 
-    &>*
-      margin-right: 25px
 
-    li:last-child 
-      margin-right: 0px;
-
-  .nav-link-hover
+  .nav-link
     font-family: Neon80
     text-align: center
     cursor: pointer
+    margin-right: 30px
     transition: all 0.5s
     color:rgb(255,255,255,0.6)
     text-shadow: 0 0 15px rgb(255,255,255r)
 
     &:hover
       color: #FF9900
-      // text-shadow: 0 0 10px #ff9933
-      // font-size: 22px
       animation: neon 1.5s ease-in-out infinite alternate;
 
+
+  .contact
+    background: #000000
+    display: flex
+    flex-direction: column
+    align-items: center
+    position: fixed
+    width: 100px
+    height: 100vh
+    top: 0
+    left: 0
+    padding-top: 100px
+    z-index: 100000
+    transition: 0.3s
+
+
+    & > *
+        margin: 20px 0
+
+    .relative
+      position: relative
+
+    .email-compose
+      position: absolute
+      background: #000000
+      width: 320px
+      height: 60px
+      transition: 0.3s
+      opacity: 0
+      transform: translate(-100%, -20px)
+      display: flex
+      justify-content: center
+      align-items: center
+
+    .emailExpanded
+      transform: translate(50px, -20px)
+      opacity: 1
+
+    .social-logo
+        width: 32px
+        margin: 0 10px
+        opacity: 0.75
+        transition: 0.1s
+
+        &:hover
+            opacity: 1
+            transform: scale(1.1)
 
   @keyframes neon
     from 
       text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #FF9900, 0 0 35px #FF9900, 0 0 40px #FF9900, 0 0 50px #FF9900, 0 0 75px #FF9900
-    
     to 
       text-shadow: 0 0 2px #fff, 0 0 4px #fff, 0 0 8px #fff, 0 0 14px #FF9900, 0 0 18px #FF9900, 0 0 24px #FF9900, 0 0 30px #FF9900, 0 0 35px #FF9900
     
   
+
+#ham-menu
+  position: fixed
+  top: 30px
+  left: 30px
+  width: 50px
+  height: 30px
+  display: flex
+  flex-direction: column
+  justify-content: space-around
+  align-items: center
+  cursor: pointer
+  z-index: 10000000
+  .bar
+    background: rgb(125, 125, 125)
+    opacity: 0.3
+    width: 40px
+    height: 5px
+    border-radius: 2.5px
+    transition: 0.33s
+
+  .bar:nth-child(2) 
+    width: 30px
+
+  &:hover 
+    .bar
+      opacity: 1
+    .bar-middle
+      transform: translateX(-5px)
+
+.xHam
+  .bar
+    opacity: 1 !important
+    border-radius: none
+  .bar-top
+    transform: translateY(10px) rotate(45deg)
+  .bar-middle
+    transform: translateX(100px)
+    opacity: 0 !important
+  .bar-bottom
+    transform: translateY(-10px) rotate(-45deg)
+
+
+.hideLinks
+  transform: translateY(-100px)
+
+.hideContact
+  transform: translateX(-100px)

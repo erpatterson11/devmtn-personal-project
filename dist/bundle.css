@@ -55,25 +55,35 @@ button:focus {
   src: url("./app/routes/about/fonts/lostWages.woff") format("truetype"); }
 
 body {
-  -ms-overflow-style: none;
-  background: black; }
-
-body::-webkit-scrollbar {
-  display: none;
-  width: 0 !important; }
+  background: #000;
+  width: 100vw;
+  height: 100vh; }
+  body::-webkit-scrollbar {
+    display: none;
+    width: 0; }
 
 #ui-view-container {
-  position: relative; }
+  position: relative;
+  transition: 0.2s;
+  width: 100%;
+  height: 100%; }
 
 ui-view {
   position: absolute;
   display: block;
   width: 100vw;
   height: auto;
-  transition: 0.35s; }
+  transition: 0.3s; }
+  ui-view::-webkit-scrollbar {
+    display: none;
+    width: 0; }
 
 .ng-hide.ng-hide-animate {
-  display: none !important; }
+  display: none; }
+
+.showNav {
+  transform: translate(100px, 100px);
+  filter: grayscale(100%); }
 
 .animateFromHome.ng-enter {
   transform: translateX(-1300px); }
@@ -99,43 +109,127 @@ ui-view {
 .animateToHome.ng-leave-active {
   transform: translateX(1300px); }
 
+.activeNav {
+  transform: translateY(0px) !important; }
+
 #main-nav {
   position: fixed;
-  top: 0%;
+  top: 0;
   width: 100vw;
-  height: 110px;
-  padding: 35px 50px;
-  display: flex;
-  justify-content: space-between;
-  background: linear-gradient(black 40%, transparent 100%);
+  height: 100px;
   color: rgba(200, 200, 200, 0.75);
   font-size: 20px;
-  transition: top 0.5s;
-  z-index: 10000; }
+  font-family: Codystar;
+  z-index: 10000000; }
   #main-nav #main-links {
+    background: #000000;
     display: flex;
-    width: 300px;
-    flex-direction: row;
-    justify-content: flex-end; }
-    #main-nav #main-links > * {
-      margin-right: 25px; }
-    #main-nav #main-links li:last-child {
-      margin-right: 0px; }
-  #main-nav .nav-link-hover {
+    justify-content: flex-end;
+    align-items: center;
+    height: 100px;
+    width: 100vw;
+    transition: 0.3s; }
+  #main-nav .nav-link {
     font-family: Neon80;
     text-align: center;
     cursor: pointer;
+    margin-right: 30px;
     transition: all 0.5s;
     text-shadow: 0 0 15px white; }
-    #main-nav .nav-link-hover:hover {
+    #main-nav .nav-link:hover {
       color: #FF9900;
       animation: neon 1.5s ease-in-out infinite alternate; }
+  #main-nav .contact {
+    background: #000000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    width: 100px;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    padding-top: 100px;
+    z-index: 100000;
+    transition: 0.3s; }
+    #main-nav .contact > * {
+      margin: 20px 0; }
+    #main-nav .contact .relative {
+      position: relative; }
+    #main-nav .contact .email-compose {
+      position: absolute;
+      background: #000000;
+      width: 320px;
+      height: 60px;
+      transition: 0.3s;
+      opacity: 0;
+      transform: translate(-100%, -20px);
+      display: flex;
+      justify-content: center;
+      align-items: center; }
+    #main-nav .contact .emailExpanded {
+      transform: translate(50px, -20px);
+      opacity: 1; }
+    #main-nav .contact .social-logo {
+      width: 32px;
+      margin: 0 10px;
+      opacity: 0.75;
+      transition: 0.1s; }
+      #main-nav .contact .social-logo:hover {
+        opacity: 1;
+        transform: scale(1.1); }
 
 @keyframes neon {
   from {
     text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #FF9900, 0 0 35px #FF9900, 0 0 40px #FF9900, 0 0 50px #FF9900, 0 0 75px #FF9900; }
   to {
     text-shadow: 0 0 2px #fff, 0 0 4px #fff, 0 0 8px #fff, 0 0 14px #FF9900, 0 0 18px #FF9900, 0 0 24px #FF9900, 0 0 30px #FF9900, 0 0 35px #FF9900; } }
+
+#ham-menu {
+  position: fixed;
+  top: 30px;
+  left: 30px;
+  width: 50px;
+  height: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  cursor: pointer;
+  z-index: 10000000; }
+  #ham-menu .bar {
+    background: #7d7d7d;
+    opacity: 0.3;
+    width: 40px;
+    height: 5px;
+    border-radius: 2.5px;
+    transition: 0.33s; }
+  #ham-menu .bar:nth-child(2) {
+    width: 30px; }
+  #ham-menu:hover .bar {
+    opacity: 1; }
+  #ham-menu:hover .bar-middle {
+    transform: translateX(-5px); }
+
+.xHam .bar {
+  opacity: 1 !important;
+  border-radius: none; }
+
+.xHam .bar-top {
+  transform: translateY(10px) rotate(45deg); }
+
+.xHam .bar-middle {
+  transform: translateX(100px);
+  opacity: 0 !important; }
+
+.xHam .bar-bottom {
+  transform: translateY(-10px) rotate(-45deg); }
+
+.hideLinks {
+  transform: translateY(-100px); }
+
+.hideContact {
+  transform: translateX(-100px); }
 
 :root {
   --gr-bg-color: #4ABDAC;
@@ -463,16 +557,11 @@ button:focus {
     text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #f47200, 0 0 35px #f47200, 0 0 40px #f47200, 0 0 50px #f47200, 0 0 75px #f47200;
     background: url(./app/routes/about/images/neon-1.jpg);
     background-size: cover; }
-    #about-section #neon-sign #neon-text {
-      padding-left: 20px;
-      text-align: center;
-      width: 100vw; }
     #about-section #neon-sign #neon-flicker {
-      display: inline;
-      transform: translateZ(0);
       animation: flicker 1s ease-in-out infinite alternate; }
     #about-section #neon-sign .neon-animation {
-      display: inline; }
+      text-align: center;
+      animation: neon2 10s ease-in-out infinite alternate; }
 
 @keyframes flicker {
   0% {
@@ -524,7 +613,8 @@ button:focus {
     text-align: justify;
     font-family: 'Raleway', cursive; }
     #about-section #about-text p {
-      margin: 50px 0; }
+      margin: 50px 0;
+      padding: 0 50px; }
   #about-section .skills-list {
     display: flex;
     flex-direction: column;
@@ -555,39 +645,6 @@ button:focus {
       transform: translate3d(0, 0, 2); }
       #about-section .dev-logo-repeat-container:hover .dev-logo-text {
         opacity: 0.8; }
-  #about-section .contact {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    width: 100vw;
-    position: fixed;
-    top: -100px;
-    z-index: 100000; }
-    #about-section .contact > * {
-      margin: 20px 0; }
-    #about-section .contact a:nth-child(1) {
-      animation: hint 2s 1s forwards; }
-    #about-section .contact a:nth-child(2) {
-      animation: hint 2s 1.1s forwards; }
-    #about-section .contact a:nth-child(3) {
-      animation: hint 2s 1.2s forwards; }
-    #about-section .contact .social-logo {
-      width: 32px;
-      margin: 0 10px;
-      opacity: 0.2;
-      transition: 0.1s; }
-      #about-section .contact .social-logo:hover {
-        opacity: 0.8;
-        transform: scale(1.1); }
-
-@keyframes hint {
-  30%, 50%, 70%, 100% {
-    opacity: 0.8;
-    transform: translateY(100px); }
-  60% {
-    transform: translateY(110px); } }
   @media (max-width: 525px) {
     #about-section #neon-sign {
       font-size: 48px; }
@@ -910,7 +967,6 @@ button:focus {
     height: 100vh;
     background: linear-gradient(black 0%, #141414 100%);
     display: flex;
-    overflow: hidden;
     flex-direction: column;
     justify-content: center;
     align-items: center; }
@@ -957,11 +1013,12 @@ button:focus {
   #home-container .svg-button {
     position: absolute;
     width: 140px;
-    transition: 1s; }
-  #home-container .svg-button:hover {
-    cursor: pointer; }
-  #home-container .svg-hover:active {
-    transform: translateY(12px); }
+    transition: 0.25s; }
+    #home-container .svg-button:hover {
+      cursor: pointer;
+      transform: scale(1.1); }
+    #home-container .svg-button:active {
+      transform: translateY(6px); }
   #home-container .svg-button .button-ol-1 {
     stroke: #b3b3b3;
     stroke-width: 2px;
@@ -1059,8 +1116,40 @@ button:focus {
   color: #cccccc;
   width: 100vw;
   height: 100vh;
-  position: fixed;
-  background: linear-gradient(#B06AB3 0%, #4568DC 100%); }
+  position: fixed; }
+  #weather-app-section #landing-page-background .video-background {
+    background: #000;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -99; }
+  #weather-app-section #landing-page-background .video-foreground,
+  #weather-app-section #landing-page-background .video-background iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; }
+  @media (min-aspect-ratio: 16 / 9) {
+    #weather-app-section #landing-page-background .video-foreground {
+      height: 300%;
+      top: -100%; } }
+  @media (max-aspect-ratio: 16 / 9) {
+    #weather-app-section #landing-page-background .video-foreground {
+      width: 300%;
+      left: -100%; } }
+  @media all and (max-width: 600px) {
+    #weather-app-section #landing-page-background .vid-info {
+      width: 50%;
+      padding: .5rem; }
+    #weather-app-section #landing-page-background .vid-info h1 {
+      margin-bottom: .2rem; } }
+  @media all and (max-width: 500px) {
+    #weather-app-section #landing-page-background .vid-info .acronym {
+      display: none; } }
 
 #weather-app-section .slide-up-animation {
   animation: slide-up 1s forwards; }

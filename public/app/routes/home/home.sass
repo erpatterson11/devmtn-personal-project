@@ -8,7 +8,6 @@ $syncopate: 'Syncopate', sans-serif
 #home-container
   color: rgb(150,150,150)
   font-family: $julius
-  // margin-top: 70px
 
   p
     padding: 40px
@@ -19,7 +18,6 @@ $syncopate: 'Syncopate', sans-serif
     height: 100vh
     background: linear-gradient(black 0%, rgb(20,20,20) 100%)
     display: flex
-    overflow: hidden
     flex-direction: column
     justify-content: center
     align-items: center
@@ -81,14 +79,14 @@ $syncopate: 'Syncopate', sans-serif
   .svg-button
     position: absolute
     width: 140px
-    transition: 1s
+    transition: 0.25s
 
-  .svg-button:hover
-    cursor: pointer
+    &:hover
+      cursor: pointer
+      transform: scale(1.1)
 
-  .svg-hover:active
-    transform: translateY(12px)
-
+    &:active
+      transform: translateY(6px)
 
   .svg-button .button-ol-1
     stroke: #b3b3b3

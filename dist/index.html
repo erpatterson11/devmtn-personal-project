@@ -13,20 +13,42 @@
   </head>
   <body ng-controller='mainCtrl'>
 
-
-
-    <div id='ui-view-container'>
-      <ui-view ng-class="{animateFromHome: viewTransition, animateToHome: !viewTransition }"></ui-view>    
+    <div id='ui-view-container' ng-class="{showNav: showNav}">
+      <ui-view ng-class="{animateFromHome: viewTransition, animateToHome: !viewTransition}"></ui-view>    
     </div>
 
-    <nav id='main-nav'>
-      <div id='navlogo' ui-sref='home' class='nav-link-hover'>Eric Patterson</div>
-      <ul id='main-links'>
-        <li ui-sref='home' class='nav-link-hover' ng-hide="hideNav">Portfolio</li>
-        <li ui-sref='about' class='nav-link-hover' ng-hide="hideNav">About</li>
+
+   <nav id='main-nav'>
+      <ul id='main-links' ng-class="{hideLinks: !showNav}">
+        <li ui-sref='home' class='nav-link' ng-click='showNav = !showNav' >portfolio</li>
+        <li ui-sref='about' class='nav-link' ng-click='showNav = !showNav' >about</li>
       </ul>
+
+      <div class='contact' ng-class="{hideContact: !showNav}">
+          <div class='email-container'>
+            <div class='email-compose' ng-class="{emailExpanded: toggleEmail}">
+              erpatterson@westmont.edu
+            </div>
+          <a ng-click="toggleEmail = !toggleEmail" class='relative'>
+              <img class='social-logo' src="./app/routes/about/images/email.svg" alt="email" />
+          </a>
+          </div>
+          <a href="https://github.com/erpatterson11">
+              <img class='social-logo' src="./app/routes/about/images/github_logo.svg" alt="github" />
+          </a>
+          <a href="https://www.linkedin.com/in/eric-patterson/">
+              <img class='social-logo' src="./app/routes/about/images/linkedin_logo.svg" alt="github" />
+          </a>
+
+      </div>
+
     </nav>
 
+    <div id="ham-menu" ng-click='showNav = !showNav' ng-class='{xHam: showNav}'>
+        <div class="bar bar-top"></div>
+        <div class="bar bar-middle"></div>
+        <div class="bar bar-bottom"></div>
+    </div>
     
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.2/angular-ui-router.js"></script>

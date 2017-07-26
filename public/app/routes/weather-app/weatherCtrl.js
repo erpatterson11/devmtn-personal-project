@@ -78,6 +78,7 @@ $scope.toggleNav = function() {
   }
 }
 
+
 $(document).mouseup(function(e) {
     var container = $("#side-nav");
     if (!container.is(e.target) && container.has(e.target).length === 0) {

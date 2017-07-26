@@ -2,3 +2,5 @@ node_modules
 server/config.js
 *.key
 *.csr
+ssl
+magnifying-glass-site
