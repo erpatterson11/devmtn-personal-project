@@ -13,7 +13,6 @@ $scope.selectedTime = 0;
 
 
 $scope.getWeatherDataFromBrowserLocation = function() {
-  console.log('browser')
   weatherApiService.getWeatherDataFromBrowserLocation()
   .then(function(results) {
     $scope.currentCity = results.city

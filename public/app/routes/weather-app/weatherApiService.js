@@ -6,7 +6,6 @@ let currentLocation = {}
 
 // gets user location from browser, returns lat & lng
 function getBrowserLocation() {
-  console.log('getting browser locashiun...')
   let deferred = $q.defer()
   navigator.geolocation.getCurrentPosition(deferred.resolve)
   return deferred.promise
@@ -20,12 +19,12 @@ function getWeatherData(latitude,longitude) {
 
 // search by city or zip, returns coordinates and location name info
  function searchLocationByAddress(address) {
-   return $http.get(`/api/weather/search/?location=${encodeURIComponent(address)}`)
+   return $http.get(`/api/weather/search?location=${encodeURIComponent(address)}`)
 }
 
 // search by coordinates, returns coordinates and location name info
 function getLocationByCoords(latitude, longitude) {
-  return $http.get(`/api/weather/search/?latitude=${encodeURIComponent(latitude)}&longitude=${encodeURIComponent(longitude)}`)
+  return $http.get(`/api/weather/search?latitude=${encodeURIComponent(latitude)}&longitude=${encodeURIComponent(longitude)}`)
 }
 
 
@@ -33,9 +32,7 @@ function getLocationByCoords(latitude, longitude) {
 // If getBrowserLocation API call fails, then return error message to tell controller to bring up prompt to search location
 
 this.getWeatherDataFromBrowserLocation = function() {
-  console.log('service')
   return getBrowserLocation().then(function(results) {
-    console.log(results)
      return $q.all({weather: getWeatherData(results.coords.latitude, results.coords.longitude), location: getLocationByCoords(results.coords.latitude, results.coords.longitude)})
       .then(function(apiResults) {
           currentLocation.weather = apiResults.weather;

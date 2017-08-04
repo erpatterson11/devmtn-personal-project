@@ -55,7 +55,7 @@ angular.module('portfolioApp').service('weatherLogicService', function(weatherCa
     const groundAccentFillSunrise2 = '#2e3a30'
     const leftMountainFillSunrise2 = '#333333'
 
-    const mountainFillSunrise1 = '#5b343a'
+    const mountainFillSunrise1 = '#5b3734'
     const mountainAccentFillSunrise1 = '#aa4419'
     const groundFillSunrise1 = '#50450b'
     const groundAccentFillSunrise1 = '#2e3a30'

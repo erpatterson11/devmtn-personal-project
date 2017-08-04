@@ -22,8 +22,9 @@ function scrollContainer($window) {
                         $(this).animate({'opacity':'1'},500);
 
                     }
-               });
-           });
+               })
+           })
         }
     }
 }
+

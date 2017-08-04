@@ -79,7 +79,7 @@
       <g class="layer1" transform="translate(20825 -4771.4)">
         <defs>
           <linearGradient id="gradient1" x1="0" x2="0" y1="1" y2="0">
-            <stop offset="0%" stop-color="#aaa" />
+            <stop offset="0%" stop-color="#aaa" stop-opacity="0"/>
             <stop offset="100%" stop-color="#777"/>
           </linearGradient>
         </defs>
@@ -110,12 +110,14 @@
 
     <div class="data-header">
         <div class="location flex-center">{{currentCity}}, {{currentState}}</div>
-        <div class="selected-temp flex-center">{{hourly[selectedTime].temperature | number: 0 }}&degF</div>
+        <div class='time-temp-container'>   
+          <div class="selected-temp flex-center">{{hourly[selectedTime].temperature | number: 0 }}&degF</div>
+          <label for='timeSlider'>{{unixToTime(hourly[selectedTime].time) | date: 'EEE h:mm a' }}</label>
+        </div>
         <div class="selected-summary flex-center">{{hourly[selectedTime].summary}}</div>
     </div>
 
     <div class='controlls flex-center'>
-        <label for='timeSlider'>{{unixToTime(hourly[selectedTime].time) | date: 'EEE h:mm a' }}</label>
         <input id="timeSlider" type="range" min='0' max='48' ng-model='selectedTime' ng-change='changeArtwork(selectedTime)'>
     </div>
 </div>

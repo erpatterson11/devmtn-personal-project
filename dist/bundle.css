@@ -1,3 +1,11 @@
+@font-face {
+  font-family: Neon80;
+  src: url("./app/routes/about/fonts/Neon.ttf") format("truetype"); }
+
+@font-face {
+  font-family: wages;
+  src: url("./app/routes/about/fonts/lostWages.woff") format("truetype"); }
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -45,222 +53,6 @@ table {
 
 button:focus {
   outline: none; }
-
-@font-face {
-  font-family: Neon80;
-  src: url("./app/routes/about/fonts/Neon.ttf") format("truetype"); }
-
-@font-face {
-  font-family: wages;
-  src: url("./app/routes/about/fonts/lostWages.woff") format("truetype"); }
-
-body {
-  background: #000;
-  width: 100vw;
-  height: 100vh; }
-  body::-webkit-scrollbar {
-    display: none;
-    width: 0; }
-
-#ui-view-container {
-  position: relative;
-  transition: 0.2s;
-  width: 100%;
-  height: 100%; }
-
-ui-view {
-  position: absolute;
-  display: block;
-  width: 100vw;
-  height: auto;
-  transition: 0.3s; }
-  ui-view::-webkit-scrollbar {
-    display: none;
-    width: 0; }
-
-.ng-hide.ng-hide-animate {
-  display: none; }
-
-.showNav {
-  transform: translate(100px, 100px);
-  filter: grayscale(100%); }
-
-.animateFromHome.ng-enter {
-  transform: translateX(-1300px); }
-
-.animateFromHome.ng-enter-active {
-  transform: translateX(0); }
-
-.animateFromHome.ng-leave {
-  transform: translateX(0); }
-
-.animateFromHome.ng-leave-active {
-  transform: translateX(-1300px); }
-
-.animateToHome.ng-enter {
-  transform: translateX(1300px); }
-
-.animateToHome.ng-enter-active {
-  transform: translateX(0); }
-
-.animateToHome.ng-leave {
-  transform: translateX(0); }
-
-.animateToHome.ng-leave-active {
-  transform: translateX(1300px); }
-
-.activeNav {
-  transform: translateY(0px) !important; }
-
-#main-nav {
-  position: fixed;
-  top: 0;
-  width: 100vw;
-  height: 100px;
-  color: rgba(200, 200, 200, 0.75);
-  font-size: 20px;
-  font-family: Codystar;
-  z-index: 10000000; }
-  #main-nav #main-links {
-    background: #000000;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    height: 100px;
-    width: 100vw;
-    padding-left: 130px;
-    transition: 0.3s; }
-  #main-nav .nav-link {
-    font-family: Neon80;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.5s;
-    margin-right: 20px;
-    text-shadow: 0 0 15px white; }
-    #main-nav .nav-link:hover {
-      color: #FF9900;
-      animation: neon 1.5s ease-in-out infinite alternate; }
-  #main-nav .contact {
-    background: #000000;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: fixed;
-    width: 100px;
-    height: 100vh;
-    top: 0;
-    left: 0;
-    padding-top: 100px;
-    z-index: 100000;
-    transition: 0.3s; }
-    #main-nav .contact > * {
-      margin: 20px 0; }
-    #main-nav .contact .relative {
-      position: relative; }
-    #main-nav .contact .email-compose {
-      position: absolute;
-      background: #000000;
-      width: 320px;
-      height: 60px;
-      transition: 0.3s;
-      opacity: 0;
-      transform: translate(-100%, -20px);
-      display: flex;
-      justify-content: center;
-      align-items: center; }
-    #main-nav .contact .emailExpanded {
-      transform: translate(50px, -20px);
-      opacity: 1; }
-    #main-nav .contact .social-logo {
-      width: 32px;
-      margin: 0 10px;
-      opacity: 0.75;
-      transition: 0.1s; }
-      #main-nav .contact .social-logo:hover {
-        opacity: 1;
-        transform: scale(1.1); }
-
-@keyframes neon {
-  from {
-    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #FF9900, 0 0 35px #FF9900, 0 0 40px #FF9900, 0 0 50px #FF9900, 0 0 75px #FF9900; }
-  to {
-    text-shadow: 0 0 2px #fff, 0 0 4px #fff, 0 0 8px #fff, 0 0 14px #FF9900, 0 0 18px #FF9900, 0 0 24px #FF9900, 0 0 30px #FF9900, 0 0 35px #FF9900; } }
-
-#ham-menu {
-  position: fixed;
-  top: 30px;
-  left: 30px;
-  width: 50px;
-  height: 30px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  cursor: pointer;
-  z-index: 10000000; }
-  #ham-menu .bar {
-    background: #7d7d7d;
-    opacity: 0.3;
-    width: 40px;
-    height: 5px;
-    border-radius: 2.5px;
-    transition: 0.33s; }
-  #ham-menu .bar:nth-child(2) {
-    width: 30px; }
-  #ham-menu:hover .bar {
-    opacity: 1; }
-  #ham-menu:hover .bar-middle {
-    transform: translateX(-5px); }
-
-.xHam .bar {
-  opacity: 1 !important;
-  border-radius: none; }
-
-.xHam .bar-top {
-  transform: translateY(10px) rotate(45deg); }
-
-.xHam .bar-middle {
-  transform: translateX(100px);
-  opacity: 0 !important; }
-
-.xHam .bar-bottom {
-  transform: translateY(-10px) rotate(-45deg); }
-
-.hideLinks {
-  transform: translateY(-100px); }
-
-.hideContact {
-  transform: translateX(-100px); }
-
-@media (max-width: 525px) {
-  .showNav {
-    transform: translate(-100px, -100px); }
-  #main-nav {
-    top: auto;
-    bottom: 0; }
-    #main-nav #main-links {
-      justify-content: flex-end;
-      padding-right: 130px; }
-    #main-nav .nav-link {
-      margin-left: 20px; }
-    #main-nav .contact {
-      left: auto;
-      justify-content: flex-end;
-      right: 0;
-      padding-bottom: 100px; }
-      #main-nav .contact .email-compose {
-        transform: translate(0, -20px); }
-      #main-nav .contact .emailExpanded {
-        transform: translate(-300px, -20px); }
-  #ham-menu {
-    top: auto;
-    left: auto;
-    bottom: 30px;
-    right: 30px; }
-  .hideLinks {
-    transform: translateY(100px); }
-  .hideContact {
-    transform: translateX(100px); } }
 
 :root {
   --gr-bg-color: #4ABDAC;
@@ -500,53 +292,215 @@ ui-view {
     }
   }
 
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  font: inherit;
-  vertical-align: baseline;
-  box-sizing: border-box;
-  text-decoration: none; }
-
-/* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section {
-  display: block; }
-
 body {
-  line-height: 1; }
+  background: #000;
+  width: 100vw;
+  height: 100vh; }
+  body::-webkit-scrollbar {
+    display: none;
+    width: 0; }
 
-ol, ul {
-  list-style: none; }
+#ui-view-container {
+  position: relative;
+  transition: 0.2s;
+  width: 100%;
+  height: 100%; }
 
-blockquote, q {
-  quotes: none; }
+ui-view {
+  position: absolute;
+  display: block;
+  width: 100vw;
+  height: auto;
+  transition: 0.3s; }
+  ui-view::-webkit-scrollbar {
+    display: none;
+    width: 0; }
 
-blockquote:before, blockquote:after,
-q:before, q:after {
-  content: '';
-  content: none; }
+.ng-hide.ng-hide-animate {
+  display: none; }
 
-table {
-  border-collapse: collapse;
-  border-spacing: 0; }
+.showNav {
+  transform: translate(100px, 100px);
+  opacity: 0.5; }
 
-button:focus {
-  outline: none; }
+.animateFromHome.ng-enter {
+  transform: translateX(-1300px); }
+
+.animateFromHome.ng-enter-active {
+  transform: translateX(0); }
+
+.animateFromHome.ng-leave {
+  transform: translateX(0); }
+
+.animateFromHome.ng-leave-active {
+  transform: translateX(-1300px); }
+
+.animateToHome.ng-enter {
+  transform: translateX(1300px); }
+
+.animateToHome.ng-enter-active {
+  transform: translateX(0); }
+
+.animateToHome.ng-leave {
+  transform: translateX(0); }
+
+.animateToHome.ng-leave-active {
+  transform: translateX(1300px); }
+
+.activeNav {
+  transform: translateY(0px) !important; }
+
+#main-nav {
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 100px;
+  color: rgba(200, 200, 200, 0.75);
+  font-size: 20px;
+  font-family: Codystar;
+  z-index: 10000000; }
+  #main-nav #main-links {
+    background: #000000;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100px;
+    width: 100vw;
+    padding-left: 130px;
+    transition: 0.3s; }
+  #main-nav .nav-link {
+    font-family: Neon80;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.5s;
+    margin-right: 20px;
+    text-shadow: 0 0 15px white; }
+    #main-nav .nav-link:hover {
+      color: #FF9900;
+      animation: neon 1.5s ease-in-out infinite alternate; }
+  #main-nav .contact {
+    background: #000000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    width: 100px;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    padding-top: 100px;
+    z-index: 100000;
+    transition: 0.3s; }
+    #main-nav .contact > * {
+      margin: 20px 0; }
+    #main-nav .contact .relative {
+      position: relative; }
+    #main-nav .contact .email-compose {
+      position: absolute;
+      background: #000000;
+      width: 320px;
+      height: 60px;
+      transition: 0.3s;
+      opacity: 0;
+      transform: translate(-100%, -20px);
+      display: flex;
+      justify-content: center;
+      align-items: center; }
+    #main-nav .contact .emailExpanded {
+      transform: translate(50px, -20px);
+      opacity: 1; }
+    #main-nav .contact .social-logo {
+      width: 32px;
+      margin: 0 10px;
+      opacity: 0.75;
+      transition: 0.1s; }
+      #main-nav .contact .social-logo:hover {
+        opacity: 1;
+        transform: scale(1.1); }
+
+@keyframes neon {
+  from {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #FF9900, 0 0 35px #FF9900, 0 0 40px #FF9900, 0 0 50px #FF9900, 0 0 75px #FF9900; }
+  to {
+    text-shadow: 0 0 2px #fff, 0 0 4px #fff, 0 0 8px #fff, 0 0 14px #FF9900, 0 0 18px #FF9900, 0 0 24px #FF9900, 0 0 30px #FF9900, 0 0 35px #FF9900; } }
+
+#ham-menu {
+  position: fixed;
+  top: 30px;
+  left: 30px;
+  width: 50px;
+  height: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  cursor: pointer;
+  z-index: 10000000; }
+  #ham-menu .bar {
+    background: #7d7d7d;
+    opacity: 0.3;
+    width: 40px;
+    height: 5px;
+    border-radius: 2.5px;
+    transition: 0.33s; }
+  #ham-menu .bar:nth-child(2) {
+    width: 30px; }
+  #ham-menu:hover .bar {
+    opacity: 1; }
+  #ham-menu:hover .bar-middle {
+    transform: translateX(-5px); }
+
+.xHam .bar {
+  opacity: 1 !important;
+  border-radius: none; }
+
+.xHam .bar-top {
+  transform: translateY(10px) rotate(45deg); }
+
+.xHam .bar-middle {
+  transform: translateX(100px);
+  opacity: 0 !important; }
+
+.xHam .bar-bottom {
+  transform: translateY(-10px) rotate(-45deg); }
+
+.hideLinks {
+  transform: translateY(-100px); }
+
+.hideContact {
+  transform: translateX(-100px); }
+
+@media (max-width: 525px) {
+  .showNav {
+    transform: translate(-100px, -100px); }
+  #main-nav {
+    top: auto;
+    bottom: 0; }
+    #main-nav #main-links {
+      justify-content: flex-end;
+      padding-right: 130px; }
+    #main-nav .nav-link {
+      margin-left: 20px; }
+    #main-nav .contact {
+      left: auto;
+      top: auto;
+      justify-content: flex-end;
+      right: 0;
+      bottom: 130px; }
+      #main-nav .contact .email-compose {
+        transform: translate(0, -20px); }
+      #main-nav .contact .emailExpanded {
+        transform: translate(-300px, -20px); }
+  #ham-menu {
+    top: auto;
+    left: auto;
+    bottom: 30px;
+    right: 30px; }
+  .hideLinks {
+    transform: translateY(100px); }
+  .hideContact {
+    transform: translateX(100px); } }
+
 
 @font-face {
   font-family: Neon80;
@@ -1279,6 +1233,11 @@ button:focus {
     padding: 50px;
       padding-margin: 10px;
     flex: 1; }
+  #weather-app-section .time-temp-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; }
   #weather-app-section .background {
     width: 100vw;
     height: 100vh;

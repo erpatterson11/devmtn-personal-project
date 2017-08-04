@@ -70,10 +70,12 @@ app.get('/api/auth0', function(req,res) {
 
 // Get coordinates from a search using geocodio
 app.get('/api/weather/search', function(req,res) {
+
+  console.log(req)
+
     if (req.query.location) {
         let address = req.query.location
         let url = `https://api.geocod.io/v1/geocode?q=${address}+&api_key=${config.dev.geocodio.secret}`
-
         request(url, function(err, response, body) {
           res.status(200).send(body)
         })
@@ -93,7 +95,7 @@ app.get('/api/weather/search', function(req,res) {
 app.get('/api/weather/coords/:lat/:long/', function(req,res) {
   let lat = req.params.lat
   let long = req.params.long
-  let url = `https://api.darksky.net/forecast/96b4eea61237b84d5a37ba9fd4faaef2/${lat},${long}`
+  let url = `https://api.darksky.net/forecast/${config.dev.darkSky.secret}/${lat},${long}`
 
   request(url, function(err, response, body) {
     res.status(200).send(body)

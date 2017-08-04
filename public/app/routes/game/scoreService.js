@@ -22,4 +22,4 @@ angular.module("portfolioApp").service("scoreService", function($http) {
     })
   }
 
-});
+})
