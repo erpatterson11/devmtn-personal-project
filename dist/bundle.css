@@ -1491,10 +1491,10 @@ ui-view {
     font-size: 20px;
     flex-direction: column;
     align-items: flex-end; }
-    #weather-app-section .data-header > * {
+    #weather-app-section .data-header .data-header-box {
       margin: 5px;
       width: 70%;
-      align-items: flex-end; }
+      text-align: right; }
     #weather-app-section .data-header .selected-time {
       font-size: 20px; }
   #weather-app-section .controlls {
