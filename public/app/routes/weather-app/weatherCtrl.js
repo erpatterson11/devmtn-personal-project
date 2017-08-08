@@ -27,6 +27,7 @@ function setWeatherData(data) {
 
 function checkLocalData() {
   let storedData = JSON.parse(localStorage.getItem("results"))
+  if (!storedData) return
   let cachedTime = storedData.weather.data.currently.time
   let now = Date.now() / 1000
   if (now - cachedTime < 3600) {
