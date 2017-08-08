@@ -140,7 +140,7 @@ angular.module('portfolioApp').directive('svgButton', ["$state", function($state
             toState: '@'
         },
         link: function(scope, elem, attrs) {
-            elem.on('touchstart', function() {
+            elem.on('touchend', function() {
                 if (attrs.desktop !== undefined){
                    if (confirm('Heads up, this project contains features that require keyboard input and is not yet optimized for mobile. Please visit on a laptop/desktop for the best experience.') ) {
                        if (attrs.uiSref) $state.transitionTo(attrs.uiSref)
@@ -149,7 +149,8 @@ angular.module('portfolioApp').directive('svgButton', ["$state", function($state
                 }
             })
             elem.on('click', function() {
-                if (attrs.href) open(attrs.href)
+                console.log(attrs)
+                if (!attrs.uiSref & attrs.href) open(attrs.href)
             })
         },
         controller: function() {
