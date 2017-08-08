@@ -6,14 +6,38 @@
     <h3>Data for nerds</h3>
     <div class='horizontal-line'></div>
     <ul class='data-for-nerds'>
-    <li>Humidity: {{ hourly[selectedTime].humidity*100 | number:0 }}%</li>
-    <li>Cloud cover: {{ hourly[selectedTime].cloudCover*100 | number:0 }}%</li>
-    <li>Chance of precip: {{ (hourly[selectedTime].precipProbability*100) | number:0 }}%</li>
-    <li>Precip intensity: {{ (hourly[selectedTime].precipIntensity*100) | number:0 }}/100</li>
-    <li>Pressure: {{ hourly[selectedTime].pressure | number:2 }} mbar</li>
-    <li>Wind bearing: {{ hourly[selectedTime].windBearing | number:0 }} deg</li>
-    <li>Wind gust: {{ hourly[selectedTime].windGust | number:2 }} mph</li>
-    <li>Wind speed: {{ hourly[selectedTime].windSpeed | number:2 }} mph</li>
+     
+        <div class='flex-between'>
+            <div>Humidity:</div> 
+            <div>{{ hourly[selectedTime].humidity*100 | number:0 }}%</div>
+        </div>
+        <div class='flex-between'>
+            <div>Cloud cover: </div> 
+            <div>{{ hourly[selectedTime].cloudCover*100 | number:0 }}%</div>
+        </div>
+        <div class='flex-between'>
+            <div>Chance of precip: </div> 
+            <div>{{ (hourly[selectedTime].precipProbabidivty*100) | number:0 }}%</div>
+        </div>
+        <div class='flex-between'>
+            <div>Precip intensity: </div> 
+            <div>{{ (hourly[selectedTime].precipIntensity*100) | number:0 }}/100</div>
+        </div>
+        <div class='flex-between'>
+            <div>Pressure: </div> 
+            <div>{{ hourly[selectedTime].pressure | number:2 }} mbar</div>
+        </div>
+        <div class='flex-between'>
+            <div>Wind bearing: </div> 
+            <div>{{ hourly[selectedTime].windBearing | number:0 }} deg</div>
+        </div>
+        <div class='flex-between'>
+            <div>Wind gust: </div> 
+            <div>{{ hourly[selectedTime].windGust | number:2 }} mph</div>
+        </div>
+            <div class='flex-between'><div>Wind speed: </div> 
+            <div>{{ hourly[selectedTime].windSpeed | number:2 }} mph</div>
+        </div>
     </ul>
     <p class='darksky-reference'>Data provided by <a href="https://darksky.net/">DarkSky</a></p>
 </div>

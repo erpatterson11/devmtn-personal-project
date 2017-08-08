@@ -545,7 +545,7 @@ ui-view {
 #side-nav-container {
   width: 100%;
   height: 100%;
-  padding-top: 25px;
+  padding-top: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -574,15 +574,19 @@ ui-view {
     width: 80%;
     display: flex;
     justify-content: flex-end; }
-  #side-nav-container li {
-    margin: 5px 0; }
+  #side-nav-container .flex-between {
+    margin: 5px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; }
   #side-nav-container .horizontal-line {
     margin-top: 5px;
     width: 60%;
     height: 1px;
     background: radial-gradient(white, transparent); }
   #side-nav-container .data-for-nerds {
-    margin: 5px 0; }
+    margin: 5px 0;
+    width: 80%; }
   #side-nav-container .darksky-reference {
     margin-top: 20px; }
 
@@ -1287,23 +1291,23 @@ ui-view {
     padding-left: 130px;
     margin-top: 20px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     color: rgba(250, 250, 250, 0.8);
     font-size: 32px;
     text-shadow: 0 0 10px black;
     transition: 0.5s; }
-    #weather-app-section .data-header > * {
+    #weather-app-section .data-header .data-header-box {
+      text-align: center;
       margin: 10px;
-      width: 20%; }
+      min-width: 20%; }
     #weather-app-section .data-header .location {
-      justify-content: flex-end; }
+      align-items: flex-end; }
     #weather-app-section .data-header .selected-time {
       font-size: 24px; }
   #weather-app-section .background {
     width: 100vw;
     height: 100vh;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0; }
   #weather-app-section #gray-sky {

@@ -88,10 +88,10 @@
     </svg>
 
     <div class="data-header">
-        <div class="flex-center location">{{currentCity}}, {{currentState}}</div>
-        <label class='flex-center selected-time' for='timeSlider'>{{unixToTime(hourly[selectedTime].time) | date: 'EEE h:mm a' }}</label> 
-        <div class="selected-temp flex-center">{{hourly[selectedTime].temperature | number: 0 }}&degF</div>
-        <div class="selected-summary flex-center">{{hourly[selectedTime].summary}}</div>
+        <div class=" data-header-box location">{{currentCity}}, {{currentState}}</div>
+        <label class=' data-header-box selected-time' for='timeSlider'>{{unixToTime(hourly[selectedTime].time) | date: 'EEE h:mm a' }}</label> 
+        <div class="selected-temp data-header-box ">{{hourly[selectedTime].temperature | number: 0 }}&degF</div>
+        <div class="selected-summary data-header-box ">{{hourly[selectedTime].summary}}</div>
     </div>
 
     <div class='controls flex-center'>

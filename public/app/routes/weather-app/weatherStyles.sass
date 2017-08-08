@@ -129,19 +129,19 @@
     padding-left: 130px
     margin-top: 20px
     display: flex
-    justify-content: space-between
     align-items: center
     color: rgba(250,250,250,0.8)
     font-size: 32px
     text-shadow: 0 0 10px rgb(0,0,0)
     transition: 0.5s
 
-    & > *
+    .data-header-box
+      text-align: center
       margin: 10px
-      width: 20%
+      min-width: 20%
     
     .location
-      justify-content: flex-end
+      align-items: flex-end
 
     .selected-time
       font-size: 24px    
@@ -149,7 +149,7 @@
   .background
     width: 100vw
     height: 100vh
-    position: absolute
+    position: fixed
     top: 0
     left: 0
 
