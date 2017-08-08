@@ -19,6 +19,10 @@ $orange: #f47200
     color: rgba(220,220,200, 0.8) 
     font-family: 'Raleway', cursive
 
+    $neon1: 0 0 10px $white, 0 0 20px $white, 0 0 30px $white, 0 0 40px $orange, 0 0 70px $orange, 0 0 80px $orange, 0 0 100px $orange, 0 0 150px $orange
+    $neon2: 0 0 5px $white, 0 0 10px $white, 0 0 15px $white, 0 0 20px $orange, 0 0 35px $orange, 0 0 40px $orange, 0 0 50px $orange, 0 0 75px $orange
+
+
     .content
         flex-grow: 1
         +flex-col
@@ -37,53 +41,53 @@ $orange: #f47200
         color: rgb(255,255,255)
         opacity: 1
         text-shadow: 0 0 5px $white, 0 0 10px $white, 0 0 15px $white, 0 0 20px $orange, 0 0 35px $orange, 0 0 40px $orange, 0 0 50px $orange, 0 0 75px $orange
-        background: url(./app/routes/about/images/neon-1.jpg)
+        background: linear-gradient(transparent, transparent 50%, rgb(0,0,0) 100%), url(./app/routes/about/images/neon-1.jpg)
         background-size: cover
 
         .small-neon-text
             font-size: 56px
 
         #neon-flicker
-            animation: flicker 1s ease-in-out infinite alternate
+            animation: flicker 4s ease-in-out infinite alternate
 
         .neon-animation
             text-align: center
             overflow-wrap: break-word
-            animation: neon2 10s ease-in-out infinite alternate
+            // animation: neon2 10s ease-in-out infinite alternate
 
         @keyframes flicker 
             0%
                 color: rgba(255,255,255,0.8)
-                text-shadow: 0 0 10px $white, 0 0 20px $white, 0 0 30px $white, 0 0 40px $orange, 0 0 70px $orange, 0 0 80px $orange, 0 0 100px $orange, 0 0 150px $orange
-            2%
+                text-shadow: $neon1
+            1%
                 color: rgba(255,255,255,0.2)
                 text-shadow: 2px 2px 25px hsl(239,100%,0%)
-            4%
+            2%
                 color: rgba(255,255,255,0.8)
-                text-shadow: 0 0 10px $white, 0 0 20px $white, 0 0 30px $white, 0 0 40px $orange, 0 0 70px $orange, 0 0 80px $orange, 0 0 100px $orange, 0 0 150px $orange
-            20%
+                text-shadow: $neon1
+            10%
+                color: rgba(255,255,255,1)
+                text-shadow: $neon2
+            12%
+                color: rgba(255,255,255,0.2)
+                text-shadow: 2px 2px 25px hsl(239,100%,0%)
+            15%
+                color: rgba(255,255,255,0.8)
+                text-shadow: $neon2
+            19%
+                color: rgba(255,255,255,0.2)
+                text-shadow: 2px 2px 25px hsl(239,100%,0%)
+            21%, 89%
+                color: rgba(255,255,255,0.7)
+                text-shadow: $neon2
+
+            90%
                 color: rgba(255,255,255,1)
                 text-shadow: 0 0 5px $white, 0 0 10px $white, 0 0 15px $white, 0 0 20px $orange, 0 0 35px $orange, 0 0 40px $orange, 0 0 50px $orange, 0 0 75px $orange
-            25%
-                color: rgba(255,255,255,0.2)
-                text-shadow: 2px 2px 25px hsl(239,100%,0%)
-            28%
-                color: rgba(255,255,255,0.8)
-                text-shadow: 0 0 5px $white, 0 0 10px $white, 0 0 15px $white, 0 0 20px $orange, 0 0 35px $orange, 0 0 40px $orange, 0 0 50px $orange, 0 0 75px $orange
-            30%
-                color: rgba(255,255,255,0.2)
-                text-shadow: 2px 2px 25px hsl(239,100%,0%)
-            31%
-                color: rgba(255,255,255,0.7)
-                text-shadow: 0 0 5px $white, 0 0 10px $white, 0 0 15px $white, 0 0 20px $orange, 0 0 35px $orange, 0 0 40px $orange, 0 0 50px $orange, 0 0 75px $orange
-
-            // 90%
-            //     color: rgba(255,255,255,1)
-            //     text-shadow: 0 0 5px $white, 0 0 10px $white, 0 0 15px $white, 0 0 20px $orange, 0 0 35px $orange, 0 0 40px $orange, 0 0 50px $orange, 0 0 75px $orange
 
             100%
                 color: rgba(255,255,255,0.8)
-                text-shadow: 0 0 5px $white, 0 0 10px $white, 0 0 15px $white, 0 0 20px $orange, 0 0 35px $orange, 0 0 40px $orange, 0 0 50px $orange, 0 0 75px $orange
+                text-shadow: $neon2
             
 
         @keyframes neon2 
@@ -151,12 +155,6 @@ $orange: #f47200
 
             .dev-logo-text
                 opacity: 0.8
-
-    .tilted-divider
-        width: 100vw
-        height: 100px
-        background: linear-gradient(transparent, rgba(200,200,200,0.1) 50%, transparent) 
-
     .portfolio-link
         +flex-col
         height: 400px
@@ -176,10 +174,10 @@ $orange: #f47200
             transition: 0.2s
 
             &:hover
-                background: rgb(200,200,200)
-                border: rgb(0,0,0) 1px solid
-                color: rgb(0,0,0)
-                box-shadow: 0 0 50px rgba(200,200,200,0.7)
+                background: $orange
+                color: $white 
+                border: none
+                box-shadow: $neon2
 
 
     @media (max-width: 525px) 

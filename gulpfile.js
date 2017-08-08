@@ -26,7 +26,8 @@ let paths = {
   indexSource: ['./public/index.html'],
   htmlSource: ['./public/app/**/*.html'],
   mediaSource: ['./public/app/**/*.svg', './public/app/**/*.png', './public/app/**/*.wav', './public/app/**/*.jpg'],
-  fontSource: ['./public/app/**/*.ttf', './public/app/**/*.woff']
+  fontSource: ['./public/app/**/*.ttf', './public/app/**/*.woff'],
+  iconSource: ['./public/favicon/*']
 }
 
 // DEFINE TASKS
@@ -34,7 +35,7 @@ let paths = {
 gulp.task('js', function() {
   return gulp.src(paths.jsSource)
   .pipe(sourcemap.init())
-  .pipe(babel({ presets: ['es2015', 'es2016'] }))
+  // .pipe(babel({ presets: ['es2015', 'es2016'] }))
   .pipe(concat('bundle.js'))
   .pipe(annotate())
   // .pipe(uglify()) //Uncomment when code is production ready
@@ -71,6 +72,12 @@ gulp.task('font', function() {
   .pipe(gulp.dest('./dist/app'))
 })
 
+gulp.task('icon', function() {
+  return gulp.src(paths.iconSource)
+  .pipe(gulp.dest('./dist/favicon'))
+})
+
+
 // WATCH TASK
 // ============================================================
 gulp.task('watch', function() {
@@ -81,7 +88,8 @@ gulp.task('watch', function() {
   gulp.watch(paths.htmlSource, ['html'])
   gulp.watch(paths.mediaSource, ['media'])
   gulp.watch(paths.fontSource, ['font'])
+  gulp.watch(paths.iconSource, ['icon'])
 })
 // DEFAULT TASK - first thing to run when gulp is called
 // ============================================================
-gulp.task('default', ['watch', 'js', 'css/sass', 'index', 'html', 'media', 'font'])
+gulp.task('default', ['watch', 'js', 'css/sass', 'index', 'html', 'media', 'font', 'icon'])

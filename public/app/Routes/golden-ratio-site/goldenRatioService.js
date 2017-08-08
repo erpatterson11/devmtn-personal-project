@@ -2,7 +2,7 @@
 // ============================================================
 angular.module("portfolioApp").service("goldenRatioService", function() {
 
-  this.generateContent = () => {
+this.generateContent = () => {
 
     const win = $(window)
     const spiral = $('.spiral')
@@ -203,7 +203,7 @@ angular.module("portfolioApp").service("goldenRatioService", function() {
       })
 
       // arrow key navigation
-      win.on('keydown', (e) => {
+      window.addEventListener('keydown', (e) => {
         if(e.keyCode === 38 || e.keyCode === 39) {
           currentSection++
           updateSpiral()
@@ -389,3 +389,4 @@ angular.module("portfolioApp").service("goldenRatioService", function() {
   }
 
 });
+

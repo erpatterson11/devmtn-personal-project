@@ -1,0 +1,88 @@
+// $julius: 'Julius Sans One', sans-serif
+
+// #svg-button-container
+//     position: relative
+
+//     .svg-button
+//         position: absolute
+//         top: 0
+//         left: 0
+//         width: 140px
+//         transition: 0.25s
+
+//         &:hover
+//             cursor: pointer
+//             transform: scale(1.1)
+
+//         &:active
+//             transform: translateY(6px)
+
+//     .svg-button .button-ol-1
+//         stroke: #b3b3b3
+//         stroke-width: 2px
+//         fill: rgba(255,255,255,0)
+//         stroke-dasharray: 400px
+//         stroke-dashoffset: 400px
+//         transition: 1s
+
+
+//     .svg-button .button-ol-2
+//         stroke: #b3b3b3
+//         stroke-width: 2px
+//         fill: rgba(255,255,255,0)
+//         stroke-dasharray: 400px
+//         stroke-dashoffset: 0px
+//         transition: 1s
+
+//     .svg-button:hover .button-ol-1
+//         stroke-dashoffset: 1200px
+//         transition: 1s
+//     .svg-button:hover .button-ol-2
+//         stroke-dashoffset: -800px
+//         transition: 1s
+
+#svg-button-container
+    position: relative
+    display: flex
+    justify-content: center
+    align-items: center
+    width: 200px
+    height: 93px
+    cursor: pointer
+    transition: 0.25s
+
+    &:hover
+        transform: scale(1.05)
+
+    &:active
+        transform: translateY(3px)
+
+
+    .link-text
+        padding: 0
+        display: flex
+        justify-content: center
+        align-items: center
+        font-size: 1em
+
+    .svg-button
+        position: absolute
+        top: 0
+        left: 0
+
+    .button-path
+        stroke: #b3b3b3
+        stroke-width: 2px
+        fill: rgba(255,255,255,0)    
+        stroke-dasharray: 400px
+        transition: 1s
+
+    .svg-button .button-ol-1
+        stroke-dashoffset: 400px
+    .svg-button .button-ol-2
+        stroke-dashoffset: 0px
+
+    .svg-button:hover .button-ol-1
+        stroke-dashoffset: 1200px
+    .svg-button:hover .button-ol-2
+        stroke-dashoffset: -800px

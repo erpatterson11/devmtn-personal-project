@@ -19,6 +19,7 @@
   z-index: -1000;
   color: var(--gr-text-color);
   text-decoration: none;
+  touch-action: none;
 }
 
 #golden-ratio-section .accent1 {

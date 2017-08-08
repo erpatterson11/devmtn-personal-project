@@ -8,7 +8,7 @@
     $stateProvider
       // HOME STATE
       .state('portfolio', {
-        url: '/',
+        url: '/portfolio',
         templateUrl: 'app/routes/home/homeTmpl.html',
         controller: 'homeCtrl',
         cache: false
@@ -29,12 +29,12 @@
         controller: 'weatherCtrl'
       })
       .state('about', {
-        url: '/about',
+        url: '/',
         templateUrl: 'app/routes/about/aboutTmpl.html',
         controller: 'aboutCtrl'
       })
 
     // ASSIGN OTHERWISE
     // ============================================================
-    $urlRouterProvider.otherwise('/about')
+    $urlRouterProvider.otherwise('/')
   });

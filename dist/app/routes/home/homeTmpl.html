@@ -1,6 +1,19 @@
 <section id='home-container'>
 
 
+  <div id='cardiac-div' class='link-bar'>
+  <canvas id='cardiac-canvas'></canvas>
+      <div class="top">
+        <h1 class='headline'>CARDIAC</h1>
+        <p>Healthy eating information and informative game</p>
+      </div>
+      <div class="bottom">
+        <svg-button href='https://cardiac.ericcpatterson.com' text='Explore'></svg-button>
+      </div>
+  </div>
+
+
+
   <div id='golden-ratio-div' class='link-bar'>
     <svg id="gr-svg-bg" viewBox="0 0 612.89678 379.57175">
     	<g id="layer1" transform="translate(773.56 -497.44)">
@@ -8,55 +21,38 @@
     		<path id="rect3751" class='path2' style="stroke-linejoin:round;stroke-miterlimit:9.4545;stroke-width:2;fill:none" d="m-339.92 731.78h34.044v55.085h-34.044zm-55.085 0h55.085v55.085h-55.085zm0 55.085v-55.085h89.129v55.085zm0 89.129v-89.129h89.129v89.129zm89.129-0.0001h-89.129v-144.21h89.129zm144.21 0h-144.21v-144.21h144.21zm0-144.21v144.21h-233.34v-144.21zm0-233.34v233.34h-233.34v-233.34zm-233.34 0h233.34v377.56h-233.34zm-377.55 0h377.55v377.56h-377.55zh610.9v377.56h-610.9z"/>
     	</g>
     </svg>
-
     <div class="top">
       <h1 class='headline'>Golden Rectangle</h1>
       <p>Experimental website layout</p>
     </div>
-
     <div class="bottom">
-      <p class='link-text'>Explore</p>
-      <svg id='golden-ratio-link-button' class="svg-button" ui-sref='golden-ratio' viewBox="0 0 267.7143 124.85715">
-        <g transform="translate(-129 -411.36)">
-          <path class="button-ol-1" style="opacity:0.374;stroke-linejoin:round;stroke-miterlimit:9.4545" d="m130 428.08h265.71v88.571h-265.71z"/>
-          <path class="button-ol-2" style="opacity:0.374;stroke-linejoin:round;stroke-miterlimit:9.4545" d="m145.82 412.47h234.08v122.65h-234.08z"/>
-        </g>
-      </svg>
+      <svg-button ui-sref='golden-ratio' text='Explore'></svg-button>
     </div>
   </div>
+
+
 
   <div id='space-div' class='link-bar'>
     <div class="top">
       <h1 class='headline'>Galaxy Strike</h1>
       <p>HTML5 Canvas Game</p>
     </div>
-
     <div class="bottom">
-      <p class='link-text'>Play</p>
-      <svg id='golden-ratio-link-button' ng-click='setViewClass()' class="svg-button" ui-sref='galaxy-strike' viewBox="0 0 267.7143 124.85715">
-        <g transform="translate(-129 -411.36)">
-          <path class="button-ol-1" style="opacity:0.374;stroke-linejoin:round;stroke-miterlimit:9.4545" d="m130 428.08h265.71v88.571h-265.71z"/>
-          <path class="button-ol-2" style="opacity:0.374;stroke-linejoin:round;stroke-miterlimit:9.4545" d="m145.82 412.47h234.08v122.65h-234.08z"/>
-        </g>
-      </svg>
+      <svg-button ui-sref='galaxy-strike' text='Play'></svg-button>
     </div>
   </div>
+
+
 
   <div id='weather-app-div' class='link-bar'>
     <div class="top">
       <h1 id='weather-clip-text' class='headline'>Visual Weather</h1>
       <p>Dynamically animated weather forecast</p>
     </div>
-
     <div class="bottom">
-      <p class='link-text'>Explore</p>
-      <svg id='golden-ratio-link-button' ng-click='setViewClass()' class="svg-button" ui-sref='weather' viewBox="0 0 267.7143 124.85715" >
-        <g transform="translate(-129 -411.36)">
-          <path class="button-ol-1" style="opacity:0.374;stroke-linejoin:round;stroke-miterlimit:9.4545" d="m130 428.08h265.71v88.571h-265.71z"/>
-          <path class="button-ol-2" style="opacity:0.374;stroke-linejoin:round;stroke-miterlimit:9.4545" d="m145.82 412.47h234.08v122.65h-234.08z"/>
-        </g>
-      </svg>
+      <svg-button ui-sref='weather' text='Explore'></svg-button>
     </div>
   </div>
+
 
 </section>

@@ -75,6 +75,7 @@ button:focus {
   z-index: -1000;
   color: var(--gr-text-color);
   text-decoration: none;
+  touch-action: none;
 }
 
 #golden-ratio-section .accent1 {
@@ -354,7 +355,6 @@ ui-view {
   position: fixed;
   top: 0;
   width: 100vw;
-  height: 100px;
   color: rgba(200, 200, 200, 0.75);
   font-size: 20px;
   font-family: Codystar;
@@ -486,7 +486,8 @@ ui-view {
       top: auto;
       justify-content: flex-end;
       right: 0;
-      bottom: 130px; }
+      bottom: 0;
+      padding-bottom: 110px; }
       #main-nav .contact .email-compose {
         transform: translate(0, -20px); }
       #main-nav .contact .emailExpanded {
@@ -501,6 +502,44 @@ ui-view {
   .hideContact {
     transform: translateX(100px); } }
 
+
+#svg-button-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  height: 93px;
+  cursor: pointer;
+  transition: 0.25s; }
+  #svg-button-container:hover {
+    transform: scale(1.05); }
+  #svg-button-container:active {
+    transform: translateY(3px); }
+  #svg-button-container .link-text {
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1em; }
+  #svg-button-container .svg-button {
+    position: absolute;
+    top: 0;
+    left: 0; }
+  #svg-button-container .button-path {
+    stroke: #b3b3b3;
+    stroke-width: 2px;
+    fill: rgba(255, 255, 255, 0);
+    stroke-dasharray: 400px;
+    transition: 1s; }
+  #svg-button-container .svg-button .button-ol-1 {
+    stroke-dashoffset: 400px; }
+  #svg-button-container .svg-button .button-ol-2 {
+    stroke-dashoffset: 0px; }
+  #svg-button-container .svg-button:hover .button-ol-1 {
+    stroke-dashoffset: 1200px; }
+  #svg-button-container .svg-button:hover .button-ol-2 {
+    stroke-dashoffset: -800px; }
 
 @font-face {
   font-family: Neon80;
@@ -541,41 +580,43 @@ ui-view {
     color: white;
     opacity: 1;
     text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #f47200, 0 0 35px #f47200, 0 0 40px #f47200, 0 0 50px #f47200, 0 0 75px #f47200;
-    background: url(./app/routes/about/images/neon-1.jpg);
+    background: linear-gradient(transparent, transparent 50%, black 100%), url(./app/routes/about/images/neon-1.jpg);
     background-size: cover; }
     #about-section #neon-sign .small-neon-text {
       font-size: 56px; }
     #about-section #neon-sign #neon-flicker {
-      animation: flicker 1s ease-in-out infinite alternate; }
+      animation: flicker 4s ease-in-out infinite alternate; }
     #about-section #neon-sign .neon-animation {
       text-align: center;
-      overflow-wrap: break-word;
-      animation: neon2 10s ease-in-out infinite alternate; }
+      overflow-wrap: break-word; }
 
 @keyframes flicker {
   0% {
     color: rgba(255, 255, 255, 0.8);
     text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #f47200, 0 0 70px #f47200, 0 0 80px #f47200, 0 0 100px #f47200, 0 0 150px #f47200; }
-  2% {
+  1% {
     color: rgba(255, 255, 255, 0.2);
     text-shadow: 2px 2px 25px black; }
-  4% {
+  2% {
     color: rgba(255, 255, 255, 0.8);
     text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #f47200, 0 0 70px #f47200, 0 0 80px #f47200, 0 0 100px #f47200, 0 0 150px #f47200; }
-  20% {
+  10% {
     color: white;
     text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #f47200, 0 0 35px #f47200, 0 0 40px #f47200, 0 0 50px #f47200, 0 0 75px #f47200; }
-  25% {
+  12% {
     color: rgba(255, 255, 255, 0.2);
     text-shadow: 2px 2px 25px black; }
-  28% {
+  15% {
     color: rgba(255, 255, 255, 0.8);
     text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #f47200, 0 0 35px #f47200, 0 0 40px #f47200, 0 0 50px #f47200, 0 0 75px #f47200; }
-  30% {
+  19% {
     color: rgba(255, 255, 255, 0.2);
     text-shadow: 2px 2px 25px black; }
-  31% {
+  21%, 89% {
     color: rgba(255, 255, 255, 0.7);
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #f47200, 0 0 35px #f47200, 0 0 40px #f47200, 0 0 50px #f47200, 0 0 75px #f47200; }
+  90% {
+    color: white;
     text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #f47200, 0 0 35px #f47200, 0 0 40px #f47200, 0 0 50px #f47200, 0 0 75px #f47200; }
   100% {
     color: rgba(255, 255, 255, 0.8);
@@ -642,10 +683,6 @@ ui-view {
       transform: translate3d(0, 0, 2); }
       #about-section .dev-logo-repeat-container:hover .dev-logo-text {
         opacity: 0.8; }
-  #about-section .tilted-divider {
-    width: 100vw;
-    height: 100px;
-    background: linear-gradient(transparent, rgba(200, 200, 200, 0.1) 50%, transparent); }
   #about-section .portfolio-link {
     display: flex;
     flex-direction: column;
@@ -666,10 +703,10 @@ ui-view {
       cursor: pointer;
       transition: 0.2s; }
       #about-section .portfolio-link button:hover {
-        background: #c8c8c8;
-        border: black 1px solid;
-        color: black;
-        box-shadow: 0 0 50px rgba(200, 200, 200, 0.7); }
+        background: #f47200;
+        color: #fff;
+        border: none;
+        box-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #f47200, 0 0 35px #f47200, 0 0 40px #f47200, 0 0 50px #f47200, 0 0 75px #f47200; }
   @media (max-width: 525px) {
     #about-section #neon-sign {
       font-size: 48px; }
@@ -998,7 +1035,6 @@ ui-view {
   #home-container .link-bar {
     width: 100vw;
     height: 100vh;
-    background: linear-gradient(black 0%, #141414 100%);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -1006,6 +1042,16 @@ ui-view {
   #home-container .headline {
     text-align: center;
     font-size: 120px; }
+  #home-container #cardiac-canvas {
+    position: absolute;
+    top: 0;
+    background: #590a16;
+    z-index: -5; }
+  #home-container #cardiac-div {
+    background: linear-gradient(transparent, black 100%); }
+    #home-container #cardiac-div .headline {
+      color: #969696;
+      font-family: "Josefin Sans", sans-serif; }
   #home-container #space-div {
     background: url("./app/routes/home/img/space-game-2.png");
     background-size: cover;
@@ -1015,22 +1061,24 @@ ui-view {
       color: orange;
       text-shadow: -5px 5px #610e0e;
       font-family: "Faster One", cursive; }
-  #home-container #golden-ratio-div .headline {
-    color: #ffca00;
-    text-shadow: -2px 2px #4e4411;
-    font-family: "Cinzel", serif; }
-  #home-container #golden-ratio-div .top {
-    z-index: 1; }
+  #home-container #golden-ratio-div {
+    background: linear-gradient(transparent, black 100%); }
+    #home-container #golden-ratio-div .headline {
+      color: #ffca00;
+      text-shadow: -2px 2px #4e4411;
+      font-family: "Cinzel", serif; }
+    #home-container #golden-ratio-div .top {
+      z-index: 1; }
   #home-container #golden-ratio-div #gr-svg-bg {
     stroke: #333;
-    opacity: 0.3;
+    opacity: 0;
     position: absolute;
     width: inherit;
     max-width: 100%;
     height: inherit;
-    transition: opacity 1s; }
+    transition: opacity 1.5s; }
   #home-container #golden-ratio-div:hover #gr-svg-bg {
-    opacity: 1; }
+    opacity: 0.7; }
   #home-container #weather-app-div .headline {
     font-family: "Baloo Bhaina", cursive;
     color: skyblue; }
@@ -1043,42 +1091,6 @@ ui-view {
     align-items: center; }
   #home-container .top {
     justify-content: flex-end; }
-  #home-container .svg-button {
-    position: absolute;
-    width: 140px;
-    transition: 0.25s; }
-    #home-container .svg-button:hover {
-      cursor: pointer;
-      transform: scale(1.1); }
-    #home-container .svg-button:active {
-      transform: translateY(6px); }
-  #home-container .svg-button .button-ol-1 {
-    stroke: #b3b3b3;
-    stroke-width: 2px;
-    fill: rgba(255, 255, 255, 0);
-    stroke-dasharray: 400px;
-    stroke-dashoffset: 400px;
-    transition: 1s; }
-  #home-container .svg-button .button-ol-2 {
-    stroke: #b3b3b3;
-    stroke-width: 2px;
-    fill: rgba(255, 255, 255, 0);
-    stroke-dasharray: 400px;
-    stroke-dashoffset: 0px;
-    transition: 1s; }
-  #home-container .svg-button:hover .button-ol-1 {
-    stroke-dashoffset: 1200px;
-    transition: 1s; }
-  #home-container .svg-button:hover .button-ol-2 {
-    stroke-dashoffset: -800px;
-    transition: 1s; }
-  #home-container .link-text {
-    position: relative;
-    font-size: 1em;
-    width: 140px;
-    text-align: center;
-    transition: 0.5s;
-    font-family: "Julius Sans One", sans-serif; }
   @media (max-width: 750px) {
     #home-container .headline {
       font-size: 68px; } }
@@ -1146,9 +1158,9 @@ ui-view {
       outline: none; }
   #weather-app-section #landing-page-background {
     z-index: 10000;
-    color: #cccccc;
+    color: #ccccccB;
     width: 100vw;
-    height: 100vh;
+    height: 105vh;
     position: fixed;
     background: url(./app/routes/weather-app/images/bg.jpg);
     background-size: cover; }
@@ -1177,46 +1189,49 @@ ui-view {
     font-family: 'Baloo Bhaina', cursive;
     color: #684155;
     font-size: 96px;
-    text-align: center; }
+    text-align: center;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3), 0 0 20px #684155; }
   #weather-app-section button {
     padding: 10px 15px;
     background: none;
     color: rgba(200, 200, 200, 0.75);
     border: 0.5px solid rgba(200, 200, 200, 0.75);
     border-radius: 20px;
-    transition: 0.15s; }
-  #weather-app-section button:hover {
     cursor: pointer;
-    color: #c8c8c8;
-    border: 0.5px solid #c8c8c8;
-    box-shadow: 0px 2px 10px 0px rgba(255, 255, 255, 0.15);
-    transform: translate(0px, -1px); }
-  #weather-app-section button:focus {
-    outline: none; }
-  #weather-app-section button:active {
-    outline: none;
-    transform: translate(0px, 3px);
-    box-shadow: 0px 1px 5px 0px rgba(255, 255, 255, 0.15); }
+    transition: 0.15s; }
+    #weather-app-section button:hover {
+      color: #c8c8c8;
+      background: #684155;
+      border: none;
+      box-shadow: 0 0 20px #684155;
+      transform: translate(0px, -1px); }
+    #weather-app-section button:focus {
+      outline: none; }
+    #weather-app-section button:active {
+      outline: none;
+      transform: translate(0px, 3px);
+      box-shadow: 0px 1px 5px 0px rgba(255, 255, 255, 0.15); }
   #weather-app-section .search-input-container input {
     background: none; }
   #weather-app-section .search-input {
     border: none;
     background: transparent;
     padding: 10px;
+    width: 150px;
     margin-bottom: 0px;
     border-radius: 20px;
     box-shadow: inset 0px 0px 10px 0px rgba(255, 255, 255, 0.15);
     text-align: center;
-    color: #cccccc;
+    color: #fff;
     transition: 0.5s; }
-  #weather-app-section .search-input::placeholder {
-    color: rgba(255, 255, 255, 0.25);
-    text-align: center; }
-  #weather-app-section .search-input:focus {
-    background: rgba(255, 255, 255, 0.05);
-    box-shadow: inset 0px 0px 20px 0px rgba(255, 255, 255, 0.15);
-    outline: none;
-    width: 250px; }
+    #weather-app-section .search-input::placeholder {
+      color: rgba(255, 255, 255, 0.25);
+      text-align: center; }
+    #weather-app-section .search-input:focus {
+      background: rgba(255, 255, 255, 0.25);
+      box-shadow: inset 0px 0px 20px 0px rgba(255, 255, 255, 0.15);
+      outline: none;
+      width: 225px; }
   #weather-app-section .data-header {
     position: fixed;
     width: 80%;
@@ -1228,10 +1243,11 @@ ui-view {
     z-index: 10000;
     color: rgba(250, 250, 250, 0.8);
     font-size: 36px;
+    text-shadow: 0 0 10px black;
     transition: 0.5s; }
-  #weather-app-section .data-header {
+  #weather-app-section .data-header * {
     padding: 50px;
-      padding-margin: 10px;
+    margin: 10px;
     flex: 1; }
   #weather-app-section .time-temp-container {
     display: flex;
@@ -1393,20 +1409,22 @@ ui-view {
     top: 0;
     left: -300px;
     width: 300px;
-    height: 90vh;
-    margin-top: 30px;
-    padding-top: 75px;
+    height: 600px;
+    margin-top: 130px;
+    padding-top: 25px;
     background: linear-gradient(#2F80ED 0%, #56CCF2 100%);
     border-radius: 10px;
     overflow-x: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
-    transition: 1s;
+    transition: 0.3s;
     color: white;
     box-shadow: 0 0 20px 2px rgba(100, 100, 100, 0.3); }
-    #weather-app-section #side-nav * {
-      margin: 5px 0px; }
+    #weather-app-section #side-nav h2 {
+      text-align: center;
+      font-size: 28px;
+      margin: 10px 0; }
     #weather-app-section #side-nav h3 {
       font-size: 24px;
       font-weight: bold;
@@ -1414,10 +1432,24 @@ ui-view {
     #weather-app-section #side-nav a {
       text-decoration: none;
       color: #ccc; }
+    #weather-app-section #side-nav .horizontal-line {
+      width: 100%;
+      height: 2px;
+      background: #c8c8c8; }
+    #weather-app-section #side-nav .data-for-nerds {
+      margin: 5px 0; }
+  #weather-app-section #side-nav-toggle-button {
+    position: fixed;
+    left: 0;
+    bottom: 200px;
+    width: 20px;
+    height: 20px;
+    background: skyblue;
+    transition: 0.3s; }
 
-@media (max-width: 600px) {
+@media (max-width: 675px) {
   #weather-app-section #site-title {
-    font-size: 48px; }
+    font-size: 72px; }
   #weather-app-section .data-header {
     margin-top: 15px;
     padding: 10px;
@@ -1427,7 +1459,9 @@ ui-view {
     #weather-app-section .data-header * {
       margin: 5px; }
   #weather-app-section .controlls {
-    bottom: 50px; } }
+    bottom: 50px; }
+  #weather-app-section #side-nav {
+    margin-top: 10px; } }
 
 @media (max-height: 450px) {
   #weather-app-section #side-nav {
