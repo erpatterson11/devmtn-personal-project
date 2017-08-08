@@ -54,6 +54,9 @@ table {
 button:focus {
   outline: none; }
 
+a {
+  color: inherit; }
+
 :root {
   --gr-bg-color: #4ABDAC;
   --gr-accent-1-color: #FC4A1A;
@@ -517,7 +520,6 @@ ui-view {
   #svg-button-container:active {
     transform: translateY(3px); }
   #svg-button-container .link-text {
-    padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1051,7 +1053,8 @@ ui-view {
     background: linear-gradient(transparent, black 100%); }
     #home-container #cardiac-div .headline {
       color: #969696;
-      font-family: "Josefin Sans", sans-serif; }
+      font-family: "Josefin Sans", sans-serif;
+      text-shadow: 0 0 15px #969696; }
   #home-container #space-div {
     background: url("./app/routes/home/img/space-game-2.png");
     background-size: cover;

@@ -299,9 +299,6 @@ angular.module('portfolioApp').service('aboutService', function() {
 
 
 })
-
-
-
 angular.module("portfolioApp").controller("gameCtrl", ["$scope", "$timeout", "scoreService", "gameService", function($scope, $timeout, scoreService, gameService) {
 
 
@@ -1492,6 +1489,9 @@ angular.module("portfolioApp").service("scoreService", ["$http", function($http)
   }
 
 }])
+
+
+
 
 // INITILIZE CONTROLLER
 // ============================================================
