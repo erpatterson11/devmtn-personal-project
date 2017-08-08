@@ -32,7 +32,7 @@
   </head>
   <body ng-controller='mainCtrl'>
 
-   <nav id='main-nav'>
+   <nav id='main-nav' ng-class="{hideMainNav: !showNav}">
       <ul id='main-links' ng-class="{hideLinks: !showNav}">
         <li ui-sref='portfolio' class='nav-link' ng-click='showNav = !showNav' >portfolio</li>
         <li ui-sref='about' class='nav-link' ng-click='showNav = !showNav' >about</li>

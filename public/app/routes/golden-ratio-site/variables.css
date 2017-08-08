@@ -49,13 +49,13 @@
 
 #golden-ratio-section canvas {
   position: fixed;
-  transition: 1s;
+  transition: 0.3s;
   background: transparent;
 }
 
 #golden-ratio-section .spiral {
   position: fixed;
-  transition: 0.5s;
+  transition: 0.3s;
   -webkit-backface-visibility: hidden;
   -webkit-transform: translateZ(0) scale(1.0, 1.0);
   backface-visibility: hidden;
@@ -71,13 +71,13 @@
   flex-wrap: wrap;
   left: -100%;
   position: absolute;
-  border-style: inset;
+  border-style: outset;
   border-left:  2px solid var(--gr-bg-color);
   border-top:  2px solid var(--gr-bg-color);
   border-right:  2px solid var(--gr-bg-color);
   backface-visibility: hidden;
   -webkit-font-smoothing: anitaliased;
-  transition: 0.25s;
+  transition: 0.3s;
 }
 
 #golden-ratio-section .section:hover {

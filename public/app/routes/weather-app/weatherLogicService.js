@@ -187,9 +187,6 @@ angular.module('portfolioApp').service('weatherLogicService', function(weatherCa
           weatherCanvasService.setSnowBool(snow)
         }
 
-        // set side-menu background based on chosen time
-        sideNav.css({'background':`radial-gradient(circle at -10px 110%, ${config[2]})`})
-
         // Toggle stars if it is night
 
         if (!isItNight) {

@@ -55,6 +55,9 @@ ui-view
 .activeNav
   transform: translateY(0px) !important
 
+.hideMainNav
+  height: 0
+
 #main-nav
   position: fixed
   top: 0
@@ -74,6 +77,7 @@ ui-view
     padding-left: 130px
     transition: 0.3s
 
+
   .nav-link
     font-family: Neon80
     text-align: center
@@ -81,11 +85,12 @@ ui-view
     transition: all 0.5s
     color:rgb(255,255,255,0.6)
     margin-right: 20px
-    text-shadow: 0 0 15px rgb(255,255,255r)
+    text-shadow: 0 0 15px rgb(255,255,255)
+    transition: 0.3s
 
     &:hover
-      color: #FF9900
-      animation: neon 1.5s ease-in-out infinite alternate;
+      color: rgb(255,255,255)
+      text-shadow: 0 0 15px rgb(255,255,255), 0 0 25px rgb(255,255,255)      
 
   .contact
     background: #000000
@@ -128,18 +133,12 @@ ui-view
         margin: 0 10px
         opacity: 0.75
         transition: 0.1s
+        cursor: pointer
 
         &:hover
             opacity: 1
             transform: scale(1.1)
-
-  @keyframes neon
-    from 
-      text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #FF9900, 0 0 35px #FF9900, 0 0 40px #FF9900, 0 0 50px #FF9900, 0 0 75px #FF9900
-    to 
-      text-shadow: 0 0 2px #fff, 0 0 4px #fff, 0 0 8px #fff, 0 0 14px #FF9900, 0 0 18px #FF9900, 0 0 24px #FF9900, 0 0 30px #FF9900, 0 0 35px #FF9900
-    
-  
+ 
 
 #ham-menu
   position: fixed

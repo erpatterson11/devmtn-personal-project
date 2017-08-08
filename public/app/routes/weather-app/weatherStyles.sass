@@ -11,7 +11,7 @@
   .flex-wrap
   	flex-wrap: wrap
 
-  .controlls
+  .controls
     position: fixed
     bottom: 0
     width: 100vw
@@ -22,7 +22,7 @@
       background: rgba(255,255,255,0.05)
       margin: 10px
       border-radius: 10px
-      box-shadow: inset 0px 0px 10px 0px rgba(255,255,255,0.15)
+      box-shadow: inset 0px 0px 10px rgba(255,255,255,0.15)
       color: white
       transition: 0.3s
     input:focus
@@ -31,13 +31,12 @@
 
   #landing-page-background
     z-index: 10000
-    color: #ccccccB
+    color: #CCCCCB
     width: 100vw
     height: 105vh
     position: fixed
     background: url(./app/routes/weather-app/images/bg.jpg)
     background-size: cover
-
 
   .slide-up-animation
     animation: slide-up 1s forwards
@@ -121,33 +120,31 @@
       outline: none
       width: 225px
 
-
   .data-header
     position: fixed
-    width: 80%
+    width: 100%
+    min-height: 80px
     top: 0
     right: 0
+    padding-left: 130px
+    margin-top: 20px
     display: flex
     justify-content: space-between
     align-items: center
-    z-index: 10000
     color: rgba(250,250,250,0.8)
-    font-size: 36px
+    font-size: 32px
     text-shadow: 0 0 10px rgb(0,0,0)
     transition: 0.5s
 
-  .data-header
-     *
-      padding: 50px
+    & > *
       margin: 10px
-      flex: 1
+      width: 20%
+    
+    .location
+      justify-content: flex-end
 
-  .time-temp-container
-    display: flex
-    justify-content: center
-    align-items: center
-    flex-direction: column
-
+    .selected-time
+      font-size: 24px    
 
   .background
     width: 100vw
@@ -156,7 +153,6 @@
     top: 0
     left: 0
 
-
   #gray-sky
     opacity: 0
     position: fixed
@@ -164,17 +160,14 @@
     height: 100vh
     background-image: linear-gradient(0, #ccc, #aaa)
 
-
   #mountainSVG
     position: fixed
     max-height: 65vh
     bottom: 0
     left: 0
 
-
   .cloud
     position: fixed
-
 
   .cloud1
     top: 50
@@ -361,45 +354,30 @@
     left: -300px
     width: 300px
     height: 600px
-    margin-top: 130px
-    padding-top: 25px
-    background: linear-gradient(#2F80ED 0%, #56CCF2 100%)
+    margin-top: 80px
     border-radius: 10px
     overflow-x: hidden
-    display: flex
-    flex-direction: column
-    align-items: center
+    box-shadow: 8px 7px 20px 0px rgba(51, 51, 51, 0.34)
     transition: 0.3s
-    color: white
-    box-shadow: 0 0 20px 2px rgba(100,100,100,0.3)
-    h2
-      text-align: center
-      font-size: 28px
-      margin: 10px 0
-    h3
-      font-size: 24px
-      font-weight: bold
-      margin-top: 10px
-    a
-      text-decoration: none
-      color: #ccc
-      
-    .horizontal-line
-      width: 100%
-      height: 2px
-      background: rgb(200,200,200)
 
-    .data-for-nerds
-      margin: 5px 0
 
   #side-nav-toggle-button
     position: fixed
-    left: 0
-    bottom: 200px
-    width: 20px
-    height: 20px
-    background: skyblue
+    left: -20px
+    top: 0
+    margin-top: 100px
+    padding-right: 20px
+    width: 50px
+    height: 30px
+    background: rgba(0,0,0,0.3)
+    transform: rotateY(180deg)
+    border-radius: 5px
+    display: flex
+    justify-content: center
+    align-items: center 
+    cursor: pointer
     transition: 0.3s
+ 
 
 @media (max-width: 675px)
   #weather-app-section
@@ -412,24 +390,29 @@
       font-size: 20px
       flex-direction: column
       align-items: flex-end
-      *
+
+      & > *
         margin: 5px
+        width: 70%
+        align-items: flex-end
+
+      .selected-time
+        font-size: 20px 
       
     .controlls
       bottom: 50px
-
+ 
     #side-nav
       margin-top: 10px
-      
-    
+
+    #side-nav-toggle-button
+      margin-top: 30px
 
 @media (max-height: 450px)
   #weather-app-section
     #side-nav
       height: auto
       overflow: scroll
-
-
 
 .hidden
   display: none !important

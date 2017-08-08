@@ -88,43 +88,25 @@
     </svg>
 
     <div class="data-header">
-        <div class="location flex-center">{{currentCity}}, {{currentState}}</div>
-        <div class='horizontal-line'></div>
-        <div class='time-temp-container'>   
-          <div class="selected-temp flex-center">{{hourly[selectedTime].temperature | number: 0 }}&degF</div>
-          <label for='timeSlider'>{{unixToTime(hourly[selectedTime].time) | date: 'EEE h:mm a' }}</label>
-        </div>
+        <div class="flex-center location">{{currentCity}}, {{currentState}}</div>
+        <label class='flex-center selected-time' for='timeSlider'>{{unixToTime(hourly[selectedTime].time) | date: 'EEE h:mm a' }}</label> 
+        <div class="selected-temp flex-center">{{hourly[selectedTime].temperature | number: 0 }}&degF</div>
         <div class="selected-summary flex-center">{{hourly[selectedTime].summary}}</div>
     </div>
 
-    <div class='controlls flex-center'>
+    <div class='controls flex-center'>
         <input id="timeSlider" type="range" min='0' max='48' ng-model='selectedTime' ng-change='changeArtwork(selectedTime)'>
     </div>
 </div>
 
-    <div id='side-nav-toggle-button' ng-click="toggleNav(); "></div>
-    <div id='side-nav'>
-      <h2>{{currentCity}}, {{currentState}}</h2>
-      <button type="button" name="myLocation" ng-click="getWeatherDataFromBrowserLocation()">See weather forecast for my location</button>
-      <br/>
-      <input type="text" class='search-input' ng-model='searchLocation' placeholder="ex. 93105 or Provo, UT" ng-keyup="$event.keyCode == 13 && searchWeatherAndLocationInfo(searchLocation)">
-      <br>
-      <button type="button" name="button" ng-click="searchWeatherAndLocationInfo(searchLocation)">Search</button>
-      </br>
-      <h3>Data for nerds</h3>
-      </br>
-      <ul class='data-for-nerds'>
-        <li>Humidity: {{ hourly[selectedTime].humidity*100 }}%</li>
-        <li>Cloud cover: {{ hourly[selectedTime].cloudCover*100 }}%</li>
-        <li>Chance of precip: {{ hourly[selectedTime].precipProbability*100 }}%</li>
-        <li>Precip intensity: {{ hourly[selectedTime].precipIntensity*100 }}/100</li>
-        <li>Pressure: {{ hourly[selectedTime].pressure }}mbar</li>
-        <li>Wind bearing: {{ hourly[selectedTime].windBearing }}deg</li>
-        <li>Wind gust: {{ hourly[selectedTime].windGust }}mph</li>
-        <li>Wind speed: {{ hourly[selectedTime].windSpeed }}mph</li>
-      </ul>
-      <p>Data provided by <a href="https://darksky.net/">DarkSky</a></p>
-    </div>
+    <weather-side-nav id='side-nav'></weather-side-nav>
+
+    <div id='side-nav-toggle-button' ng-click="toggleNav(); ">
+        <svg height="20px" viewBox="0 0 50 80" xml:space="preserve">
+            <polyline fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" points="
+             45.63,75.8 0.375,38.087 45.63,0.375 "/>
+        </svg>  
+   </div>
 
     <div id='landing-page-background' class="flex-center">
         <div id='site-title' class='flex-center'>Visual Weather</div>

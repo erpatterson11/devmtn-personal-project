@@ -1,6 +1,5 @@
 // CONFIG
   // ============================================================
-scrollContainer.$inject = ["$window"];
   angular.module("portfolioApp",['ui.router', 'ngAnimate'])
   
   .config(["$stateProvider", "$urlRouterProvider", function($stateProvider, $urlRouterProvider) {
@@ -104,37 +103,6 @@ angular.module("portfolioApp").service("mainService", ["$http", function($http) 
 
 }]);
 
-angular.module('portfolioApp')
-    .directive('scrollContainer', scrollContainer)
-
-
-
-function scrollContainer($window) {
-
-    return {
-        restrict: 'A',
-        scope: true,
-        link: function(scope, element, attrs) {
-
-            angular.element($window).bind("scroll", function() {
-
-                $('.hideme').each( function(i){
-                    var bottom_of_object = $(this).offset().top + $(this).outerHeight();
-                    var bottom_of_window = $(window).scrollTop() + $(window).height();
-
-                    /* If the object is completely visible in the window, fade it it */
-                    if( bottom_of_window > bottom_of_object ){
-
-                        $(this).animate({'opacity':'1'},500);
-
-                    }
-               })
-           })
-        }
-    }
-}
-
-
 // INITILIZE SERVICE
 // ============================================================
 angular.module("portfolioApp").service("reusableFuncsService", ["$http", function($http) {
@@ -161,32 +129,6 @@ angular.module("portfolioApp").service("reusableFuncsService", ["$http", functio
 
 }]);
 
-angular.module('portfolioApp')
-.directive("scrollHide", ["$window", function ($window) {
-    return function(scope, element, attrs) {
-        angular.element($window).bind("scroll", function() {
-            scope.toggle = false
-            console.log(scope.toggle)
-            scope.$apply()
-        })
-    }
-}])
-angular.module('portfolioApp').directive('youtube', ["$sce", function($sce) {
-  return {
-    restrict: 'EA',
-    scope: { code:'=' },
-    replace: true,
-    template: '<div style="height:400px;"><iframe style="overflow:hidden;height:100%;width:100%" width="100%" height="100%" src="{{url}}" frameborder="0" allowfullscreen></iframe></div>',
-    link: function (scope) {
-        scope.$watch('code', function (newVal) {
-           if (newVal) {
-               scope.url = $sce.trustAsResourceUrl("http://www.youtube.com/embed/" + newVal);
-           }
-        })
-    }
-  }
-}])
-
 angular.module('portfolioApp').directive('svgButton', function() {
 
     return {
@@ -195,6 +137,13 @@ angular.module('portfolioApp').directive('svgButton', function() {
         scope: {
             text: '@'
         }
+    }
+})
+angular.module('portfolioApp').directive('weatherSideNav', function() {
+
+    return {
+        restrict: 'E',
+        templateUrl: './app/directives/weatherSideNav/weatherSideNavTmpl.html'
     }
 })
 angular.module('portfolioApp').controller('aboutCtrl', ["$scope", "aboutService", function($scope, aboutService) {
@@ -299,6 +248,9 @@ angular.module('portfolioApp').service('aboutService', function() {
 
 
 })
+
+
+
 angular.module("portfolioApp").controller("gameCtrl", ["$scope", "$timeout", "scoreService", "gameService", function($scope, $timeout, scoreService, gameService) {
 
 
@@ -1490,9 +1442,6 @@ angular.module("portfolioApp").service("scoreService", ["$http", function($http)
 
 }])
 
-
-
-
 // INITILIZE CONTROLLER
 // ============================================================
 angular.module("portfolioApp").controller("goldenRatioCtrl", ["$scope", "goldenRatioService", function($scope, goldenRatioService) {
@@ -2310,8 +2259,10 @@ function getLocationByCoords(latitude, longitude) {
 
 this.getWeatherDataFromBrowserLocation = function() {
   return getBrowserLocation().then(function(results) {
+    console.log(results)
      return $q.all({weather: getWeatherData(results.coords.latitude, results.coords.longitude), location: getLocationByCoords(results.coords.latitude, results.coords.longitude)})
       .then(function(apiResults) {
+          console.log(apiResults)
           currentLocation.weather = apiResults.weather;
           currentLocation.city = apiResults.location.data.results[0].address_components.city;
           currentLocation.state = apiResults.location.data.results[0].address_components.state;
@@ -2336,6 +2287,10 @@ this.searchWeatherAndLocationInfo = function(address) {
     })
 }
 
+
+this.checkCachedWeatherData = function() {
+  
+}
 
 }])//---------------------------------------------------------------------------
 
@@ -2633,44 +2588,46 @@ $scope.fiveDay = false
 $scope.selectedTime = 0
 $scope.sideNav = false
 
+
+//-------------------------------------------------------------------
+//            Other Functions
+//--------------------------------------------------------------------
+
+
+function setWeatherData(data) {
+      $scope.currentCity = data.city
+      $scope.currentState = data.state
+      $scope.weather = data.weather.data
+      $scope.hourly = data.weather.data.hourly.data
+      $('#timeSlider').val(0)
+      $scope.changeArtwork($scope.selectedTime)
+      $scope.artworkTransition()
+      localStorage.setItem("results", JSON.stringify(data))
+}
+
+function checkLocalData() {
+  let storedData = JSON.parse(localStorage.getItem("results"))
+  let cachedTime = storedData.weather.data.currently.time
+  let now = Date.now() / 1000
+  if (now - cachedTime < 3600) {
+    setWeatherData( storedData )
+  }
+}
+
   //------------------------------------------------------------------------------
   //            $scope Functions
   //------------------------------------------------------------------------------
 
-
 $scope.getWeatherDataFromBrowserLocation = function() {
-  weatherApiService.getWeatherDataFromBrowserLocation()
-  .then(function(results) {
-    $scope.currentCity = results.city
-    $scope.currentState = results.state
-
-    $scope.weather = results.weather.data
-    $scope.hourly = results.weather.data.hourly.data
-
-    $('#timeSlider').val(0)
-
-    $scope.changeArtwork($scope.selectedTime)
-    $scope.artworkTransition()
-    localStorage.weather = JSON.stringify(results.weather.data)
-    })
+  weatherApiService.getWeatherDataFromBrowserLocation().then(function(results) {
+    setWeatherData(results)
+  })
 }
 
-
 $scope.searchWeatherAndLocationInfo = function(address) {
-      weatherApiService.searchWeatherAndLocationInfo(address).then(function(results) {
-        $scope.currentCity = results.city
-        $scope.currentState = results.state
-
-        $scope.weather = results.weather.data
-        $scope.hourly = results.weather.data.hourly.data
-
-        $('#timeSlider').val(0)
-
-        $scope.changeArtwork($scope.selectedTime)
-        $scope.searchLocation = ''
-        $scope.artworkTransition()
-        localStorage.weather = JSON.stringify(results.weather.data)
-      })
+  weatherApiService.searchWeatherAndLocationInfo(address).then(function(results) {
+    setWeatherData(results)
+  })
 }
 
 
@@ -2692,36 +2649,20 @@ $scope.changeArtwork = function(inputTime) {
 }
 
 $scope.toggleNav = function() {
-  console.log($scope.sideNav,  $('#side-nav, #side-nav-toggle-button'))
   if (!$scope.sideNav) {
-    $('#side-nav, #side-nav-toggle-button').css({'transform':'translateX(310px)'})
+    $('#side-nav').css({'transform':'translateX(310px)'})
+    $('#side-nav-toggle-button').css({'transform':'translateX(280px)', 'background':'rgba(0,0,0,0)'})
     $('.data-header').css({'transform':'translateY(-250px)'})
-    $('.controlls').css({'transform':'translateY(250px)'})
   } else {
-    $('#side-nav, #side-nav-toggle-button').css({'transform':'translateX(0px)'})
+    $('#side-nav, #side-nav-toggle-button').css({'transform':'translateX(0px) rotateY(180deg)', 'background':'rgba(0,0,0,0.3)'})
     $('.data-header').css({'transform':'translateY(0px)'})
-    $('.controlls').css({'transform':'translateY(0px)'})
   }
   $scope.sideNav = !$scope.sideNav
 }
 
 
-$(document).mouseup(function(e) {
-    let sideNav = $("#side-nav")
-    console.log(!sideNav.is(e.target), sideNav.has(e.target).length === 0)
-    if (!sideNav.is(e.target) && sideNav.has(e.target).length === 0) {
-      $('#side-nav, #side-nav-toggle-button').css({'transform':'translateX(0px)'})
-      $('.data-header').css({'transform':'translateY(0px)'})
-      $('.controlls').css({'transform':'translateY(0px)'})
-      $scope.sideNav = false
-    }
-});
 
-
-//-------------------------------------------------------------------
-//            Other Functions
-//--------------------------------------------------------------------
-
+checkLocalData()
 
 }])//---------------------------------------------------------------------------------
 
@@ -2913,9 +2854,6 @@ angular.module('portfolioApp').service('weatherLogicService', ["weatherCanvasSer
           weatherCanvasService.setRainBool(rain)
           weatherCanvasService.setSnowBool(snow)
         }
-
-        // set side-menu background based on chosen time
-        sideNav.css({'background':`radial-gradient(circle at -10px 110%, ${config[2]})`})
 
         // Toggle stars if it is night
 

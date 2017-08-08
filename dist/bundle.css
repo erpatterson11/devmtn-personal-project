@@ -108,13 +108,13 @@ a {
 
 #golden-ratio-section canvas {
   position: fixed;
-  transition: 1s;
+  transition: 0.3s;
   background: transparent;
 }
 
 #golden-ratio-section .spiral {
   position: fixed;
-  transition: 0.5s;
+  transition: 0.3s;
   -webkit-backface-visibility: hidden;
   -webkit-transform: translateZ(0) scale(1.0, 1.0);
   backface-visibility: hidden;
@@ -130,13 +130,13 @@ a {
   flex-wrap: wrap;
   left: -100%;
   position: absolute;
-  border-style: inset;
+  border-style: outset;
   border-left:  2px solid var(--gr-bg-color);
   border-top:  2px solid var(--gr-bg-color);
   border-right:  2px solid var(--gr-bg-color);
   backface-visibility: hidden;
   -webkit-font-smoothing: anitaliased;
-  transition: 0.25s;
+  transition: 0.3s;
 }
 
 #golden-ratio-section .section:hover {
@@ -354,6 +354,9 @@ ui-view {
 .activeNav {
   transform: translateY(0px) !important; }
 
+.hideMainNav {
+  height: 0; }
+
 #main-nav {
   position: fixed;
   top: 0;
@@ -377,10 +380,11 @@ ui-view {
     cursor: pointer;
     transition: all 0.5s;
     margin-right: 20px;
-    text-shadow: 0 0 15px white; }
+    text-shadow: 0 0 15px white;
+    transition: 0.3s; }
     #main-nav .nav-link:hover {
-      color: #FF9900;
-      animation: neon 1.5s ease-in-out infinite alternate; }
+      color: white;
+      text-shadow: 0 0 15px white, 0 0 25px white; }
   #main-nav .contact {
     background: #000000;
     display: flex;
@@ -416,16 +420,11 @@ ui-view {
       width: 32px;
       margin: 0 10px;
       opacity: 0.75;
-      transition: 0.1s; }
+      transition: 0.1s;
+      cursor: pointer; }
       #main-nav .contact .social-logo:hover {
         opacity: 1;
         transform: scale(1.1); }
-
-@keyframes neon {
-  from {
-    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #FF9900, 0 0 35px #FF9900, 0 0 40px #FF9900, 0 0 50px #FF9900, 0 0 75px #FF9900; }
-  to {
-    text-shadow: 0 0 2px #fff, 0 0 4px #fff, 0 0 8px #fff, 0 0 14px #FF9900, 0 0 18px #FF9900, 0 0 24px #FF9900, 0 0 30px #FF9900, 0 0 35px #FF9900; } }
 
 #ham-menu {
   position: fixed;
@@ -542,6 +541,50 @@ ui-view {
     stroke-dashoffset: 1200px; }
   #svg-button-container .svg-button:hover .button-ol-2 {
     stroke-dashoffset: -800px; }
+
+#side-nav-container {
+  width: 100%;
+  height: 100%;
+  padding-top: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  background: rgba(0, 0, 0, 0.3);
+  text-shadow: 1px 1px 16px #2d2d2d; }
+  #side-nav-container h2 {
+    text-align: center;
+    font-size: 28px;
+    margin: 10px 0; }
+  #side-nav-container h3 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 10px; }
+  #side-nav-container a {
+    text-decoration: none;
+    color: #ccc; }
+  #side-nav-container .side-nav-button {
+    margin-top: 10px;
+    margin-bottom: 20px; }
+    #side-nav-container .side-nav-button:hover {
+      background: rgba(255, 255, 255, 0.3);
+      color: white;
+      box-shadow: 3px 5px 20px 3px rgba(130, 130, 130, 0.2); }
+  #side-nav-container .arrow-container {
+    width: 80%;
+    display: flex;
+    justify-content: flex-end; }
+  #side-nav-container li {
+    margin: 5px 0; }
+  #side-nav-container .horizontal-line {
+    margin-top: 5px;
+    width: 60%;
+    height: 1px;
+    background: radial-gradient(white, transparent); }
+  #side-nav-container .data-for-nerds {
+    margin: 5px 0; }
+  #side-nav-container .darksky-reference {
+    margin-top: 20px; }
 
 @font-face {
   font-family: Neon80;
@@ -1143,25 +1186,25 @@ ui-view {
     align-items: center; }
   #weather-app-section .flex-wrap {
     flex-wrap: wrap; }
-  #weather-app-section .controlls {
+  #weather-app-section .controls {
     position: fixed;
     bottom: 0;
     width: 100vw;
     padding-bottom: 50px;
     color: white;
     transition: 0.5s; }
-    #weather-app-section .controlls input {
+    #weather-app-section .controls input {
       background: rgba(255, 255, 255, 0.05);
       margin: 10px;
       border-radius: 10px;
-      box-shadow: inset 0px 0px 10px 0px rgba(255, 255, 255, 0.15);
+      box-shadow: inset 0px 0px 10px rgba(255, 255, 255, 0.15);
       color: white;
       transition: 0.3s; }
-    #weather-app-section .controlls input:focus {
+    #weather-app-section .controls input:focus {
       outline: none; }
   #weather-app-section #landing-page-background {
     z-index: 10000;
-    color: #ccccccB;
+    color: #CCCCCB;
     width: 100vw;
     height: 105vh;
     position: fixed;
@@ -1237,26 +1280,26 @@ ui-view {
       width: 225px; }
   #weather-app-section .data-header {
     position: fixed;
-    width: 80%;
+    width: 100%;
+    min-height: 80px;
     top: 0;
     right: 0;
+    padding-left: 130px;
+    margin-top: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    z-index: 10000;
     color: rgba(250, 250, 250, 0.8);
-    font-size: 36px;
+    font-size: 32px;
     text-shadow: 0 0 10px black;
     transition: 0.5s; }
-  #weather-app-section .data-header * {
-    padding: 50px;
-    margin: 10px;
-    flex: 1; }
-  #weather-app-section .time-temp-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column; }
+    #weather-app-section .data-header > * {
+      margin: 10px;
+      width: 20%; }
+    #weather-app-section .data-header .location {
+      justify-content: flex-end; }
+    #weather-app-section .data-header .selected-time {
+      font-size: 24px; }
   #weather-app-section .background {
     width: 100vw;
     height: 100vh;
@@ -1413,41 +1456,26 @@ ui-view {
     left: -300px;
     width: 300px;
     height: 600px;
-    margin-top: 130px;
-    padding-top: 25px;
-    background: linear-gradient(#2F80ED 0%, #56CCF2 100%);
+    margin-top: 80px;
     border-radius: 10px;
     overflow-x: hidden;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transition: 0.3s;
-    color: white;
-    box-shadow: 0 0 20px 2px rgba(100, 100, 100, 0.3); }
-    #weather-app-section #side-nav h2 {
-      text-align: center;
-      font-size: 28px;
-      margin: 10px 0; }
-    #weather-app-section #side-nav h3 {
-      font-size: 24px;
-      font-weight: bold;
-      margin-top: 10px; }
-    #weather-app-section #side-nav a {
-      text-decoration: none;
-      color: #ccc; }
-    #weather-app-section #side-nav .horizontal-line {
-      width: 100%;
-      height: 2px;
-      background: #c8c8c8; }
-    #weather-app-section #side-nav .data-for-nerds {
-      margin: 5px 0; }
+    box-shadow: 8px 7px 20px 0px rgba(51, 51, 51, 0.34);
+    transition: 0.3s; }
   #weather-app-section #side-nav-toggle-button {
     position: fixed;
-    left: 0;
-    bottom: 200px;
-    width: 20px;
-    height: 20px;
-    background: skyblue;
+    left: -20px;
+    top: 0;
+    margin-top: 100px;
+    padding-right: 20px;
+    width: 50px;
+    height: 30px;
+    background: rgba(0, 0, 0, 0.3);
+    transform: rotateY(180deg);
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
     transition: 0.3s; }
 
 @media (max-width: 675px) {
@@ -1459,12 +1487,18 @@ ui-view {
     font-size: 20px;
     flex-direction: column;
     align-items: flex-end; }
-    #weather-app-section .data-header * {
-      margin: 5px; }
+    #weather-app-section .data-header > * {
+      margin: 5px;
+      width: 70%;
+      align-items: flex-end; }
+    #weather-app-section .data-header .selected-time {
+      font-size: 20px; }
   #weather-app-section .controlls {
     bottom: 50px; }
   #weather-app-section #side-nav {
-    margin-top: 10px; } }
+    margin-top: 10px; }
+  #weather-app-section #side-nav-toggle-button {
+    margin-top: 30px; } }
 
 @media (max-height: 450px) {
   #weather-app-section #side-nav {

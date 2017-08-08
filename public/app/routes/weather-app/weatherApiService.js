@@ -33,8 +33,10 @@ function getLocationByCoords(latitude, longitude) {
 
 this.getWeatherDataFromBrowserLocation = function() {
   return getBrowserLocation().then(function(results) {
+    console.log(results)
      return $q.all({weather: getWeatherData(results.coords.latitude, results.coords.longitude), location: getLocationByCoords(results.coords.latitude, results.coords.longitude)})
       .then(function(apiResults) {
+          console.log(apiResults)
           currentLocation.weather = apiResults.weather;
           currentLocation.city = apiResults.location.data.results[0].address_components.city;
           currentLocation.state = apiResults.location.data.results[0].address_components.state;
@@ -59,5 +61,9 @@ this.searchWeatherAndLocationInfo = function(address) {
     })
 }
 
+
+this.checkCachedWeatherData = function() {
+  
+}
 
 })//---------------------------------------------------------------------------
