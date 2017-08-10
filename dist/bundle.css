@@ -505,13 +505,126 @@ ui-view {
     transform: translateX(100px); } }
 
 
+#game-over-content {
+  font-family: "Press Start 2P", cursive;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 300px;
+  min-height: 30%;
+  background: #141414;
+  border-radius: 5px;
+  box-shadow: 0 0 25px 0px #323232;
+  transition: 0.7s; }
+  #game-over-content > * {
+    margin: 10px; }
+  #game-over-content button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.6);
+    transition: 0.1s; }
+    #game-over-content button:hover {
+      cursor: pointer;
+      color: rgba(255, 255, 255, 0.8);
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-1px); }
+    #game-over-content button:active {
+      transform: translateY(2px); }
+  #game-over-content .game-over-header {
+    font-size: 24px;
+    margin: 10px;
+    text-align: center; }
+    #game-over-content .game-over-header.small {
+      font-size: 18px; }
+  #game-over-content #score-submission-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    max-height: 400px;
+    transition: 0.3s; }
+  #game-over-content #gameover-high-scores {
+    min-width: 75%; }
+  #game-over-content #high-scores-list {
+    opacity: 0.7;
+    font-size: 12px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; }
+    #game-over-content #high-scores-list li {
+      margin: 5px 0; }
+    #game-over-content #high-scores-list #highscores-players {
+      flex: 2; }
+  #game-over-content * {
+    margin: 2px; }
+  #game-over-content button {
+    padding: 10px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.6);
+    transition: 0.1s; }
+  #game-over-content button:hover {
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px); }
+  #game-over-content button:active {
+    transform: translateY(2px); }
+  #game-over-content .submission-box-section {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; }
+  #game-over-content .close {
+    width: 100%;
+    align-items: flex-end;
+    transition: color 0.5s; }
+  #game-over-content #content-close-icon {
+    font-size: 20px;
+    color: white;
+    cursor: pointer; }
+  #game-over-content #content-close-icon:hover {
+    color: #ddd; }
+  #game-over-content .login-buttons {
+    flex: 8;
+    flex-direction: row; }
+  #game-over-content .height {
+    max-height: 0;
+    overflow: hidden; }
+  #game-over-content a {
+    text-decoration: none; }
+  #game-over-content input {
+    background: #323232;
+    border: none;
+    border-radius: 3px;
+    padding: 5px;
+    color: #ddd; }
+  #game-over-content input:focus {
+    box-shadow: inset 0 0 20px 0 #191919;
+    outline: none; }
+  #game-over-content hr {
+    width: 100%;
+    color: rgba(200, 200, 200, 0.5);
+    border: 0;
+    height: 1px;
+    background-image: -webkit-linear-gradient(left, #141414, #8c8b8b, #141414); }
+
 #svg-button-container {
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 200px;
-  height: 93px;
+  width: 150px;
+  height: 74px;
+  font-family: "Julius Sans One", sans-serif;
   cursor: pointer;
   transition: 0.25s; }
   #svg-button-container:hover {
@@ -777,6 +890,7 @@ ui-view {
   height: 100vh;
   overflow: hidden;
   color: #ddd;
+  font: "Press Start 2P", cursive;
   background: linear-gradient(black 0%, #0f0f0f 100%); }
   #game-section #game-container {
     position: absolute;
@@ -887,44 +1001,6 @@ ui-view {
       margin-bottom: 10%; }
       #game-section #start-screen .controlls-container * {
         margin: 5px 0px; }
-    #game-section #start-screen .svg-button-container {
-      width: 140px;
-      display: flex;
-      flex-direction: center;
-      justify-content: center;
-      align-items: center; }
-      #game-section #start-screen .svg-button-container .svg-button {
-        position: relative;
-        width: 100%; }
-      #game-section #start-screen .svg-button-container .svg-button .button-ol-1 {
-        stroke: #b3b3b3;
-        stroke-width: 2px;
-        fill: rgba(255, 255, 255, 0);
-        stroke-dasharray: 400px;
-        stroke-dashoffset: 400px;
-        transition: 1s; }
-      #game-section #start-screen .svg-button-container .svg-button .button-ol-2 {
-        stroke: #b3b3b3;
-        stroke-width: 2px;
-        fill: rgba(255, 255, 255, 0);
-        stroke-dasharray: 400px;
-        stroke-dashoffset: 0px;
-        transition: 1s; }
-      #game-section #start-screen .svg-button-container .svg-button:hover {
-        cursor: pointer; }
-      #game-section #start-screen .svg-button-container .svg-button:hover .button-ol-1 {
-        stroke-dashoffset: 1200px;
-        transition: 1s; }
-      #game-section #start-screen .svg-button-container .svg-button:hover .button-ol-2 {
-        stroke-dashoffset: -800px;
-        transition: 1s; }
-      #game-section #start-screen .svg-button-container .link-text {
-        position: absolute;
-        font-size: 1em;
-        width: 140px;
-        text-align: center;
-        transition: 0.5s;
-        font-family: "Julius Sans One", sans-serif; }
   #game-section #game-over-screen {
     position: absolute;
     width: 100%;
@@ -935,115 +1011,6 @@ ui-view {
     align-items: center;
     background: rgba(0, 0, 0, 0.5);
     transition: 1s; }
-    #game-section #game-over-screen #game-over-content {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      width: 30%;
-      min-height: 30%;
-      background: #141414;
-      border-radius: 5px;
-      box-shadow: 0 0 25px 0px #323232;
-      transition: 0.7s; }
-      #game-section #game-over-screen #game-over-content * {
-        margin: 10px; }
-      #game-section #game-over-screen #game-over-content button {
-        padding: 10px;
-        border: none;
-        border-radius: 5px;
-        background: rgba(255, 255, 255, 0.1);
-        color: rgba(255, 255, 255, 0.6);
-        transition: 0.1s; }
-      #game-section #game-over-screen #game-over-content button:hover {
-        cursor: pointer;
-        color: rgba(255, 255, 255, 0.8);
-        background: rgba(255, 255, 255, 0.2);
-        transform: translateY(-1px); }
-      #game-section #game-over-screen #game-over-content button:active {
-        transform: translateY(2px); }
-  #game-section #score-submission-box {
-    position: fixed;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.1); }
-  #game-section #gameover-high-scores {
-    width: 75%; }
-  #game-section #highscores {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center; }
-    #game-section #highscores #highscores-players {
-      flex: 2; }
-  #game-section #content-box {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 60%;
-    min-height: 30%;
-    padding: 10px;
-    background: #141414;
-    border-radius: 5px;
-    box-shadow: 0 0 25px 0px #323232;
-    transition: 0.35s; }
-    #game-section #content-box * {
-      margin: 2px; }
-    #game-section #content-box button {
-      padding: 10px;
-      margin: 10px;
-      border: none;
-      border-radius: 5px;
-      background: rgba(255, 255, 255, 0.1);
-      color: rgba(255, 255, 255, 0.6);
-      transition: 0.1s; }
-    #game-section #content-box button:hover {
-      cursor: pointer;
-      color: rgba(255, 255, 255, 0.8);
-      background: rgba(255, 255, 255, 0.2);
-      transform: translateY(-1px); }
-    #game-section #content-box button:active {
-      transform: translateY(2px); }
-    #game-section #content-box .submission-box-section {
-      width: 50%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center; }
-    #game-section #content-box .close {
-      width: 100%;
-      align-items: flex-end;
-      transition: color 0.5s; }
-      #game-section #content-box .close #content-close-icon {
-        font-size: 20px;
-        color: white;
-        cursor: pointer; }
-      #game-section #content-box .close #content-close-icon:hover {
-        color: #ddd; }
-    #game-section #content-box .login-buttons {
-      flex: 8;
-      flex-direction: row; }
-      #game-section #content-box .login-buttons a {
-        text-decoration: none; }
-    #game-section #content-box input {
-      background: #323232;
-      border: none;
-      border-radius: 3px;
-      padding: 5px;
-      color: #ddd; }
-    #game-section #content-box input:focus {
-      box-shadow: inset 0 0 20px 0 #191919;
-      outline: none; }
-  #game-section hr {
-    width: 100%;
-    color: rgba(200, 200, 200, 0.5);
-    border: 0;
-    height: 1px;
-    background-image: -webkit-linear-gradient(left, #141414, #8c8b8b, #141414); }
 
 .hidden {
   display: none !important; }

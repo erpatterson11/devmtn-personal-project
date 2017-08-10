@@ -129,6 +129,13 @@ angular.module("portfolioApp").service("reusableFuncsService", ["$http", functio
 
 }]);
 
+angular.module('portfolioApp').directive('gameOverModal', function() {
+
+    return {
+        restrict: 'E',
+        templateUrl: './app/directives/gameOverModal/gameOverModalTmpl.html'
+    }
+})
 angular.module('portfolioApp').directive('svgButton', ["$state", function($state) {
 
     return {
@@ -149,7 +156,6 @@ angular.module('portfolioApp').directive('svgButton', ["$state", function($state
                 }
             })
             elem.on('click', function() {
-                console.log(attrs)
                 if (!attrs.uiSref & attrs.href) open(attrs.href)
             })
         },
@@ -165,6 +171,9 @@ angular.module('portfolioApp').directive('weatherSideNav', function() {
         templateUrl: './app/directives/weatherSideNav/weatherSideNavTmpl.html'
     }
 })
+
+
+
 angular.module('portfolioApp').controller('aboutCtrl', ["$scope", "aboutService", function($scope, aboutService) {
 
     $scope.iconColors = {}
@@ -267,9 +276,6 @@ angular.module('portfolioApp').service('aboutService', function() {
 
 
 })
-
-
-
 angular.module("portfolioApp").controller("gameCtrl", ["$scope", "$timeout", "scoreService", "gameService", function($scope, $timeout, scoreService, gameService) {
 
 
@@ -291,10 +297,6 @@ angular.module("portfolioApp").controller("gameCtrl", ["$scope", "$timeout", "sc
   $scope.showScoreSubmission = function() {
     $scope.isShownSubmissionForm = !$scope.isShownSubmissionForm
     $scope.getFinalScore()
-  }
-
-  $scope.showGuestNicknameEntry = function() {
-    $scope.isShownNicknameInput = !$scope.isShownNicknameInput
   }
 
 //========================== HTTP Requests ================================
@@ -320,7 +322,6 @@ angular.module("portfolioApp").controller("gameCtrl", ["$scope", "$timeout", "sc
   $scope.getDbScores()
 
   $scope.submitFinalScore = function(name) {
-    $scope.showGuestNicknameEntry()
     if ($scope.userInfo) {
       scoreService.getAuth0Info()
         .then(function(results) {
@@ -340,7 +341,9 @@ angular.module("portfolioApp").controller("gameCtrl", ["$scope", "$timeout", "sc
         nickname: name
       }
     scoreService.addScore(obj).then(function() {
+      console.log('score submitted!')
       $scope.getDbScores()
+      $scope.isShownNicknameInput = !$scope.isShownNicknameInput
     })
     }
   }
@@ -354,18 +357,25 @@ angular.module("portfolioApp").service("gameService", ["reusableFuncsService", f
 
 
 // note: there is a getScore function attached to the service
-//       it is declared after the game code
+//       that is declared after the game code
 
 
   // GAME CODE
-  //==============================================================
-
+  ///////////////////////////////////////////////////////////////////////////////
 
   //========================== Custom Functions ================================
 
   function random(min, max) {
       return (Math.random() * (max - min)) + min
   }
+
+
+  //========================== Shims ================================
+
+  const requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
+                            window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+
+  const cancelAnimationFrame = window.cancelAnimationFrame || window.mozCancelAnimationFrame;
 
   //========================== Target DOM Elements ================================
 
@@ -1264,11 +1274,6 @@ angular.module("portfolioApp").service("gameService", ["reusableFuncsService", f
     let req
     let isAnimating = false
 
-    let requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
-                                window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
-
-    let cancelAnimationFrame = window.cancelAnimationFrame || window.mozCancelAnimationFrame;
-
     const init = () => {
       Player = PlayerFactory()
       PlayerBullets = PlayerBulletFactory()
@@ -1308,7 +1313,6 @@ angular.module("portfolioApp").service("gameService", ["reusableFuncsService", f
         } else {
           isAnimating = false
           gameOverScreen.classList.remove('hidden')
-          finalScoreText.innerText = `${Score.get()}`
           cancelAnimationFrame(req)
           setPauseIcon()
         }
@@ -1367,7 +1371,6 @@ angular.module("portfolioApp").service("gameService", ["reusableFuncsService", f
       .then( results => {
         Game.init()
         loadingScreen.classList.add('media-loaded')
-        console.log(results)
       } )
       .catch( error => console.log( "failure", error) )
 
@@ -1416,7 +1419,7 @@ angular.module("portfolioApp").service("gameService", ["reusableFuncsService", f
 
 
 ////////////////////////////////////////////////////////////////////
-// END GAME CODE
+// END OF GAME CODE
 
 
 

@@ -1,0 +1,44 @@
+
+<div id='game-over-content'>
+
+    <h3 class='game-over-header'>Game Over</h3>
+    <div>
+        <button class='restart-button' type="button" name="button">Restart</button>
+        <button id='submit-score' ng-hide='isShownSubmissionForm' ng-click='showScoreSubmission()' type="button" name="button">Submit Score</button>
+    </div>
+
+    <div id='score-submission-box' ng-show='isShownSubmissionForm'>
+
+            <div id='player-score' class='submission-box-section'>
+                <h3 class='game-over-header small'>Final Score</h3>
+                <hr>
+                <p id='final-score-text'>{{finalScore}}</p>
+            </div>
+
+            <!--<div class="login-buttons submission-box-section">
+                <a href="/login"><button type="button" name="button" >Login</button></a>
+                <button id='guest-login-button' type="button" name="button" ng-click="isShownNicknameInput = !isShownNicknameInput">Guest</button>
+            </div>-->
+
+            <div id='custom-login' class='submission-box-section' ng-hide="isShownNicknameInput">
+                <input type="text" name="Nickname" placeholder='nickname' ng-model='nickname'>
+                <button type="submit" name='Submit' ng-click='submitFinalScore(nickname)'>Submit</button>
+            </div>
+
+            <div id='gameover-high-scores' class='submission-box-section'>
+                <h3 class='game-over-header small'>High Scores</h3>
+                <hr>
+                <div id="high-scores-list">
+                    <ul id='highscore-number'>
+                        <li ng-repeat='player in scores'>{{$index}}</li>
+                    </ul>
+                    <ul id='highscore-players'>
+                        <li ng-repeat='player in scores'>{{player.nickname}}</li>
+                    </ul>
+                    <ul id='highscore-scores'>
+                        <li ng-repeat='player in scores'>{{player.score}}</li>
+                    </ul>
+                </div>
+        </div>
+
+</div>

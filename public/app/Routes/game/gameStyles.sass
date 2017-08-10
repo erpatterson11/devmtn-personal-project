@@ -10,6 +10,7 @@ $game: 'Press Start 2P', cursive
   height: 100vh
   overflow: hidden
   color: $textColor
+  font: $game
   background: linear-gradient(black 0%, rgb(15,15,15) 100%)
 
 
@@ -134,56 +135,6 @@ $game: 'Press Start 2P', cursive
       *
         margin: 5px 0px
 
-    .svg-button-container
-      width: 140px
-      display: flex
-      flex-direction: center
-      justify-content: center
-      align-items: center
-      .svg-button
-        position: relative
-        width: 100%
-
-      .svg-button .button-ol-1
-        stroke: #b3b3b3
-        stroke-width: 2px
-        fill: rgba(255,255,255,0)
-        stroke-dasharray: 400px
-        stroke-dashoffset: 400px
-        transition: 1s
-
-
-      .svg-button .button-ol-2
-        stroke: #b3b3b3
-        stroke-width: 2px
-        fill: rgba(255,255,255,0)
-        stroke-dasharray: 400px
-        stroke-dashoffset: 0px
-        transition: 1s
-
-      .svg-button:hover
-        cursor: pointer
-
-      .svg-button:hover .button-ol-1
-        // stroke: rgba(255,255,255,0.05)
-        // fill: rgba(255,255,255,0.1)
-        // stroke-width: 1px
-        stroke-dashoffset: 1200px
-        transition: 1s
-      .svg-button:hover .button-ol-2
-        // stroke: rgba(255,255,255,0.05)
-        // fill: rgba(255,255,255,0.1)
-        // stroke-width: 1px
-        stroke-dashoffset: -800px
-        transition: 1s
-
-      .link-text
-        position: absolute
-        font-size: 1em
-        width: 140px
-        text-align: center
-        transition: 0.5s
-        font-family: $julius
 
   #game-over-screen
     position: absolute
@@ -195,137 +146,9 @@ $game: 'Press Start 2P', cursive
     align-items: center
     background: rgba(0,0,0,0.5)
     transition: 1s
-    #game-over-content
-      display: flex
-      flex-direction: column
-      justify-content: center
-      align-items: center
-      width: 30%
-      min-height: 30%
-      background: $charcoal
-      border-radius: 5px
-      box-shadow: 0 0 25px 0px rgb(50,50,50)
-      transition: 0.7s
-      *
-        margin: 10px
-      button
-        padding: 10px
-        border: none
-        border-radius: 5px
-        background: rgba(255,255,255,0.1)
-        color: rgba(255,255,255,0.6)
-        transition: 0.1s
-
-      button:hover
-        cursor: pointer
-        color: rgba(255,255,255,0.8)
-        background: rgba(255,255,255,0.2)
-        transform: translateY(-1px)
-      button:active
-        transform: translateY(2px)
 
 
-
-  #score-submission-box
-    position: fixed
-    display: flex
-    justify-content: center
-    align-items: center
-    width: 100%
-    height: 100%
-    background: rgba(0,0,0,0.1)
-
-  #gameover-high-scores
-    width: 75%
-
-  #highscores
-    width: 100%
-    display: flex
-    justify-content: space-between
-    align-items: center
-    #highscores-players
-      flex: 2
-
-  #content-box
-    display: flex
-    flex-direction: column
-    justify-content: center
-    align-items: center
-    width: 60%
-    min-height: 30%
-    padding: 10px
-    background: $charcoal
-    border-radius: 5px
-    box-shadow: 0 0 25px 0px rgb(50,50,50)
-    transition: 0.35s
-    *
-      margin: 2px
-
-    button
-      padding: 10px
-      margin: 10px
-      border: none
-      border-radius: 5px
-      background: rgba(255,255,255,0.1)
-      color: rgba(255,255,255,0.6)
-      transition: 0.1s
-
-    button:hover
-      cursor: pointer
-      color: rgba(255,255,255,0.8)
-      background: rgba(255,255,255,0.2)
-      transform: translateY(-1px)
-
-    button:active
-      transform: translateY(2px)
-
-    .submission-box-section
-      width: 50%
-      display: flex
-      flex-direction: column
-      justify-content: center
-      align-items: center
-
-    .close
-      width: 100%
-      align-items: flex-end
-
-      transition: color 0.5s
-
-      #content-close-icon
-        font-size: 20px
-        color: white
-        cursor: pointer
-
-      #content-close-icon:hover
-        color: $textColor
-
-    .login-buttons
-      flex: 8
-      flex-direction: row
-
-      a
-        text-decoration: none
-
-    input
-      background: rgb(50,50,50)
-      border: none
-      border-radius: 3px
-      padding: 5px
-      color: $textColor
-    input:focus
-      box-shadow: inset 0 0 20px 0 rgb(25,25,25)
-      outline: none
-
-
-
-  hr
-    width: 100%
-    color: rgba(200,200,200,0.5)
-    border: 0
-    height: 1px
-    background-image: -webkit-linear-gradient(left, $charcoal , #8c8b8b, $charcoal)
-
+  
 
 .hidden
   display: none !important

@@ -4,18 +4,25 @@ angular.module("portfolioApp").service("gameService", function(reusableFuncsServ
 
 
 // note: there is a getScore function attached to the service
-//       it is declared after the game code
+//       that is declared after the game code
 
 
   // GAME CODE
-  //==============================================================
-
+  ///////////////////////////////////////////////////////////////////////////////
 
   //========================== Custom Functions ================================
 
   function random(min, max) {
       return (Math.random() * (max - min)) + min
   }
+
+
+  //========================== Shims ================================
+
+  const requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
+                            window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+
+  const cancelAnimationFrame = window.cancelAnimationFrame || window.mozCancelAnimationFrame;
 
   //========================== Target DOM Elements ================================
 
@@ -914,11 +921,6 @@ angular.module("portfolioApp").service("gameService", function(reusableFuncsServ
     let req
     let isAnimating = false
 
-    let requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
-                                window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
-
-    let cancelAnimationFrame = window.cancelAnimationFrame || window.mozCancelAnimationFrame;
-
     const init = () => {
       Player = PlayerFactory()
       PlayerBullets = PlayerBulletFactory()
@@ -958,7 +960,6 @@ angular.module("portfolioApp").service("gameService", function(reusableFuncsServ
         } else {
           isAnimating = false
           gameOverScreen.classList.remove('hidden')
-          finalScoreText.innerText = `${Score.get()}`
           cancelAnimationFrame(req)
           setPauseIcon()
         }
@@ -1017,7 +1018,6 @@ angular.module("portfolioApp").service("gameService", function(reusableFuncsServ
       .then( results => {
         Game.init()
         loadingScreen.classList.add('media-loaded')
-        console.log(results)
       } )
       .catch( error => console.log( "failure", error) )
 
@@ -1066,7 +1066,7 @@ angular.module("portfolioApp").service("gameService", function(reusableFuncsServ
 
 
 ////////////////////////////////////////////////////////////////////
-// END GAME CODE
+// END OF GAME CODE
 
 
 

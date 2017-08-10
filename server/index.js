@@ -119,7 +119,6 @@ app.post('/api/scores', function(req,res) {
   if (req.body.auth0) {
     auth0id = req.body.auth0
   }
-
   if (typeof score !== 'number' || typeof nickname !== 'string') {
     res.status(400).send(`There was an error posting your score.
       This is the information you sent.
@@ -133,7 +132,7 @@ app.post('/api/scores', function(req,res) {
       if (err) {
         res.send(err)
       } else {
-        res.status(200).send(confirmation)
+        res.status(200).send(true)
       }
     })
   }

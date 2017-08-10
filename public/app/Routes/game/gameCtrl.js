@@ -21,10 +21,6 @@ angular.module("portfolioApp").controller("gameCtrl", function($scope, $timeout,
     $scope.getFinalScore()
   }
 
-  $scope.showGuestNicknameEntry = function() {
-    $scope.isShownNicknameInput = !$scope.isShownNicknameInput
-  }
-
 //========================== HTTP Requests ================================
 
   $scope.getAuth0Info = function() {
@@ -48,7 +44,6 @@ angular.module("portfolioApp").controller("gameCtrl", function($scope, $timeout,
   $scope.getDbScores()
 
   $scope.submitFinalScore = function(name) {
-    $scope.showGuestNicknameEntry()
     if ($scope.userInfo) {
       scoreService.getAuth0Info()
         .then(function(results) {
@@ -68,7 +63,9 @@ angular.module("portfolioApp").controller("gameCtrl", function($scope, $timeout,
         nickname: name
       }
     scoreService.addScore(obj).then(function() {
+      console.log('score submitted!')
       $scope.getDbScores()
+      $scope.isShownNicknameInput = !$scope.isShownNicknameInput
     })
     }
   }
