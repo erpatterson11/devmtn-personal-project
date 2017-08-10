@@ -18,7 +18,10 @@ angular.module('portfolioApp').directive('svgButton', function($state) {
                 }
             })
             elem.on('click', function() {
-                if (!attrs.uiSref & attrs.href) open(attrs.href)
+                console.log(attrs.uiSref, attrs.href)
+                if (!attrs.uiSref && attrs.href) {
+                    open(attrs.href)
+                }
             })
         },
         controller: function() {

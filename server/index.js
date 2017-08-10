@@ -39,6 +39,16 @@ passport.use(new Auth0Strategy(config.dev.auth0Strategy, function(accessToken, r
   return done(null, profile)
 }))
 
+passport.serializeUser(function(user,done) {
+  done(null, user)
+})
+
+passport.deserializeUser(function(user,done) {
+  done(null, user)
+})
+
+
+
 // login endpoint
 app.get('/login', passport.authenticate('auth0'), function(req,res) {
   res.redirect('/#!/space')
@@ -50,13 +60,7 @@ passport.authenticate('auth0', {
   failureRedirect: '/login'
 }))
 
-passport.serializeUser(function(user,done) {
-  done(null, user)
-})
 
-passport.deserializeUser(function(user,done) {
-  done(null, user)
-})
 
 // import controller module
 const controller = require('./servCtrl')

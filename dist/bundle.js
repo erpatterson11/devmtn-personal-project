@@ -156,7 +156,10 @@ angular.module('portfolioApp').directive('svgButton', ["$state", function($state
                 }
             })
             elem.on('click', function() {
-                if (!attrs.uiSref & attrs.href) open(attrs.href)
+                console.log(attrs.uiSref, attrs.href)
+                if (!attrs.uiSref && attrs.href) {
+                    open(attrs.href)
+                }
             })
         },
         controller: function() {
@@ -171,9 +174,6 @@ angular.module('portfolioApp').directive('weatherSideNav', function() {
         templateUrl: './app/directives/weatherSideNav/weatherSideNavTmpl.html'
     }
 })
-
-
-
 angular.module('portfolioApp').controller('aboutCtrl', ["$scope", "aboutService", function($scope, aboutService) {
 
     $scope.iconColors = {}
@@ -276,6 +276,9 @@ angular.module('portfolioApp').service('aboutService', function() {
 
 
 })
+
+
+
 angular.module("portfolioApp").controller("gameCtrl", ["$scope", "$timeout", "scoreService", "gameService", function($scope, $timeout, scoreService, gameService) {
 
 
@@ -300,6 +303,11 @@ angular.module("portfolioApp").controller("gameCtrl", ["$scope", "$timeout", "sc
   }
 
 //========================== HTTP Requests ================================
+
+  $scope.initGame = function() {
+    gameService.initGame()
+    console.log('game inited')
+  }
 
   $scope.getAuth0Info = function() {
     scoreService.getAuth0Info()
@@ -1369,8 +1377,8 @@ angular.module("portfolioApp").service("gameService", ["reusableFuncsService", f
   Promise
       .all([audio.monitorLoading(), images.monitorLoading(), spriteRepo.monitorLoading()])
       .then( results => {
-        Game.init()
         loadingScreen.classList.add('media-loaded')
+        Game.init()
       } )
       .catch( error => console.log( "failure", error) )
 
@@ -1413,7 +1421,7 @@ angular.module("portfolioApp").service("gameService", ["reusableFuncsService", f
     if (!Game.status()) {
       Game.toggleLoop()
     }
-    controlsTooltip.classList.add('hidden')
+      controlsTooltip.classList.add('hidden')
     })
 
 
@@ -1434,7 +1442,9 @@ angular.module("portfolioApp").service("gameService", ["reusableFuncsService", f
     return Game.stop()
   }
 
-
+  this.initGame = function() {
+    return Game.init()
+  }
 
 }]);
 

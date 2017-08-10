@@ -23,6 +23,11 @@ angular.module("portfolioApp").controller("gameCtrl", function($scope, $timeout,
 
 //========================== HTTP Requests ================================
 
+  $scope.initGame = function() {
+    gameService.initGame()
+    console.log('game inited')
+  }
+
   $scope.getAuth0Info = function() {
     scoreService.getAuth0Info()
       .then(function(results) {

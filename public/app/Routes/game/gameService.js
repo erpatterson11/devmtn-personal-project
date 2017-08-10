@@ -1016,8 +1016,8 @@ angular.module("portfolioApp").service("gameService", function(reusableFuncsServ
   Promise
       .all([audio.monitorLoading(), images.monitorLoading(), spriteRepo.monitorLoading()])
       .then( results => {
-        Game.init()
         loadingScreen.classList.add('media-loaded')
+        Game.init()
       } )
       .catch( error => console.log( "failure", error) )
 
@@ -1060,7 +1060,7 @@ angular.module("portfolioApp").service("gameService", function(reusableFuncsServ
     if (!Game.status()) {
       Game.toggleLoop()
     }
-    controlsTooltip.classList.add('hidden')
+      controlsTooltip.classList.add('hidden')
     })
 
 
@@ -1081,6 +1081,8 @@ angular.module("portfolioApp").service("gameService", function(reusableFuncsServ
     return Game.stop()
   }
 
-
+  this.initGame = function() {
+    return Game.init()
+  }
 
 });
