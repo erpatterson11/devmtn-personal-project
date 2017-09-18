@@ -1042,39 +1042,6 @@ ui-view {
     #game-section #content-box .submission-box-section {
       width: 80%; } }
 
-#magnifying-glass-container {
-  margin: 0;
-  color: white;
-  width: 100vw;
-  height: auto; }
-  #magnifying-glass-container button {
-    cursor: pointer; }
-  #magnifying-glass-container #magnifying-glass, #magnifying-glass-container #magnifying-glass-art {
-    position: fixed;
-    z-index: 99;
-    display: none;
-    pointer-events: none; }
-  #magnifying-glass-container .container1 {
-    position: absolute;
-    background: #323232; }
-  #magnifying-glass-container .zoomed {
-    position: absolute;
-    overflow: hidden; }
-  #magnifying-glass-container .content {
-    width: 90%;
-    min-height: 300px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 50px;
-    background: transparent; }
-  #magnifying-glass-container .separator {
-    width: 100vw;
-    height: 50px;
-    background: #0a0a0a;
-    transform: rotate(1deg) skew(1deg); }
-
 #home-container {
   color: #969696;
   font-family: "Julius Sans One", sans-serif; }
@@ -1116,10 +1083,12 @@ ui-view {
     top: 0;
     background: #590a16;
     z-index: -5; }
-  #home-container #space-div .headline {
-    color: orange;
-    text-shadow: -5px 5px #610e0e;
-    font-family: "Faster One", cursive; }
+  #home-container #space-div {
+    background: url("./app/routes/home/img/space-game-2.png"); }
+    #home-container #space-div .headline {
+      color: orange;
+      text-shadow: -5px 5px #610e0e;
+      font-family: "Faster One", cursive; }
   #home-container #golden-ratio-div {
     background: linear-gradient(black 0%, rgba(0, 0, 0, 0.3) 50%, black 100%); }
     #home-container #golden-ratio-div .headline {
@@ -1156,6 +1125,39 @@ ui-view {
   @media (max-width: 400px) {
     #home-container .headline {
       font-size: 48px; } }
+
+#magnifying-glass-container {
+  margin: 0;
+  color: white;
+  width: 100vw;
+  height: auto; }
+  #magnifying-glass-container button {
+    cursor: pointer; }
+  #magnifying-glass-container #magnifying-glass, #magnifying-glass-container #magnifying-glass-art {
+    position: fixed;
+    z-index: 99;
+    display: none;
+    pointer-events: none; }
+  #magnifying-glass-container .container1 {
+    position: absolute;
+    background: #323232; }
+  #magnifying-glass-container .zoomed {
+    position: absolute;
+    overflow: hidden; }
+  #magnifying-glass-container .content {
+    width: 90%;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+    background: transparent; }
+  #magnifying-glass-container .separator {
+    width: 100vw;
+    height: 50px;
+    background: #0a0a0a;
+    transform: rotate(1deg) skew(1deg); }
 
 #weather-app-section {
   font-family: 'Julius Sans One', sans-serif; }
