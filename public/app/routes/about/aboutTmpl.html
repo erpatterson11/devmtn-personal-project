@@ -3,10 +3,16 @@
     <div class='content'>
   
             <div id='neon-sign'>
-                   <p class='neon-animation'>eric patterson</p><br><p class='neon-animation small-neon-text'><span id='neon-flicker'>w</span>eb developer</p>
-                </div>
+                <p class='neon-animation fade-in'>
+                    eric patterson
+                </p>
+                <br/>
+                <p class='neon-animation small-neon-text fade-in'>
+                    <span id='neon-flicker'>w</span>eb developer
+                </p>
+            </div>
 
-            <div id='about-text'>
+            <div id='about-text' class="fade-in">
                 <p>
                 I love making dynamic and interactive content for the web. I'm always looking for new ways to solve a problem or innovate. 
                 </p>
@@ -18,8 +24,8 @@
                 </p>
             </div> 
 
-        <h3 class='skills-list-header'>These are the tools I use to build cool things</h3>
-        <ul class='skills-list'>
+        <h3 class='skills-list-header fade-in'>These are the tools I use to build cool things</h3>
+        <ul class='skills-list fade-in'>
             <div class='dev-logo-repeat-container' ng-repeat='(key, value) in images' ng-mouseenter="toggleBoxShadow(this,true)" ng-mouseleave="toggleBoxShadow(this,false)" >
                 <img ng-src='{{value.src}}' ng-style='iconColors.{{key}}.dropShadow' class='dev-logo'></li>
                 <p class='dev-logo-text' ng-style='iconColors.{{key}}.textShadow' style='color:{{value.color}};'>{{key.toUpperCase()}}</p>
@@ -27,9 +33,9 @@
         </ul>
 
 
-        <div class='portfolio-link'>
-            <p>See what I've created so far</p> 
-            <button ui-sref='portfolio'>Portfolio</button>
+        <div class='portfolio-link fade-in'>
+            <p className='fade-in'>See what I've created so far</p> 
+            <button ui-sref='portfolio' class='fade-in'>Portfolio</button>
         </div>
    
     </div>

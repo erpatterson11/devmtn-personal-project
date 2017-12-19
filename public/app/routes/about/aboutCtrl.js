@@ -1,8 +1,12 @@
 angular.module('portfolioApp').controller('aboutCtrl', function($scope, aboutService) {
 
+    aboutService.routeLoadAnimation()
+
     $scope.iconColors = {}
 
     $scope.images = aboutService.images
+
+    $scope.bgImage = aboutService.image
 
     $scope.toggleBoxShadow = function(item, bool) {
         if (bool) {
@@ -16,4 +20,6 @@ angular.module('portfolioApp').controller('aboutCtrl', function($scope, aboutSer
     }
 
     // aboutService.pulseNeon()
+
+
 })

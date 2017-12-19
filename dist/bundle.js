@@ -43,7 +43,9 @@ angular.module("portfolioApp").controller("mainCtrl", ["$scope", "$window", "$st
 
     let allowedRoutes = ['home', 'about']
 
+    
     $scope.hideNav = allowedRoutes.includes($state.name)
+    $scope.hideNav = false
 
     $scope.$on('$stateChangeSuccess', function(evt, toState, toParams, fromState, fromParams) {
             $scope.viewTransition = fromState.name !== 'home'
@@ -57,49 +59,32 @@ angular.module("portfolioApp").controller("mainCtrl", ["$scope", "$window", "$st
         $window.open(`mailto:${$scope.myEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)},_self`)
     }
 
+    mainService.routeLoadAnimation() 
+
 }])
 
 // INITILIZE SERVICE
 // ============================================================
 angular.module("portfolioApp").service("mainService", ["$http", function($http) {
 
-
-
-  this.toggleNavBar = function() {
-    const navbar = document.querySelector('#main-nav')
-    let didScroll = false
-    let lastScrollTop = 0
-    let delta = 5
-    let navHeight = navbar.style.height
-
-    window.addEventListener('scroll', () => {
-      didScroll = true
-    })
-
-    setInterval(() => {
-      if (didScroll) {
-        scroll()
-        didScroll = false
+  this.routeLoadAnimation = function() {
+    TweenMax.from(
+      [
+        $('#main-nav'),
+        $('#ham-menu')
+      ],
+      0.2,
+      {
+        delay: 0.5,
+        opacity: 0
       }
-    }, 100)
+    )
 
-    function scroll() {
-      let currentPos = window.scrollY
-      if (Math.abs(lastScrollTop - currentPos) <= delta) {
-        return
-      }
-      if (currentPos > lastScrollTop && currentPos > navHeight) {
-        navbar.style.top = `-60px`
-        // navbar.style.top = `-${getComputedStyle(navbar).height}`
-      } else {
-        if (currentPos < lastScrollTop) {
-        navbar.style.top = '0px'
-        }
-      }
-      lastScrollTop = currentPos
-    }
+    // TweenMax.from(
+
+    // )
+
   }
-
 
 }]);
 
@@ -176,9 +161,13 @@ angular.module('portfolioApp').directive('weatherSideNav', function() {
 })
 angular.module('portfolioApp').controller('aboutCtrl', ["$scope", "aboutService", function($scope, aboutService) {
 
+    aboutService.routeLoadAnimation()
+
     $scope.iconColors = {}
 
     $scope.images = aboutService.images
+
+    $scope.bgImage = aboutService.image
 
     $scope.toggleBoxShadow = function(item, bool) {
         if (bool) {
@@ -192,8 +181,42 @@ angular.module('portfolioApp').controller('aboutCtrl', ["$scope", "aboutService"
     }
 
     // aboutService.pulseNeon()
+
+
 }])
 angular.module('portfolioApp').service('aboutService', function() {
+
+    this.routeLoadAnimation = function() {
+        let bgImage = new Image()
+        bgImage.src = './app/routes/about/images/neon-1.jpg'
+        bgImage.onload = function() {
+            const neonSign = $('#neon-sign')
+            TweenMax.from(
+                neonSign,
+                1,
+                {
+                    opacity: 0
+                }
+            )
+            neonSign.css({
+                'background':`linear-gradient(transparent, transparent 50%, rgb(0,0,0) 100%), url('./app/routes/about/images/neon-1.jpg')`,
+                'background-size': 'cover'
+            })
+        }
+        
+        TweenMax.staggerFrom(
+            $('.fade-in'), 
+            0.5, 
+            {
+                opacity: 0,
+                x: -500,
+                ease: Power2.easeOut,
+                delay: 1
+            },
+            0.25
+        )
+    }
+
 
     function Images() {
         this.html = new Image()
@@ -221,7 +244,7 @@ angular.module('portfolioApp').service('aboutService', function() {
         this.sass.src = './app/routes/about/images/sass.svg'
         this.jquery.src = './app/routes/about/images/jquery.svg'
         this.greensock.src = './app/routes/about/images/greensock.svg'
-        this.webpack.src = '/app/routes/about/images/webpack.svg'
+        this.webpack.src = './app/routes/about/images/webpack.svg'
         this.gulp.src = './app/routes/about/images/gulp.svg'
         this.git.src = './app/routes/about/images/git.svg'
         this.github.src = './app/routes/about/images/github_logo.svg'
@@ -245,8 +268,8 @@ angular.module('portfolioApp').service('aboutService', function() {
     this.images = new Images()
 
     this.pulseNeon = function() {
-        let workingNeon = document.querySelectorAll('.neon-animation')
-        let flickeringNeon = document.querySelector('#neon-flicker')
+        let workingNeon = $('.neon-animation')
+        let flickeringNeon = $('#neon-flicker')
         let tl = new TimelineMax({
                         repeat:-1,
                         yoyo: true

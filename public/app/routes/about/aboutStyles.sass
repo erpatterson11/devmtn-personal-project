@@ -41,14 +41,13 @@ $orange: #f47200
         color: rgb(255,255,255)
         opacity: 1
         text-shadow: 0 0 5px $white, 0 0 10px $white, 0 0 15px $white, 0 0 20px $orange, 0 0 35px $orange, 0 0 40px $orange, 0 0 50px $orange, 0 0 75px $orange
-        background: linear-gradient(transparent, transparent 50%, rgb(0,0,0) 100%), url(./app/routes/about/images/neon-1.jpg)
         background-size: cover
 
         .small-neon-text
             font-size: 56px
 
         #neon-flicker
-            animation: flicker 4s ease-in-out infinite alternate
+            // animation: flicker 4s ease-in-out infinite alternate
 
         .neon-animation
             text-align: center
@@ -137,7 +136,7 @@ $orange: #f47200
         +flex-col
         opacity: 0.4
         margin: 10px 0
-        transition: 0.2s
+        transition: 0.25s ease-in-out
 
         .dev-logo-text
             opacity: 0
@@ -149,12 +148,14 @@ $orange: #f47200
             margin: 10px
             flex: 1
 
+
         &:hover
             opacity: 0.8
-            transform: translate3d(0,0,2)
+            transform: scale(1.1)
 
             .dev-logo-text
                 opacity: 0.8
+
     .portfolio-link
         +flex-col
         height: 400px

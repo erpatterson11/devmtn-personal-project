@@ -1,5 +1,37 @@
 angular.module('portfolioApp').service('aboutService', function() {
 
+    this.routeLoadAnimation = function() {
+        let bgImage = new Image()
+        bgImage.src = './app/routes/about/images/neon-1.jpg'
+        bgImage.onload = function() {
+            const neonSign = $('#neon-sign')
+            TweenMax.from(
+                neonSign,
+                1,
+                {
+                    opacity: 0
+                }
+            )
+            neonSign.css({
+                'background':`linear-gradient(transparent, transparent 50%, rgb(0,0,0) 100%), url('./app/routes/about/images/neon-1.jpg')`,
+                'background-size': 'cover'
+            })
+        }
+        
+        TweenMax.staggerFrom(
+            $('.fade-in'), 
+            0.5, 
+            {
+                opacity: 0,
+                x: -500,
+                ease: Power2.easeOut,
+                delay: 1
+            },
+            0.25
+        )
+    }
+
+
     function Images() {
         this.html = new Image()
         this.css = new Image()
@@ -26,7 +58,7 @@ angular.module('portfolioApp').service('aboutService', function() {
         this.sass.src = './app/routes/about/images/sass.svg'
         this.jquery.src = './app/routes/about/images/jquery.svg'
         this.greensock.src = './app/routes/about/images/greensock.svg'
-        this.webpack.src = '/app/routes/about/images/webpack.svg'
+        this.webpack.src = './app/routes/about/images/webpack.svg'
         this.gulp.src = './app/routes/about/images/gulp.svg'
         this.git.src = './app/routes/about/images/git.svg'
         this.github.src = './app/routes/about/images/github_logo.svg'
@@ -50,8 +82,8 @@ angular.module('portfolioApp').service('aboutService', function() {
     this.images = new Images()
 
     this.pulseNeon = function() {
-        let workingNeon = document.querySelectorAll('.neon-animation')
-        let flickeringNeon = document.querySelector('#neon-flicker')
+        let workingNeon = $('.neon-animation')
+        let flickeringNeon = $('#neon-flicker')
         let tl = new TimelineMax({
                         repeat:-1,
                         yoyo: true

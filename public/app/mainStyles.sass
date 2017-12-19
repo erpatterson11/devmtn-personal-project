@@ -55,9 +55,6 @@ ui-view
 .activeNav
   transform: translateY(0px) !important
 
-.hideMainNav
-  height: 0
-
 #main-nav
   position: fixed
   top: 0
@@ -74,6 +71,7 @@ ui-view
     align-items: center
     height: 100px
     width: 100vw
+    transform: translateY(-100px)
     padding-left: 130px
     transition: 0.3s
 
@@ -103,6 +101,7 @@ ui-view
     top: 0
     left: 0
     padding-top: 100px
+    transform: translateX(-100px)
     z-index: 100000
     transition: 0.3s
 
@@ -182,11 +181,11 @@ ui-view
     transform: translateY(-10px) rotate(-45deg)
 
 
-.hideLinks
-  transform: translateY(-100px)
+.showLinks
+  transform: translateY(0px) !important
 
-.hideContact
-  transform: translateX(-100px)
+.showContact
+  transform: translateX(0px) !important
 
 
 @media (max-width: 525px) 
