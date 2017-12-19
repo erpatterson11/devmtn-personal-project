@@ -15,10 +15,6 @@ angular.module("portfolioApp").service("mainService", function($http) {
       }
     )
 
-    // TweenMax.from(
-
-    // )
-
   }
 
 });

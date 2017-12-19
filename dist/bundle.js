@@ -39,10 +39,9 @@
     $urlRouterProvider.otherwise('/')
   }]);
 
-angular.module("portfolioApp").controller("mainCtrl", ["$scope", "$window", "$state", "mainService", "reusableFuncsService", function($scope, $window, $state, mainService, reusableFuncsService) {
+angular.module("portfolioApp").controller("mainCtrl", ["$scope", "$window", "$state", "mainService", function($scope, $window, $state, mainService) {
 
     let allowedRoutes = ['home', 'about']
-
     
     $scope.hideNav = allowedRoutes.includes($state.name)
     $scope.hideNav = false
@@ -80,14 +79,25 @@ angular.module("portfolioApp").service("mainService", ["$http", function($http) 
       }
     )
 
-    // TweenMax.from(
-
-    // )
-
   }
 
 }]);
 
+angular.module("portfolioApp").service("routeLoadAnimationService", function() {
+    this.routeLoadAnimation = function(targets) {
+        TweenMax.staggerFrom(
+            targets,
+            0.5,
+            {
+                delay: 0.25,
+                ease: Power1.easeOut,
+                x: -500,
+                opacity: 0
+            },
+            0.15
+        )
+    }
+})
 // INITILIZE SERVICE
 // ============================================================
 angular.module("portfolioApp").service("reusableFuncsService", ["$http", function($http) {
@@ -159,11 +169,9 @@ angular.module('portfolioApp').directive('weatherSideNav', function() {
         templateUrl: './app/directives/weatherSideNav/weatherSideNavTmpl.html'
     }
 })
+angular.module('portfolioApp').controller('aboutCtrl', ["$scope", "aboutService", "routeLoadAnimationService", function($scope, aboutService, routeLoadAnimationService) {
 
-
-
-angular.module('portfolioApp').controller('aboutCtrl', ["$scope", "aboutService", function($scope, aboutService) {
-
+    routeLoadAnimationService.routeLoadAnimation($('.fade-in'))
     aboutService.routeLoadAnimation()
 
     $scope.iconColors = {}
@@ -206,18 +214,6 @@ angular.module('portfolioApp').service('aboutService', function() {
                 'background-size': 'cover'
             })
         }
-        
-        TweenMax.staggerFrom(
-            $('.fade-in'), 
-            0.5, 
-            {
-                opacity: 0,
-                x: -500,
-                ease: Power2.easeOut,
-                delay: 1
-            },
-            0.25
-        )
     }
 
 
@@ -302,6 +298,9 @@ angular.module('portfolioApp').service('aboutService', function() {
 
 
 })
+
+
+
 angular.module("portfolioApp").controller("gameCtrl", ["$scope", "$timeout", "scoreService", "gameService", function($scope, $timeout, scoreService, gameService) {
 
 
@@ -2105,34 +2104,13 @@ this.bloody = function(canv) {
 
 // INITILIZE CONTROLLER
 // ============================================================
-angular.module("portfolioApp").controller("homeCtrl", ["$scope", "$rootScope", "pulseParticlesService", "homeService", function($scope, $rootScope, pulseParticlesService, homeService) {
+angular.module("portfolioApp").controller("homeCtrl", ["$scope", "$rootScope", "pulseParticlesService", "routeLoadAnimationService", function($scope, $rootScope, pulseParticlesService, routeLoadAnimationService) {
   
     pulseParticlesService.bloody(document.querySelector('#cardiac-canvas'))
-    homeService.routeLoadAnimations()
+    routeLoadAnimationService.routeLoadAnimation([$('.top'),$('.bottom')])
 
 }]);
 
-angular.module("portfolioApp").service("homeService", function() {
-    
-    this.routeLoadAnimations = function() {
-        TweenMax.staggerFrom(
-            [
-                $('.top'),
-                $('.bottom')
-            ],
-            0.25,
-            {
-                delay: 0.25,
-                ease: Power1.easeOut,
-                x: -500,
-                opacity: 0
-            },
-            0.15
-        )
-    }
-  
-});
-  
 // INITILIZE CONTROLLER
 // ============================================================
 angular.module("portfolioApp").controller("magnifyCtrl", ["$scope", "reusableFuncsService", function($scope, reusableFuncsService) {
@@ -2655,7 +2633,7 @@ angular.module('portfolioApp').service('weatherCanvasService', function() {
 
 }) //-------------------------------------------------------------
 
-angular.module('portfolioApp').controller('weatherCtrl', ["$scope", "$location", "weatherApiService", "weatherLogicService", function($scope, $location, weatherApiService, weatherLogicService){
+angular.module('portfolioApp').controller('weatherCtrl', ["$scope", "$location", "weatherService", "weatherApiService", "weatherLogicService", "routeLoadAnimationService", function($scope, $location, weatherService, weatherApiService, weatherLogicService, routeLoadAnimationService){
 
   //------------------------------------------------------------------------------
   //            $scope Variables
@@ -2665,7 +2643,12 @@ $scope.fiveDay = false
 $scope.selectedTime = 0
 $scope.sideNav = false
 
+  //------------------------------------------------------------------------------
+  //            Route Load Animation
+  //------------------------------------------------------------------------------
 
+routeLoadAnimationService.routeLoadAnimation($('.fade-in'))
+weatherService.routeLoadAnimation()
 //-------------------------------------------------------------------
 //            Other Functions
 //--------------------------------------------------------------------
@@ -3133,3 +3116,28 @@ angular.module('portfolioApp').service('weatherLogicService', ["weatherCanvasSer
     }
 
 }]) //--------------------------------------------------------------
+
+angular.module('portfolioApp').service('weatherService', function(){
+
+    this.routeLoadAnimation = function() {
+
+        const landingBgImage = new Image()
+        landingBgImage.src = './app/routes/weather-app/images/bg.jpg'
+        landingBgImage.onload = function() {
+            const landingBg = $('#landing-page-background')
+            TweenMax.from(
+                landingBg,
+                3,
+                {
+                    opacity: 0
+                }
+            )
+            landingBg.css({
+                'background':`url('./app/routes/weather-app/images/bg.jpg')`,
+                'background-size': 'cover'
+            })
+            // cb()
+        }
+    }
+
+})    

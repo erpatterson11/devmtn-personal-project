@@ -1,4 +1,4 @@
-angular.module('portfolioApp').controller('weatherCtrl', function($scope, $location, weatherApiService, weatherLogicService){
+angular.module('portfolioApp').controller('weatherCtrl', function($scope, $location, weatherService, weatherApiService, weatherLogicService, routeLoadAnimationService){
 
   //------------------------------------------------------------------------------
   //            $scope Variables
@@ -8,7 +8,12 @@ $scope.fiveDay = false
 $scope.selectedTime = 0
 $scope.sideNav = false
 
+  //------------------------------------------------------------------------------
+  //            Route Load Animation
+  //------------------------------------------------------------------------------
 
+routeLoadAnimationService.routeLoadAnimation($('.fade-in'))
+weatherService.routeLoadAnimation()
 //-------------------------------------------------------------------
 //            Other Functions
 //--------------------------------------------------------------------

@@ -1,7 +1,6 @@
-angular.module("portfolioApp").controller("mainCtrl", function($scope, $window, $state, mainService, reusableFuncsService) {
+angular.module("portfolioApp").controller("mainCtrl", function($scope, $window, $state, mainService) {
 
     let allowedRoutes = ['home', 'about']
-
     
     $scope.hideNav = allowedRoutes.includes($state.name)
     $scope.hideNav = false

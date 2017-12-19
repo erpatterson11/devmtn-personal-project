@@ -1,5 +1,6 @@
-angular.module('portfolioApp').controller('aboutCtrl', function($scope, aboutService) {
+angular.module('portfolioApp').controller('aboutCtrl', function($scope, aboutService, routeLoadAnimationService) {
 
+    routeLoadAnimationService.routeLoadAnimation($('.fade-in'))
     aboutService.routeLoadAnimation()
 
     $scope.iconColors = {}

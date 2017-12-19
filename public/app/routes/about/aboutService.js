@@ -17,18 +17,6 @@ angular.module('portfolioApp').service('aboutService', function() {
                 'background-size': 'cover'
             })
         }
-        
-        TweenMax.staggerFrom(
-            $('.fade-in'), 
-            0.5, 
-            {
-                opacity: 0,
-                x: -500,
-                ease: Power2.easeOut,
-                delay: 1
-            },
-            0.25
-        )
     }
 
 

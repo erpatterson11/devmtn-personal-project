@@ -1,8 +1,8 @@
 // INITILIZE CONTROLLER
 // ============================================================
-angular.module("portfolioApp").controller("homeCtrl", function($scope, $rootScope, pulseParticlesService, homeService) {
+angular.module("portfolioApp").controller("homeCtrl", function($scope, $rootScope, pulseParticlesService, routeLoadAnimationService) {
   
     pulseParticlesService.bloody(document.querySelector('#cardiac-canvas'))
-    homeService.routeLoadAnimations()
+    routeLoadAnimationService.routeLoadAnimation([$('.top'),$('.bottom')])
 
 });
