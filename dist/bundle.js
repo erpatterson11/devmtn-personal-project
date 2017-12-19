@@ -159,6 +159,9 @@ angular.module('portfolioApp').directive('weatherSideNav', function() {
         templateUrl: './app/directives/weatherSideNav/weatherSideNavTmpl.html'
     }
 })
+
+
+
 angular.module('portfolioApp').controller('aboutCtrl', ["$scope", "aboutService", function($scope, aboutService) {
 
     aboutService.routeLoadAnimation()
@@ -299,9 +302,6 @@ angular.module('portfolioApp').service('aboutService', function() {
 
 
 })
-
-
-
 angular.module("portfolioApp").controller("gameCtrl", ["$scope", "$timeout", "scoreService", "gameService", function($scope, $timeout, scoreService, gameService) {
 
 
@@ -2105,12 +2105,34 @@ this.bloody = function(canv) {
 
 // INITILIZE CONTROLLER
 // ============================================================
-angular.module("portfolioApp").controller("homeCtrl", ["$scope", "$rootScope", "pulseParticlesService", function($scope, $rootScope, pulseParticlesService) {
+angular.module("portfolioApp").controller("homeCtrl", ["$scope", "$rootScope", "pulseParticlesService", "homeService", function($scope, $rootScope, pulseParticlesService, homeService) {
   
     pulseParticlesService.bloody(document.querySelector('#cardiac-canvas'))
+    homeService.routeLoadAnimations()
 
 }]);
 
+angular.module("portfolioApp").service("homeService", function() {
+    
+    this.routeLoadAnimations = function() {
+        TweenMax.staggerFrom(
+            [
+                $('.top'),
+                $('.bottom')
+            ],
+            0.25,
+            {
+                delay: 0.25,
+                ease: Power1.easeOut,
+                x: -500,
+                opacity: 0
+            },
+            0.15
+        )
+    }
+  
+});
+  
 // INITILIZE CONTROLLER
 // ============================================================
 angular.module("portfolioApp").controller("magnifyCtrl", ["$scope", "reusableFuncsService", function($scope, reusableFuncsService) {

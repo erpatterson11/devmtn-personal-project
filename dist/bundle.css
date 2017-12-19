@@ -504,6 +504,204 @@ ui-view {
     transform: translateX(100px); } }
 
 
+#game-over-content {
+  font-family: "Press Start 2P", cursive;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 300px;
+  min-height: 30%;
+  background: #141414;
+  border-radius: 5px;
+  box-shadow: 0 0 25px 0px #323232;
+  transition: 0.7s; }
+  #game-over-content > * {
+    margin: 10px; }
+  #game-over-content button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.6);
+    transition: 0.1s; }
+    #game-over-content button:hover {
+      cursor: pointer;
+      color: rgba(255, 255, 255, 0.8);
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-1px); }
+    #game-over-content button:active {
+      transform: translateY(2px); }
+  #game-over-content .game-over-header {
+    font-size: 24px;
+    margin: 10px;
+    text-align: center; }
+    #game-over-content .game-over-header.small {
+      font-size: 18px; }
+  #game-over-content #score-submission-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    max-height: 400px;
+    transition: 0.3s; }
+  #game-over-content #gameover-high-scores {
+    min-width: 75%; }
+  #game-over-content #high-scores-list {
+    opacity: 0.7;
+    font-size: 12px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; }
+    #game-over-content #high-scores-list li {
+      margin: 5px 0; }
+    #game-over-content #high-scores-list #highscores-players {
+      flex: 2; }
+  #game-over-content * {
+    margin: 2px; }
+  #game-over-content button {
+    padding: 10px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.6);
+    transition: 0.1s; }
+  #game-over-content button:hover {
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px); }
+  #game-over-content button:active {
+    transform: translateY(2px); }
+  #game-over-content .submission-box-section {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; }
+  #game-over-content .close {
+    width: 100%;
+    align-items: flex-end;
+    transition: color 0.5s; }
+  #game-over-content #content-close-icon {
+    font-size: 20px;
+    color: white;
+    cursor: pointer; }
+  #game-over-content #content-close-icon:hover {
+    color: #ddd; }
+  #game-over-content .login-buttons {
+    flex: 8;
+    flex-direction: row; }
+  #game-over-content .height {
+    max-height: 0;
+    overflow: hidden; }
+  #game-over-content a {
+    text-decoration: none; }
+  #game-over-content input {
+    background: #323232;
+    border: none;
+    border-radius: 3px;
+    padding: 5px;
+    color: #ddd; }
+  #game-over-content input:focus {
+    box-shadow: inset 0 0 20px 0 #191919;
+    outline: none; }
+  #game-over-content hr {
+    width: 100%;
+    color: rgba(200, 200, 200, 0.5);
+    border: 0;
+    height: 1px;
+    background-image: -webkit-linear-gradient(left, #141414, #8c8b8b, #141414); }
+
+#svg-button-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  height: 74px;
+  font-family: "Julius Sans One", sans-serif;
+  cursor: pointer;
+  transition: 0.25s; }
+  #svg-button-container:hover {
+    transform: scale(1.05); }
+  #svg-button-container:active {
+    transform: translateY(3px); }
+  #svg-button-container .link-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1em; }
+  #svg-button-container .svg-button {
+    position: absolute;
+    top: 0;
+    left: 0; }
+  #svg-button-container .button-path {
+    stroke: #b3b3b3;
+    stroke-width: 2px;
+    fill: rgba(255, 255, 255, 0);
+    stroke-dasharray: 400px;
+    transition: 1s; }
+  #svg-button-container .svg-button .button-ol-1 {
+    stroke-dashoffset: 400px; }
+  #svg-button-container .svg-button .button-ol-2 {
+    stroke-dashoffset: 0px; }
+  #svg-button-container .svg-button:hover .button-ol-1 {
+    stroke-dashoffset: 1200px; }
+  #svg-button-container .svg-button:hover .button-ol-2 {
+    stroke-dashoffset: -800px; }
+
+#side-nav-container {
+  width: 100%;
+  height: 100%;
+  padding-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  background: rgba(0, 0, 0, 0.3);
+  text-shadow: 1px 1px 16px #2d2d2d; }
+  #side-nav-container h2 {
+    text-align: center;
+    font-size: 28px;
+    margin: 10px 0; }
+  #side-nav-container h3 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 10px; }
+  #side-nav-container a {
+    text-decoration: none;
+    color: #ccc; }
+  #side-nav-container .side-nav-button {
+    margin-top: 10px;
+    margin-bottom: 20px; }
+    #side-nav-container .side-nav-button:hover {
+      background: rgba(255, 255, 255, 0.3);
+      color: white;
+      box-shadow: 3px 5px 20px 3px rgba(130, 130, 130, 0.2); }
+  #side-nav-container .arrow-container {
+    width: 80%;
+    display: flex;
+    justify-content: flex-end; }
+  #side-nav-container .flex-between {
+    margin: 5px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; }
+  #side-nav-container .horizontal-line {
+    margin-top: 5px;
+    width: 60%;
+    height: 1px;
+    background: radial-gradient(white, transparent); }
+  #side-nav-container .data-for-nerds {
+    margin: 5px 0;
+    width: 80%; }
+  #side-nav-container .darksky-reference {
+    margin-top: 20px; }
+
 @font-face {
   font-family: Neon80;
   src: url("./app/routes/about/fonts/Neon.ttf") format("truetype"); }
@@ -1287,201 +1485,3 @@ ui-view {
 
 .hidden {
   display: none !important; }
-
-#game-over-content {
-  font-family: "Press Start 2P", cursive;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-width: 300px;
-  min-height: 30%;
-  background: #141414;
-  border-radius: 5px;
-  box-shadow: 0 0 25px 0px #323232;
-  transition: 0.7s; }
-  #game-over-content > * {
-    margin: 10px; }
-  #game-over-content button {
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    background: rgba(255, 255, 255, 0.1);
-    color: rgba(255, 255, 255, 0.6);
-    transition: 0.1s; }
-    #game-over-content button:hover {
-      cursor: pointer;
-      color: rgba(255, 255, 255, 0.8);
-      background: rgba(255, 255, 255, 0.2);
-      transform: translateY(-1px); }
-    #game-over-content button:active {
-      transform: translateY(2px); }
-  #game-over-content .game-over-header {
-    font-size: 24px;
-    margin: 10px;
-    text-align: center; }
-    #game-over-content .game-over-header.small {
-      font-size: 18px; }
-  #game-over-content #score-submission-box {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    width: 100%;
-    max-height: 400px;
-    transition: 0.3s; }
-  #game-over-content #gameover-high-scores {
-    min-width: 75%; }
-  #game-over-content #high-scores-list {
-    opacity: 0.7;
-    font-size: 12px;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center; }
-    #game-over-content #high-scores-list li {
-      margin: 5px 0; }
-    #game-over-content #high-scores-list #highscores-players {
-      flex: 2; }
-  #game-over-content * {
-    margin: 2px; }
-  #game-over-content button {
-    padding: 10px;
-    margin: 10px;
-    border: none;
-    border-radius: 5px;
-    background: rgba(255, 255, 255, 0.1);
-    color: rgba(255, 255, 255, 0.6);
-    transition: 0.1s; }
-  #game-over-content button:hover {
-    cursor: pointer;
-    color: rgba(255, 255, 255, 0.8);
-    background: rgba(255, 255, 255, 0.2);
-    transform: translateY(-1px); }
-  #game-over-content button:active {
-    transform: translateY(2px); }
-  #game-over-content .submission-box-section {
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center; }
-  #game-over-content .close {
-    width: 100%;
-    align-items: flex-end;
-    transition: color 0.5s; }
-  #game-over-content #content-close-icon {
-    font-size: 20px;
-    color: white;
-    cursor: pointer; }
-  #game-over-content #content-close-icon:hover {
-    color: #ddd; }
-  #game-over-content .login-buttons {
-    flex: 8;
-    flex-direction: row; }
-  #game-over-content .height {
-    max-height: 0;
-    overflow: hidden; }
-  #game-over-content a {
-    text-decoration: none; }
-  #game-over-content input {
-    background: #323232;
-    border: none;
-    border-radius: 3px;
-    padding: 5px;
-    color: #ddd; }
-  #game-over-content input:focus {
-    box-shadow: inset 0 0 20px 0 #191919;
-    outline: none; }
-  #game-over-content hr {
-    width: 100%;
-    color: rgba(200, 200, 200, 0.5);
-    border: 0;
-    height: 1px;
-    background-image: -webkit-linear-gradient(left, #141414, #8c8b8b, #141414); }
-
-#svg-button-container {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 150px;
-  height: 74px;
-  font-family: "Julius Sans One", sans-serif;
-  cursor: pointer;
-  transition: 0.25s; }
-  #svg-button-container:hover {
-    transform: scale(1.05); }
-  #svg-button-container:active {
-    transform: translateY(3px); }
-  #svg-button-container .link-text {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1em; }
-  #svg-button-container .svg-button {
-    position: absolute;
-    top: 0;
-    left: 0; }
-  #svg-button-container .button-path {
-    stroke: #b3b3b3;
-    stroke-width: 2px;
-    fill: rgba(255, 255, 255, 0);
-    stroke-dasharray: 400px;
-    transition: 1s; }
-  #svg-button-container .svg-button .button-ol-1 {
-    stroke-dashoffset: 400px; }
-  #svg-button-container .svg-button .button-ol-2 {
-    stroke-dashoffset: 0px; }
-  #svg-button-container .svg-button:hover .button-ol-1 {
-    stroke-dashoffset: 1200px; }
-  #svg-button-container .svg-button:hover .button-ol-2 {
-    stroke-dashoffset: -800px; }
-
-#side-nav-container {
-  width: 100%;
-  height: 100%;
-  padding-top: 50px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: white;
-  background: rgba(0, 0, 0, 0.3);
-  text-shadow: 1px 1px 16px #2d2d2d; }
-  #side-nav-container h2 {
-    text-align: center;
-    font-size: 28px;
-    margin: 10px 0; }
-  #side-nav-container h3 {
-    font-size: 24px;
-    font-weight: bold;
-    margin-top: 10px; }
-  #side-nav-container a {
-    text-decoration: none;
-    color: #ccc; }
-  #side-nav-container .side-nav-button {
-    margin-top: 10px;
-    margin-bottom: 20px; }
-    #side-nav-container .side-nav-button:hover {
-      background: rgba(255, 255, 255, 0.3);
-      color: white;
-      box-shadow: 3px 5px 20px 3px rgba(130, 130, 130, 0.2); }
-  #side-nav-container .arrow-container {
-    width: 80%;
-    display: flex;
-    justify-content: flex-end; }
-  #side-nav-container .flex-between {
-    margin: 5px 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center; }
-  #side-nav-container .horizontal-line {
-    margin-top: 5px;
-    width: 60%;
-    height: 1px;
-    background: radial-gradient(white, transparent); }
-  #side-nav-container .data-for-nerds {
-    margin: 5px 0;
-    width: 80%; }
-  #side-nav-container .darksky-reference {
-    margin-top: 20px; }
