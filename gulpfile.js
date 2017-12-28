@@ -9,13 +9,13 @@ const merge = require('merge-stream')
 const babel = require('gulp-babel')
 const gutil = require('gulp-util')
 const sourcemap = require('gulp-sourcemaps')
-const CacheBuster = require('gulp-cachebust')
-const cachebust = new CacheBuster()
+// const CacheBuster = require('gulp-cachebust')
+// const cachebust = new CacheBuster()
 
 
-let changeEvent = function(evt) {
-    gutil.log('File', gutil.colors.cyan(evt.path.replace(new RegExp('/.*(?=/' + basePaths.src + ')/'), '')), 'was', gutil.colors.magenta(evt.type))
-}
+// let changeEvent = function(evt) {
+//     gutil.log('File', gutil.colors.cyan(evt.path.replace(new RegExp('/.*(?=/' + basePaths.src + ')/'), '')), 'was', gutil.colors.magenta(evt.type))
+// }
 
 // DECLARE FILE PATHS
 // ============================================================
@@ -35,10 +35,10 @@ let paths = {
 gulp.task('js', function() {
   return gulp.src(paths.jsSource)
   .pipe(sourcemap.init())
-  // .pipe(babel({ presets: ['es2015', 'es2016'] }))
+  .pipe(babel({ presets: ['es2015', 'es2016'] }))
   .pipe(concat('bundle.js'))
   .pipe(annotate())
-  // .pipe(uglify()) //Uncomment when code is production ready
+  // .pipe(uglify()) 
   .pipe(gulp.dest('./dist'))
 })
 
