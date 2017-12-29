@@ -1,8 +1,7 @@
 # Personal Portfolio Site
 
-[![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://ericcpatterson.com)
+[![Hosted compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://ericcpatterson.com)
 
-> Standard Readme Style
 
 This is my personal portfolio site for all of my projects. You can view the hosted version [here](https://ericcpatterson.com).
 
@@ -19,7 +18,7 @@ The following projects exist in separate repositories:
 
 ## Table of Contents
 
-- [Technology Used](#background)
+- [Technology Used](#technologyused)
 - [Install](#install)
 - [Maintainers](#maintainers)
 - [Contribute](#contribute)
@@ -53,13 +52,9 @@ This portfolio site and the projects contained within were created with the foll
 
 This project uses [node](http://nodejs.org) and [npm](https://npmjs.com). Go check them out if you don't have them locally installed.
 
-```sh
-$ npm install --global standard-readme-spec
-```
-
 ## Maintainers
 
-[@EricPatterson](https://github.com/erpatterson11).
+[@EricPatterson](https://github.com/erpatterson11)
 
 ## Contribute
 
@@ -67,4 +62,4 @@ See a bug or issue? Let me know! [Open an issue](https://github.com/erpatterson1
 
 ## License
 
-[MIT](LICENSE) © Richard Littauer
+[MIT](LICENSE) © Eric Patterson
