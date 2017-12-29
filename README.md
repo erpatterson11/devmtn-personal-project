@@ -1,8 +1,5 @@
 # Personal Portfolio Site
 
-[![Hosted compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://ericcpatterson.com)
-
-
 This is my personal portfolio site for all of my projects. You can view the hosted version [here](https://ericcpatterson.com).
 
 This repository includes code for the portfolio site as well as my projects listed below: 
