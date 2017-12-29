@@ -191,7 +191,10 @@ ui-view
 @media (max-width: 525px) 
 
   .showNav
-    transform: translate(-100px, -100px) 
+    transform: translate(-100px, -100px)
+
+  .hideMainNav
+    transform: translate(200px, 200px)
 
   #main-nav
     top: auto
@@ -200,6 +203,8 @@ ui-view
     #main-links
       justify-content: flex-end
       padding-right: 130px
+      transform: translateY(100px)
+
 
     .nav-link
       margin-left: 20px
@@ -211,6 +216,8 @@ ui-view
       right: 0
       bottom: 0
       padding-bottom: 110px
+      transform: translateX(100px)
+
 
       .email-compose
         transform: translate(0, -20px)
@@ -225,7 +232,8 @@ ui-view
     right: 30px
 
   .hideLinks
-    transform: translateY(100px)
+    transform: translateY(-100px)
 
   .hideContact
-    transform: translateX(100px)
+    transform: translateX(-100px)
+    

@@ -474,12 +474,15 @@ ui-view {
 @media (max-width: 525px) {
   .showNav {
     transform: translate(-100px, -100px); }
+  .hideMainNav {
+    transform: translate(200px, 200px); }
   #main-nav {
     top: auto;
     bottom: 0; }
     #main-nav #main-links {
       justify-content: flex-end;
-      padding-right: 130px; }
+      padding-right: 130px;
+      transform: translateY(100px); }
     #main-nav .nav-link {
       margin-left: 20px; }
     #main-nav .contact {
@@ -488,7 +491,8 @@ ui-view {
       justify-content: flex-end;
       right: 0;
       bottom: 0;
-      padding-bottom: 110px; }
+      padding-bottom: 110px;
+      transform: translateX(100px); }
       #main-nav .contact .email-compose {
         transform: translate(0, -20px); }
       #main-nav .contact .emailExpanded {
@@ -499,9 +503,9 @@ ui-view {
     bottom: 30px;
     right: 30px; }
   .hideLinks {
-    transform: translateY(100px); }
+    transform: translateY(-100px); }
   .hideContact {
-    transform: translateX(100px); } }
+    transform: translateX(-100px); } }
 
 
 #game-over-content {
@@ -702,164 +706,6 @@ ui-view {
   #side-nav-container .darksky-reference {
     margin-top: 20px; }
 
-#game-section {
-  position: absolute;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-  color: #ddd;
-  font: "Press Start 2P", cursive;
-  background: linear-gradient(black 0%, #0f0f0f 100%); }
-  #game-section #game-container {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 50%;
-    transform: translateY(-50%); }
-    #game-section #game-container canvas {
-      position: fixed;
-      width: 100vw;
-      height: 100vh; }
-    #game-section #game-container #gameCanvas {
-      box-shadow: 0px 0px 15px 10px rgba(20, 20, 20, 0.5); }
-    #game-section #game-container #bgCanvas {
-      background: black; }
-    #game-section #game-container #controls-tooltip {
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: "Press Start 2P", cursive;
-      background: rgba(0, 0, 0, 0.5); }
-      #game-section #game-container #controls-tooltip ul {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center; }
-        #game-section #game-container #controls-tooltip ul li {
-          margin: 10px; }
-    #game-section #game-container #stats-bar {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      top: 0;
-      left: 0;
-      flex-direction: column;
-      justify-content: flex-end;
-      align-items: center;
-      background: transparent; }
-      #game-section #game-container #stats-bar #stats-top {
-        width: 100%;
-        height: 50%;
-        margin-top: 15px;
-        font-family: "Press Start 2P", cursive;
-        display: flex;
-        justify-content: space-around;
-        align-items: flex-start; }
-        #game-section #game-container #stats-bar #stats-top #health-bar {
-          width: 20%;
-          height: 20px;
-          border: 1px solid black;
-          border-radius: 10px;
-          background: linear-gradient(90deg, rgba(189, 195, 199, 0.5) 0%, rgba(44, 62, 80, 0.5) 100%); }
-          #game-section #game-container #stats-bar #stats-top #health-bar #health-bar-fill {
-            float: right;
-            width: 0%;
-            height: 100%;
-            border-radius: 10px;
-            background: #141414;
-            transition: 0.5s; }
-      #game-section #game-container #stats-bar #stats-bottom {
-        width: 100%;
-        height: 50%;
-        display: flex;
-        align-items: flex-end; }
-        #game-section #game-container #stats-bar #stats-bottom button {
-          padding: 10px;
-          border: none;
-          background: rgba(0, 0, 0, 0.2);
-          color: rgba(255, 255, 255, 0.2);
-          transition: 0.1s; }
-        #game-section #game-container #stats-bar #stats-bottom:hover {
-          cursor: pointer;
-          color: rgba(255, 255, 255, 0.6); }
-        #game-section #game-container #stats-bar #stats-bottom:focus {
-          outline: none; }
-  #game-section #start-screen {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    background: black;
-    transition: 1s; }
-    #game-section #start-screen h1 {
-      color: #ddd; }
-    #game-section #start-screen ul {
-      font-size: 10px; }
-    #game-section #start-screen .title {
-      text-align: center;
-      font-size: 90px;
-      color: orange;
-      text-shadow: -5px 5px #610e0e;
-      font-family: "Faster One", cursive;
-      margin-bottom: 50px; }
-    #game-section #start-screen .controlls-container {
-      font-family: "Press Start 2P", cursive;
-      font-size: 24px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 10%; }
-      #game-section #start-screen .controlls-container * {
-        margin: 5px 0px; }
-  #game-section #game-over-screen {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: rgba(0, 0, 0, 0.5);
-    transition: 1s; }
-
-.hidden {
-  display: none !important; }
-
-#game-loading-screen {
-  position: fixed;
-  z-index: 10000;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #000;
-  transition: 0.3s; }
-
-.media-loaded {
-  animation: slide-up 1s forwards; }
-
-@keyframes slide-up {
-  20% {
-    transform: translateY(5%); }
-  100% {
-    transform: translateY(-100%);
-    display: none; } }
-
-@media (max-width: 450px) {
-  #game-section #content-box {
-    width: 80%; }
-    #game-section #content-box .submission-box-section {
-      width: 80%; } }
-
 @font-face {
   font-family: Neon80;
   src: url("./app/routes/about/fonts/Neon.ttf") format("truetype"); }
@@ -1037,6 +883,164 @@ ui-view {
       font-size: 24px; }
       #about-section .portfolio-link button {
         height: 35px; } }
+
+#game-section {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  color: #ddd;
+  font: "Press Start 2P", cursive;
+  background: linear-gradient(black 0%, #0f0f0f 100%); }
+  #game-section #game-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 50%;
+    transform: translateY(-50%); }
+    #game-section #game-container canvas {
+      position: fixed;
+      width: 100vw;
+      height: 100vh; }
+    #game-section #game-container #gameCanvas {
+      box-shadow: 0px 0px 15px 10px rgba(20, 20, 20, 0.5); }
+    #game-section #game-container #bgCanvas {
+      background: black; }
+    #game-section #game-container #controls-tooltip {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: "Press Start 2P", cursive;
+      background: rgba(0, 0, 0, 0.5); }
+      #game-section #game-container #controls-tooltip ul {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center; }
+        #game-section #game-container #controls-tooltip ul li {
+          margin: 10px; }
+    #game-section #game-container #stats-bar {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      top: 0;
+      left: 0;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      background: transparent; }
+      #game-section #game-container #stats-bar #stats-top {
+        width: 100%;
+        height: 50%;
+        margin-top: 15px;
+        font-family: "Press Start 2P", cursive;
+        display: flex;
+        justify-content: space-around;
+        align-items: flex-start; }
+        #game-section #game-container #stats-bar #stats-top #health-bar {
+          width: 20%;
+          height: 20px;
+          border: 1px solid black;
+          border-radius: 10px;
+          background: linear-gradient(90deg, rgba(189, 195, 199, 0.5) 0%, rgba(44, 62, 80, 0.5) 100%); }
+          #game-section #game-container #stats-bar #stats-top #health-bar #health-bar-fill {
+            float: right;
+            width: 0%;
+            height: 100%;
+            border-radius: 10px;
+            background: #141414;
+            transition: 0.5s; }
+      #game-section #game-container #stats-bar #stats-bottom {
+        width: 100%;
+        height: 50%;
+        display: flex;
+        align-items: flex-end; }
+        #game-section #game-container #stats-bar #stats-bottom button {
+          padding: 10px;
+          border: none;
+          background: rgba(0, 0, 0, 0.2);
+          color: rgba(255, 255, 255, 0.2);
+          transition: 0.1s; }
+        #game-section #game-container #stats-bar #stats-bottom:hover {
+          cursor: pointer;
+          color: rgba(255, 255, 255, 0.6); }
+        #game-section #game-container #stats-bar #stats-bottom:focus {
+          outline: none; }
+  #game-section #start-screen {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    background: black;
+    transition: 1s; }
+    #game-section #start-screen h1 {
+      color: #ddd; }
+    #game-section #start-screen ul {
+      font-size: 10px; }
+    #game-section #start-screen .title {
+      text-align: center;
+      font-size: 90px;
+      color: orange;
+      text-shadow: -5px 5px #610e0e;
+      font-family: "Faster One", cursive;
+      margin-bottom: 50px; }
+    #game-section #start-screen .controlls-container {
+      font-family: "Press Start 2P", cursive;
+      font-size: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 10%; }
+      #game-section #start-screen .controlls-container * {
+        margin: 5px 0px; }
+  #game-section #game-over-screen {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5);
+    transition: 1s; }
+
+.hidden {
+  display: none !important; }
+
+#game-loading-screen {
+  position: fixed;
+  z-index: 10000;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #000;
+  transition: 0.3s; }
+
+.media-loaded {
+  animation: slide-up 1s forwards; }
+
+@keyframes slide-up {
+  20% {
+    transform: translateY(5%); }
+  100% {
+    transform: translateY(-100%);
+    display: none; } }
+
+@media (max-width: 450px) {
+  #game-section #content-box {
+    width: 80%; }
+    #game-section #content-box .submission-box-section {
+      width: 80%; } }
 
 #home-container {
   color: #969696;
