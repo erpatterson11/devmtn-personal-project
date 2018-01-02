@@ -635,7 +635,7 @@ angular.module("portfolioApp").service("gameService", ["reusableFuncsService", f
     // generate object to store status of each key
     // initialize status of all pressed keys to false
   };var KeyStatus = {};
-  for (code in KeyCodes) {
+  for (var code in KeyCodes) {
     KeyStatus[KeyCodes[code]] = false;
   }
 
