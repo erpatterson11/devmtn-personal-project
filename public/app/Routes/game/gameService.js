@@ -1044,6 +1044,7 @@ angular.module("portfolioApp").service("gameService", function(reusableFuncsServ
       gameOverScreen.classList.add('hidden')
       Game.init()
       Game.loop()
+      console.log('restart game!');
     })
   })
 

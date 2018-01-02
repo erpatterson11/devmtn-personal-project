@@ -22,6 +22,7 @@ this.generateContent = () => {
     let rotate = 0
     let goldenRatio = 0.618033
     let axis = 0.7237
+    let spiralOrigin
     let spiralOriginX
     let spiralOriginY
     let wW = window.innerWidth
@@ -261,7 +262,7 @@ this.generateContent = () => {
     }
 
     let changeColors = (section) => {;
-      num = limitNums(section)
+      let num = limitNums(section)
       num < 0 ? num = 0 : null
       let colors = colorSchemes[num]
       document.documentElement.style.setProperty('--gr-bg-color', colors.bg)

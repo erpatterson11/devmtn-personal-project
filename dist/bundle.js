@@ -305,15 +305,16 @@ angular.module("portfolioApp").controller("gameCtrl", ["$scope", "$timeout", "sc
   //========================== DOM Manipulation Functions ================================
 
   );$scope.showScoreSubmission = function () {
-    $scope.isShownSubmissionForm = !$scope.isShownSubmissionForm;
+    $scope.isShownSubmissionForm = true;
     $scope.getFinalScore();
   };
 
   //========================== HTTP Requests ================================
 
   $scope.initGame = function () {
+    $scope.isShownSubmissionForm = false;
+    $scope.isShownNicknameInput = false;
     gameService.initGame();
-    console.log('game inited');
   };
 
   $scope.getAuth0Info = function () {
@@ -352,7 +353,6 @@ angular.module("portfolioApp").controller("gameCtrl", ["$scope", "$timeout", "sc
         nickname: name
       };
       scoreService.addScore(obj).then(function () {
-        console.log('score submitted!');
         $scope.getDbScores();
         $scope.isShownNicknameInput = !$scope.isShownNicknameInput;
       });
@@ -1409,6 +1409,7 @@ angular.module("portfolioApp").service("gameService", ["reusableFuncsService", f
       gameOverScreen.classList.add('hidden');
       Game.init();
       Game.loop();
+      console.log('restart game!');
     });
   });
 
@@ -1506,6 +1507,7 @@ angular.module("portfolioApp").service("goldenRatioService", function () {
     var rotate = 0;
     var goldenRatio = 0.618033;
     var axis = 0.7237;
+    var spiralOrigin = void 0;
     var spiralOriginX = void 0;
     var spiralOriginY = void 0;
     var wW = window.innerWidth;
@@ -1741,7 +1743,7 @@ angular.module("portfolioApp").service("goldenRatioService", function () {
 
     var changeColors = function changeColors(section) {
       ;
-      num = limitNums(section);
+      var num = limitNums(section);
       num < 0 ? num = 0 : null;
       var colors = colorSchemes[num];
       document.documentElement.style.setProperty('--gr-bg-color', colors.bg);

@@ -17,15 +17,16 @@ angular.module("portfolioApp").controller("gameCtrl", function($scope, $timeout,
   //========================== DOM Manipulation Functions ================================
 
   $scope.showScoreSubmission = function() {
-    $scope.isShownSubmissionForm = !$scope.isShownSubmissionForm
+    $scope.isShownSubmissionForm = true
     $scope.getFinalScore()
   }
 
 //========================== HTTP Requests ================================
 
   $scope.initGame = function() {
+    $scope.isShownSubmissionForm = false
+    $scope.isShownNicknameInput = false
     gameService.initGame()
-    console.log('game inited')
   }
 
   $scope.getAuth0Info = function() {
@@ -68,7 +69,6 @@ angular.module("portfolioApp").controller("gameCtrl", function($scope, $timeout,
         nickname: name
       }
     scoreService.addScore(obj).then(function() {
-      console.log('score submitted!')
       $scope.getDbScores()
       $scope.isShownNicknameInput = !$scope.isShownNicknameInput
     })
