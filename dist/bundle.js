@@ -1375,7 +1375,7 @@ angular.module("portfolioApp").service("gameService", ["reusableFuncsService", f
     };
   };
 
-  Game = GameFactory
+  var Game = GameFactory
 
   //========================== DOM Manipulation ================================
 

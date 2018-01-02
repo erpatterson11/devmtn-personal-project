@@ -1007,7 +1007,7 @@ angular.module("portfolioApp").service("gameService", function(reusableFuncsServ
     }
   };
 
-  Game = GameFactory()
+  const Game = GameFactory()
 
   //========================== DOM Manipulation ================================
 
